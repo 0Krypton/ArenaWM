@@ -30,12 +30,14 @@ class ScreenTypeLayout extends StatelessWidget {
           }
         }
 
+        // if user on desktop then return Desktop Screen
         if (sizeInfo.deviceType == DeviceScreenType.Desktop) {
           if (desktop != null) {
             return desktop;
           }
         }
 
+        // if user on mobile then return Mobile Screen
         return mobile;
       },
     );

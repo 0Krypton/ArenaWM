@@ -1,0 +1,987 @@
+define(['dart_sdk', 'packages/riverpod/src/created_provider.dart', 'packages/flutter/src/foundation/debug.dart', 'packages/flutter/src/widgets/widget_span.dart', 'packages/flutter/src/foundation/change_notifier.dart'], (function load__packages__flutter_riverpod__src__provider_dart(dart_sdk, packages__riverpod__src__created_provider$46dart, packages__flutter__src__foundation__debug$46dart, packages__flutter__src__widgets__widget_span$46dart, packages__flutter__src__foundation__change_notifier$46dart) {
+  'use strict';
+  const core = dart_sdk.core;
+  const _internal = dart_sdk._internal;
+  const _js_helper = dart_sdk._js_helper;
+  const dart = dart_sdk.dart;
+  const dartx = dart_sdk.dartx;
+  const framework = packages__riverpod__src__created_provider$46dart.src__framework;
+  const diagnostics = packages__flutter__src__foundation__debug$46dart.src__foundation__diagnostics;
+  const framework$ = packages__flutter__src__widgets__widget_span$46dart.src__widgets__framework;
+  const widget_inspector = packages__flutter__src__widgets__widget_span$46dart.src__widgets__widget_inspector;
+  const change_notifier = packages__flutter__src__foundation__change_notifier$46dart.src__foundation__change_notifier;
+  var provider$ = Object.create(dart.library);
+  var framework$0 = Object.create(dart.library);
+  var consumer = Object.create(dart.library);
+  var internals = Object.create(dart.library);
+  var builders = Object.create(dart.library);
+  var change_notifier_provider = Object.create(dart.library);
+  var $entries = dartx.entries;
+  var $values = dartx.values;
+  var $clear = dartx.clear;
+  var $remove = dartx.remove;
+  var $putIfAbsent = dartx.putIfAbsent;
+  dart._checkModuleNullSafetyMode(false);
+  var T$ = {
+    ObjectN: () => (T$.ObjectN = dart.constFn(dart.nullable(core.Object)))(),
+    ProviderBaseOfObject$TToT: () => (T$.ProviderBaseOfObject$TToT = dart.constFn(dart.gFnType(T => {
+      var ProviderBaseOfObject$T = () => (ProviderBaseOfObject$T = dart.constFn(framework.ProviderBase$(core.Object, T)))();
+      return [T, [ProviderBaseOfObject$T()]];
+    }, T => {
+      var ProviderBaseOfObject$T = () => (ProviderBaseOfObject$T = dart.constFn(framework.ProviderBase$(core.Object, T)))();
+      return [T$.ObjectN()];
+    })))(),
+    RootProviderOfCreated$ObjectToCreated: () => (T$.RootProviderOfCreated$ObjectToCreated = dart.constFn(dart.gFnType(Created => {
+      var RootProviderOfCreated$Object = () => (RootProviderOfCreated$Object = dart.constFn(framework.RootProvider$(Created, core.Object)))();
+      return [Created, [RootProviderOfCreated$Object()]];
+    }, Created => {
+      var RootProviderOfCreated$Object = () => (RootProviderOfCreated$Object = dart.constFn(framework.RootProvider$(Created, core.Object)))();
+      return [T$.ObjectN()];
+    })))(),
+    OverrideL: () => (T$.OverrideL = dart.constFn(dart.legacy(framework.Override)))(),
+    UncontrolledProviderScopeN: () => (T$.UncontrolledProviderScopeN = dart.constFn(dart.nullable(framework$0.UncontrolledProviderScope)))(),
+    IterablePropertyOfProviderObserver: () => (T$.IterablePropertyOfProviderObserver = dart.constFn(diagnostics.IterableProperty$(framework.ProviderObserver)))(),
+    IterablePropertyOfOverride: () => (T$.IterablePropertyOfOverride = dart.constFn(diagnostics.IterableProperty$(framework.Override)))(),
+    DiagnosticsPropertyOfObject: () => (T$.DiagnosticsPropertyOfObject = dart.constFn(diagnostics.DiagnosticsProperty$(core.Object)))(),
+    VoidTobool: () => (T$.VoidTobool = dart.constFn(dart.fnType(core.bool, [])))(),
+    _LocationL: () => (T$._LocationL = dart.constFn(dart.legacy(widget_inspector._Location)))(),
+    LinkedMapOfProviderBase$ProviderSubscription: () => (T$.LinkedMapOfProviderBase$ProviderSubscription = dart.constFn(_js_helper.LinkedMap$(framework.ProviderBase, framework.ProviderSubscription)))(),
+    VoidToProviderSubscription: () => (T$.VoidToProviderSubscription = dart.constFn(dart.fnType(framework.ProviderSubscription, [])))()
+  };
+  var T$Eval = Object.assign({
+    _: () => T$Eval
+  }, T$);
+  var S = {
+    _: () => S
+  };
+  var S$Eval = Object.assign({
+    _: () => S$Eval
+  }, S);
+  const CT = Object.create({
+    _: () => (C, CT)
+  });
+  dart.defineLazy(CT, {
+    get C0() {
+      return C[0] = dart.constList([], T$.OverrideL());
+    },
+    get C3() {
+      return C[3] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "container",
+        [_Location_column]: 7,
+        [_Location_line]: 221,
+        [_Location_file]: null
+      });
+    },
+    get C4() {
+      return C[4] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: null,
+        [_Location_name]: "child",
+        [_Location_column]: 7,
+        [_Location_line]: 222,
+        [_Location_file]: null
+      });
+    },
+    get C2() {
+      return C[2] = dart.constList([C[3] || CT.C3, C[4] || CT.C4], T$._LocationL());
+    },
+    get C1() {
+      return C[1] = dart.const({
+        __proto__: widget_inspector._Location.prototype,
+        [_Location_parameterLocations]: C[2] || CT.C2,
+        [_Location_name]: null,
+        [_Location_column]: 12,
+        [_Location_line]: 220,
+        [_Location_file]: "file:///D:/flutter%20sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_riverpod-0.13.1/lib/src/framework.dart"
+      });
+    },
+    get C5() {
+      return C[5] = dart.const({
+        __proto__: builders.AutoDisposeChangeNotifierProviderBuilder.prototype
+      });
+    },
+    get C6() {
+      return C[6] = dart.const({
+        __proto__: builders.ChangeNotifierProviderFamilyBuilder.prototype
+      });
+    },
+    get C7() {
+      return C[7] = dart.const({
+        __proto__: builders.AutoDisposeChangeNotifierProviderFamilyBuilder.prototype
+      });
+    }
+  }, false);
+  var C = Array(8).fill(void 0);
+  var I = [
+    "file:///D:/flutter%20sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_riverpod-0.13.1/lib/src/provider.dart",
+    "file:///D:/flutter%20sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_riverpod-0.13.1/lib/src/framework.dart",
+    "package:flutter_riverpod/src/framework.dart",
+    "file:///D:/flutter%20sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_riverpod-0.13.1/lib/src/consumer.dart",
+    "package:flutter_riverpod/src/consumer.dart",
+    "file:///D:/flutter%20sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_riverpod-0.13.1/lib/src/builders.dart",
+    "package:flutter_riverpod/src/builders.dart",
+    "package:flutter_riverpod/src/change_notifier_provider.dart",
+    "file:///D:/flutter%20sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_riverpod-0.13.1/lib/src/change_notifier_provider/base.dart",
+    "file:///D:/flutter%20sdk/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_riverpod-0.13.1/lib/src/change_notifier_provider/auto_dispose.dart"
+  ];
+  provider$['BuildContextX|read'] = function BuildContextX$124read(T, $this, provider) {
+    if ($this == null) dart.nullFailed(I[0], 76, 5, "#this");
+    if (provider == null) dart.nullFailed(I[0], 76, 37, "provider");
+    return framework$0.ProviderScope.containerOf($this, {listen: false}).read(T, provider);
+  };
+  provider$['BuildContextX|get#read'] = function BuildContextX$124get$35read($this) {
+    if ($this == null) dart.nullFailed(I[0], 76, 5, "#this");
+    return dart.fn((T, provider) => {
+      if (provider == null) dart.nullFailed(I[0], 76, 37, "provider");
+      return provider$['BuildContextX|read'](T, $this, provider);
+    }, T$.ProviderBaseOfObject$TToT());
+  };
+  provider$['BuildContextX|refresh'] = function BuildContextX$124refresh(Created, $this, provider) {
+    if ($this == null) dart.nullFailed(I[0], 110, 11, "#this");
+    if (provider == null) dart.nullFailed(I[0], 110, 58, "provider");
+    return framework$0.ProviderScope.containerOf($this, {listen: false}).refresh(Created, provider);
+  };
+  provider$['BuildContextX|get#refresh'] = function BuildContextX$124get$35refresh($this) {
+    if ($this == null) dart.nullFailed(I[0], 110, 11, "#this");
+    return dart.fn((Created, provider) => {
+      if (provider == null) dart.nullFailed(I[0], 110, 58, "provider");
+      return provider$['BuildContextX|refresh'](Created, $this, provider);
+    }, T$.RootProviderOfCreated$ObjectToCreated());
+  };
+  var child$ = dart.privateName(framework$0, "ProviderScope.child");
+  var observers$ = dart.privateName(framework$0, "ProviderScope.observers");
+  var overrides$ = dart.privateName(framework$0, "ProviderScope.overrides");
+  framework$0.ProviderScope = class ProviderScope extends framework$.StatefulWidget {
+    get child() {
+      return this[child$];
+    }
+    set child(value) {
+      super.child = value;
+    }
+    get observers() {
+      return this[observers$];
+    }
+    set observers(value) {
+      super.observers = value;
+    }
+    get overrides() {
+      return this[overrides$];
+    }
+    set overrides(value) {
+      super.overrides = value;
+    }
+    static containerOf(context, opts) {
+      let t4;
+      if (context == null) dart.nullFailed(I[1], 90, 18, "context");
+      let listen = opts && 'listen' in opts ? opts.listen : true;
+      if (listen == null) dart.nullFailed(I[1], 91, 10, "listen");
+      let scope = null;
+      if (dart.test(listen)) {
+        scope = context.dependOnInheritedWidgetOfExactType(framework$0.UncontrolledProviderScope);
+      } else {
+        scope = T$.UncontrolledProviderScopeN().as((t4 = context.getElementForInheritedWidgetOfExactType(framework$0.UncontrolledProviderScope), t4 == null ? null : t4.widget));
+      }
+      if (scope == null) {
+        dart.throw(new core.StateError.new("No ProviderScope found"));
+      }
+      return scope.container;
+    }
+    createState() {
+      return new framework$0.ProviderScopeState.new();
+    }
+    createElement() {
+      return new framework$0._ProviderScopeElement.new(this);
+    }
+    debugFillProperties(properties) {
+      if (properties == null) dart.nullFailed(I[1], 130, 56, "properties");
+      super.debugFillProperties(properties);
+      properties.add(new (T$.IterablePropertyOfProviderObserver()).new("observers", this.observers));
+      properties.add(new (T$.IterablePropertyOfOverride()).new("overrides", this.overrides));
+    }
+  };
+  (framework$0.ProviderScope.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let overrides = opts && 'overrides' in opts ? opts.overrides : C[0] || CT.C0;
+    if (overrides == null) dart.nullFailed(I[1], 83, 10, "overrides");
+    let observers = opts && 'observers' in opts ? opts.observers : null;
+    let child = opts && 'child' in opts ? opts.child : null;
+    if (child == null) dart.nullFailed(I[1], 85, 19, "child");
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[overrides$] = overrides;
+    this[observers$] = observers;
+    this[child$] = child;
+    framework$0.ProviderScope.__proto__.new.call(this, {key: key, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = framework$0.ProviderScope.prototype;
+  dart.addTypeTests(framework$0.ProviderScope);
+  dart.addTypeCaches(framework$0.ProviderScope);
+  dart.setMethodSignature(framework$0.ProviderScope, () => ({
+    __proto__: dart.getMethods(framework$0.ProviderScope.__proto__),
+    createState: dart.fnType(framework$0.ProviderScopeState, []),
+    createElement: dart.fnType(framework$0._ProviderScopeElement, [])
+  }));
+  dart.setLibraryUri(framework$0.ProviderScope, I[2]);
+  dart.setFieldSignature(framework$0.ProviderScope, () => ({
+    __proto__: dart.getFields(framework$0.ProviderScope.__proto__),
+    child: dart.finalFieldType(framework$.Widget),
+    observers: dart.finalFieldType(dart.nullable(core.List$(framework.ProviderObserver))),
+    overrides: dart.finalFieldType(core.List$(framework.Override))
+  }));
+  framework$0._ProviderScopeElement = class _ProviderScopeElement extends framework$.StatefulElement {
+    debugFillProperties(properties) {
+      let t4;
+      if (properties == null) dart.nullFailed(I[1], 142, 56, "properties");
+      super.debugFillProperties(properties);
+      let container = framework$0.ProviderScopeState.as(this.state).container;
+      for (let entry of container.debugProviderValues[$entries]) {
+        let name = (t4 = entry.key.name, t4 == null ? framework.describeIdentity(entry.key) : t4);
+        properties.add(new (T$.DiagnosticsPropertyOfObject()).new(name, entry.value));
+      }
+    }
+  };
+  (framework$0._ProviderScopeElement.new = function(widget) {
+    if (widget == null) dart.nullFailed(I[1], 139, 39, "widget");
+    framework$0._ProviderScopeElement.__proto__.new.call(this, widget);
+    ;
+  }).prototype = framework$0._ProviderScopeElement.prototype;
+  dart.addTypeTests(framework$0._ProviderScopeElement);
+  dart.addTypeCaches(framework$0._ProviderScopeElement);
+  dart.setLibraryUri(framework$0._ProviderScopeElement, I[2]);
+  var __ProviderScopeState_container = dart.privateName(framework$0, "_#ProviderScopeState#container");
+  var __ProviderScopeState_container_isSet = dart.privateName(framework$0, "_#ProviderScopeState#container#isSet");
+  var _debugParentOwner = dart.privateName(framework$0, "_debugParentOwner");
+  var _dirty = dart.privateName(framework$0, "_dirty");
+  var _Location_parameterLocations = dart.privateName(widget_inspector, "_Location.parameterLocations");
+  var _Location_name = dart.privateName(widget_inspector, "_Location.name");
+  var _Location_column = dart.privateName(widget_inspector, "_Location.column");
+  var _Location_line = dart.privateName(widget_inspector, "_Location.line");
+  var _Location_file = dart.privateName(widget_inspector, "_Location.file");
+  framework$0.ProviderScopeState = class ProviderScopeState extends framework$.State$(framework$0.ProviderScope) {
+    get container() {
+      let t4;
+      return dart.test(this[__ProviderScopeState_container_isSet]) ? (t4 = this[__ProviderScopeState_container], t4) : dart.throw(new _internal.LateError.fieldNI("container"));
+    }
+    set container(t4) {
+      if (t4 == null) dart.nullFailed(I[1], 162, 26, "null");
+      this[__ProviderScopeState_container_isSet] = true;
+      this[__ProviderScopeState_container] = t4;
+    }
+    initState() {
+      let t5, t5$;
+      super.initState();
+      let scope = T$.UncontrolledProviderScopeN().as((t5 = this.context.getElementForInheritedWidgetOfExactType(framework$0.UncontrolledProviderScope), t5 == null ? null : t5.widget));
+      if (!dart.test(dart.fn(() => {
+        let t5;
+        this[_debugParentOwner] = (t5 = scope, t5 == null ? null : t5.container);
+        return true;
+      }, T$.VoidTobool())())) dart.assertFailed("", I[1], 173, 12, "() {\n      _debugParentOwner = scope?.container;\n      return true;\n    }()");
+      this.container = new framework.ProviderContainer.new({parent: (t5$ = scope, t5$ == null ? null : t5$.container), overrides: this.widget.overrides, observers: this.widget.observers});
+    }
+    didUpdateWidget(oldWidget) {
+      framework$0.ProviderScope.as(oldWidget);
+      if (oldWidget == null) dart.nullFailed(I[1], 196, 38, "oldWidget");
+      super.didUpdateWidget(oldWidget);
+      this[_dirty] = true;
+    }
+    build(context) {
+      if (context == null) dart.nullFailed(I[1], 202, 29, "context");
+      if (!dart.test(dart.fn(() => {
+        let t5, t5$;
+        let scope = T$.UncontrolledProviderScopeN().as((t5 = context.getElementForInheritedWidgetOfExactType(framework$0.UncontrolledProviderScope), t5 == null ? null : t5.widget));
+        if (!dart.equals((t5$ = scope, t5$ == null ? null : t5$.container), this[_debugParentOwner])) {
+          dart.throw(new core.UnsupportedError.new("ProviderScope was rebuilt with a different ProviderScope ancestor"));
+        }
+        return true;
+      }, T$.VoidTobool())())) dart.assertFailed("", I[1], 203, 12, "() {\n      final scope = context\n          .getElementForInheritedWidgetOfExactType<UncontrolledProviderScope>()\n          ?.widget as UncontrolledProviderScope?;\n\n      if (scope?.container != _debugParentOwner) {\n        throw UnsupportedError(\n          'ProviderScope was rebuilt with a different ProviderScope ancestor',\n        );\n      }\n      return true;\n    }()");
+      if (dart.test(this[_dirty])) {
+        this[_dirty] = false;
+        this.container.updateOverrides(this.widget.overrides);
+      }
+      return new framework$0.UncontrolledProviderScope.new({container: this.container, child: this.widget.child, $creationLocationd_0dea112b090073317d4: C[1] || CT.C1});
+    }
+    dispose() {
+      this.container.dispose();
+      super.dispose();
+    }
+  };
+  (framework$0.ProviderScopeState.new = function() {
+    this[__ProviderScopeState_container] = null;
+    this[__ProviderScopeState_container_isSet] = false;
+    this[_debugParentOwner] = null;
+    this[_dirty] = false;
+    framework$0.ProviderScopeState.__proto__.new.call(this);
+    ;
+  }).prototype = framework$0.ProviderScopeState.prototype;
+  dart.addTypeTests(framework$0.ProviderScopeState);
+  dart.addTypeCaches(framework$0.ProviderScopeState);
+  dart.setMethodSignature(framework$0.ProviderScopeState, () => ({
+    __proto__: dart.getMethods(framework$0.ProviderScopeState.__proto__),
+    build: dart.fnType(framework$.Widget, [framework$.BuildContext])
+  }));
+  dart.setGetterSignature(framework$0.ProviderScopeState, () => ({
+    __proto__: dart.getGetters(framework$0.ProviderScopeState.__proto__),
+    container: framework.ProviderContainer
+  }));
+  dart.setSetterSignature(framework$0.ProviderScopeState, () => ({
+    __proto__: dart.getSetters(framework$0.ProviderScopeState.__proto__),
+    container: framework.ProviderContainer
+  }));
+  dart.setLibraryUri(framework$0.ProviderScopeState, I[2]);
+  dart.setFieldSignature(framework$0.ProviderScopeState, () => ({
+    __proto__: dart.getFields(framework$0.ProviderScopeState.__proto__),
+    [__ProviderScopeState_container]: dart.fieldType(dart.nullable(framework.ProviderContainer)),
+    [__ProviderScopeState_container_isSet]: dart.fieldType(core.bool),
+    [_debugParentOwner]: dart.fieldType(dart.nullable(framework.ProviderContainer)),
+    [_dirty]: dart.fieldType(core.bool)
+  }));
+  var container$ = dart.privateName(framework$0, "UncontrolledProviderScope.container");
+  framework$0.UncontrolledProviderScope = class UncontrolledProviderScope extends framework$.InheritedWidget {
+    get container() {
+      return this[container$];
+    }
+    set container(value) {
+      super.container = value;
+    }
+    updateShouldNotify(oldWidget) {
+      framework$0.UncontrolledProviderScope.as(oldWidget);
+      if (oldWidget == null) dart.nullFailed(I[1], 251, 53, "oldWidget");
+      return !dart.equals(this.container, oldWidget.container);
+    }
+    debugFillProperties(properties) {
+      let t5;
+      if (properties == null) dart.nullFailed(I[1], 256, 56, "properties");
+      super.debugFillProperties(properties);
+      for (let entry of this.container.debugProviderValues[$entries]) {
+        let name = (t5 = entry.key.name, t5 == null ? framework.describeIdentity(entry.key) : t5);
+        properties.add(new (T$.DiagnosticsPropertyOfObject()).new(name, entry.value));
+      }
+    }
+    createElement() {
+      return new framework$0._UncontrolledProviderScopeElement.new(this);
+    }
+  };
+  (framework$0.UncontrolledProviderScope.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let container = opts && 'container' in opts ? opts.container : null;
+    if (container == null) dart.nullFailed(I[1], 243, 19, "container");
+    let child = opts && 'child' in opts ? opts.child : null;
+    if (child == null) dart.nullFailed(I[1], 244, 21, "child");
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[container$] = container;
+    framework$0.UncontrolledProviderScope.__proto__.new.call(this, {key: key, child: child, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = framework$0.UncontrolledProviderScope.prototype;
+  dart.addTypeTests(framework$0.UncontrolledProviderScope);
+  dart.addTypeCaches(framework$0.UncontrolledProviderScope);
+  dart.setMethodSignature(framework$0.UncontrolledProviderScope, () => ({
+    __proto__: dart.getMethods(framework$0.UncontrolledProviderScope.__proto__),
+    updateShouldNotify: dart.fnType(core.bool, [dart.nullable(core.Object)]),
+    createElement: dart.fnType(framework$0._UncontrolledProviderScopeElement, [])
+  }));
+  dart.setLibraryUri(framework$0.UncontrolledProviderScope, I[2]);
+  dart.setFieldSignature(framework$0.UncontrolledProviderScope, () => ({
+    __proto__: dart.getFields(framework$0.UncontrolledProviderScope.__proto__),
+    container: dart.finalFieldType(framework.ProviderContainer)
+  }));
+  framework$0._UncontrolledProviderScopeElement = class _UncontrolledProviderScopeElement extends framework$.InheritedElement {
+    mount(parent, newSlot) {
+      if (!dart.test(dart.fn(() => {
+        framework$0.UncontrolledProviderScope.as(this.widget).container.debugVsyncs.add(dart.bind(this, 'markNeedsBuild'));
+        return true;
+      }, T$.VoidTobool())())) dart.assertFailed("", I[1], 277, 12, "() {\n      (widget as UncontrolledProviderScope)\n          .container\n          .debugVsyncs\n          .add(markNeedsBuild);\n      return true;\n    }()");
+      super.mount(parent, newSlot);
+    }
+    update(newWidget) {
+      framework$.ProxyWidget.as(newWidget);
+      if (newWidget == null) dart.nullFailed(I[1], 288, 27, "newWidget");
+      if (!dart.test(dart.fn(() => {
+        framework$0.UncontrolledProviderScope.as(this.widget).container.debugVsyncs.remove(dart.bind(this, 'markNeedsBuild'));
+        framework$0.UncontrolledProviderScope.as(newWidget).container.debugVsyncs.add(dart.bind(this, 'markNeedsBuild'));
+        return true;
+      }, T$.VoidTobool())())) dart.assertFailed("", I[1], 289, 12, "() {\n      (widget as UncontrolledProviderScope)\n          .container\n          .debugVsyncs\n          .remove(markNeedsBuild);\n      (newWidget as UncontrolledProviderScope)\n          .container\n          .debugVsyncs\n          .add(markNeedsBuild);\n      return true;\n    }()");
+      super.update(newWidget);
+    }
+    unmount() {
+      if (!dart.test(dart.fn(() => {
+        framework$0.UncontrolledProviderScope.as(this.widget).container.debugVsyncs.remove(dart.bind(this, 'markNeedsBuild'));
+        return true;
+      }, T$.VoidTobool())())) dart.assertFailed("", I[1], 305, 12, "() {\n      (widget as UncontrolledProviderScope)\n          .container\n          .debugVsyncs\n          .remove(markNeedsBuild);\n      return true;\n    }()");
+      super.unmount();
+    }
+  };
+  (framework$0._UncontrolledProviderScopeElement.new = function(widget) {
+    if (widget == null) dart.nullFailed(I[1], 272, 63, "widget");
+    framework$0._UncontrolledProviderScopeElement.__proto__.new.call(this, widget);
+    ;
+  }).prototype = framework$0._UncontrolledProviderScopeElement.prototype;
+  dart.addTypeTests(framework$0._UncontrolledProviderScopeElement);
+  dart.addTypeCaches(framework$0._UncontrolledProviderScopeElement);
+  dart.setMethodSignature(framework$0._UncontrolledProviderScopeElement, () => ({
+    __proto__: dart.getMethods(framework$0._UncontrolledProviderScopeElement.__proto__),
+    mount: dart.fnType(dart.void, [dart.nullable(framework$.Element), dart.nullable(core.Object)])
+  }));
+  dart.setLibraryUri(framework$0._UncontrolledProviderScopeElement, I[2]);
+  var _builder = dart.privateName(consumer, "Consumer._builder");
+  var _child = dart.privateName(consumer, "Consumer._child");
+  var _builder$ = dart.privateName(consumer, "_builder");
+  var _child$ = dart.privateName(consumer, "_child");
+  consumer.ConsumerWidget = class ConsumerWidget extends framework$.StatefulWidget {
+    createState() {
+      return new consumer._ConsumerState.new();
+    }
+  };
+  (consumer.ConsumerWidget.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    consumer.ConsumerWidget.__proto__.new.call(this, {key: key, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = consumer.ConsumerWidget.prototype;
+  dart.addTypeTests(consumer.ConsumerWidget);
+  dart.addTypeCaches(consumer.ConsumerWidget);
+  dart.setMethodSignature(consumer.ConsumerWidget, () => ({
+    __proto__: dart.getMethods(consumer.ConsumerWidget.__proto__),
+    createState: dart.fnType(consumer._ConsumerState, [])
+  }));
+  dart.setLibraryUri(consumer.ConsumerWidget, I[4]);
+  consumer.Consumer = class Consumer extends consumer.ConsumerWidget {
+    get [_builder$]() {
+      return this[_builder];
+    }
+    set [_builder$](value) {
+      super[_builder$] = value;
+    }
+    get [_child$]() {
+      return this[_child];
+    }
+    set [_child$](value) {
+      super[_child$] = value;
+    }
+    build(context, watch) {
+      let t7, t6, t5;
+      if (context == null) dart.nullFailed(I[3], 146, 29, "context");
+      if (watch == null) dart.nullFailed(I[3], 146, 51, "watch");
+      t5 = context;
+      t6 = watch;
+      t7 = this[_child$];
+      return this[_builder$](t5, t6, t7);
+    }
+  };
+  (consumer.Consumer.new = function(opts) {
+    let key = opts && 'key' in opts ? opts.key : null;
+    let builder = opts && 'builder' in opts ? opts.builder : null;
+    if (builder == null) dart.nullFailed(I[3], 136, 30, "builder");
+    let child = opts && 'child' in opts ? opts.child : null;
+    let $36creationLocationd_0dea112b090073317d4 = opts && '$creationLocationd_0dea112b090073317d4' in opts ? opts.$creationLocationd_0dea112b090073317d4 : null;
+    this[_child] = child;
+    this[_builder] = builder;
+    consumer.Consumer.__proto__.new.call(this, {key: key, $creationLocationd_0dea112b090073317d4: $36creationLocationd_0dea112b090073317d4});
+    ;
+  }).prototype = consumer.Consumer.prototype;
+  dart.addTypeTests(consumer.Consumer);
+  dart.addTypeCaches(consumer.Consumer);
+  dart.setMethodSignature(consumer.Consumer, () => ({
+    __proto__: dart.getMethods(consumer.Consumer.__proto__),
+    build: dart.fnType(framework$.Widget, [framework$.BuildContext, dart.gFnType(T => [T, [framework.ProviderBase$(dart.nullable(core.Object), T)]], T => [dart.nullable(core.Object)])])
+  }));
+  dart.setLibraryUri(consumer.Consumer, I[4]);
+  dart.setFieldSignature(consumer.Consumer, () => ({
+    __proto__: dart.getFields(consumer.Consumer.__proto__),
+    [_builder$]: dart.finalFieldType(dart.fnType(framework$.Widget, [framework$.BuildContext, dart.gFnType(T => [T, [framework.ProviderBase$(dart.nullable(core.Object), T)]], T => [dart.nullable(core.Object)]), dart.nullable(framework$.Widget)])),
+    [_child$]: dart.finalFieldType(dart.nullable(framework$.Widget))
+  }));
+  var _container = dart.privateName(consumer, "_container");
+  var _dependencies = dart.privateName(consumer, "_dependencies");
+  var _oldDependencies = dart.privateName(consumer, "_oldDependencies");
+  var ___ConsumerState__buildCache = dart.privateName(consumer, "_#_ConsumerState#_buildCache");
+  var ___ConsumerState__buildCache_isSet = dart.privateName(consumer, "_#_ConsumerState#_buildCache#isSet");
+  var _isExternalBuild = dart.privateName(consumer, "_isExternalBuild");
+  var _buildCache = dart.privateName(consumer, "_buildCache");
+  var _reader = dart.privateName(consumer, "_reader");
+  var _mayHaveChanged = dart.privateName(consumer, "_mayHaveChanged");
+  consumer._ConsumerState = class _ConsumerState extends framework$.State$(consumer.ConsumerWidget) {
+    get [_buildCache]() {
+      let t5;
+      return dart.test(this[___ConsumerState__buildCache_isSet]) ? (t5 = this[___ConsumerState__buildCache], t5) : dart.throw(new _internal.LateError.fieldNI("_buildCache"));
+    }
+    set [_buildCache](t5) {
+      if (t5 == null) dart.nullFailed(I[3], 247, 15, "null");
+      this[___ConsumerState__buildCache_isSet] = true;
+      this[___ConsumerState__buildCache] = t5;
+    }
+    didUpdateWidget(oldWidget) {
+      consumer.ConsumerWidget.as(oldWidget);
+      if (oldWidget == null) dart.nullFailed(I[3], 252, 39, "oldWidget");
+      super.didUpdateWidget(oldWidget);
+      this[_isExternalBuild] = true;
+    }
+    reassemble() {
+      super.reassemble();
+      this[_isExternalBuild] = true;
+    }
+    didChangeDependencies() {
+      super.didChangeDependencies();
+      this[_isExternalBuild] = true;
+      let newContainer = framework$0.ProviderScope.containerOf(this.context);
+      if (!dart.equals(this[_container], newContainer)) {
+        this[_container] = newContainer;
+        for (let dependency of this[_dependencies][$values]) {
+          dependency.close();
+        }
+        this[_dependencies][$clear]();
+      }
+    }
+    build(context) {
+      if (context == null) dart.nullFailed(I[3], 278, 29, "context");
+      let didFlush = false;
+      for (let dep of this[_dependencies][$values]) {
+        if (dart.test(dep.flush())) {
+          didFlush = true;
+        }
+      }
+      let shouldRecompute = dart.test(this[_isExternalBuild]) || didFlush;
+      this[_isExternalBuild] = false;
+      if (!shouldRecompute) {
+        return this[_buildCache];
+      }
+      try {
+        this[_oldDependencies] = this[_dependencies];
+        this[_dependencies] = new (T$.LinkedMapOfProviderBase$ProviderSubscription()).new();
+        return this[_buildCache] = this.widget.build(context, dart.bind(this, _reader));
+      } finally {
+        for (let dep of dart.nullCheck(this[_oldDependencies])[$values]) {
+          dep.close();
+        }
+        this[_oldDependencies] = null;
+      }
+    }
+    [_reader](Res, target) {
+      if (target == null) dart.nullFailed(I[3], 303, 47, "target");
+      return Res.as(this[_dependencies][$putIfAbsent](target, dart.fn(() => {
+        let t6;
+        let oldDependency = (t6 = this[_oldDependencies], t6 == null ? null : t6[$remove](target));
+        if (oldDependency != null) {
+          return oldDependency;
+        }
+        return dart.nullCheck(this[_container]).listen(Res, target, {mayHaveChanged: dart.bind(this, _mayHaveChanged)});
+      }, T$.VoidToProviderSubscription())).read());
+    }
+    [_mayHaveChanged](sub) {
+      if (sub == null) dart.nullFailed(I[3], 318, 45, "sub");
+      framework$.Element.as(this.context).markNeedsBuild();
+    }
+    dispose() {
+      for (let dependency of this[_dependencies][$values]) {
+        dependency.close();
+      }
+      super.dispose();
+    }
+  };
+  (consumer._ConsumerState.new = function() {
+    this[_container] = null;
+    this[_dependencies] = new (T$.LinkedMapOfProviderBase$ProviderSubscription()).new();
+    this[_oldDependencies] = null;
+    this[___ConsumerState__buildCache] = null;
+    this[___ConsumerState__buildCache_isSet] = false;
+    this[_isExternalBuild] = true;
+    consumer._ConsumerState.__proto__.new.call(this);
+    ;
+  }).prototype = consumer._ConsumerState.prototype;
+  dart.addTypeTests(consumer._ConsumerState);
+  dart.addTypeCaches(consumer._ConsumerState);
+  dart.setMethodSignature(consumer._ConsumerState, () => ({
+    __proto__: dart.getMethods(consumer._ConsumerState.__proto__),
+    build: dart.fnType(framework$.Widget, [framework$.BuildContext]),
+    [_reader]: dart.gFnType(Res => [Res, [framework.ProviderBase$(dart.nullable(core.Object), Res)]], Res => [dart.nullable(core.Object)]),
+    [_mayHaveChanged]: dart.fnType(dart.void, [framework.ProviderSubscription])
+  }));
+  dart.setGetterSignature(consumer._ConsumerState, () => ({
+    __proto__: dart.getGetters(consumer._ConsumerState.__proto__),
+    [_buildCache]: framework$.Widget
+  }));
+  dart.setSetterSignature(consumer._ConsumerState, () => ({
+    __proto__: dart.getSetters(consumer._ConsumerState.__proto__),
+    [_buildCache]: framework$.Widget
+  }));
+  dart.setLibraryUri(consumer._ConsumerState, I[4]);
+  dart.setFieldSignature(consumer._ConsumerState, () => ({
+    __proto__: dart.getFields(consumer._ConsumerState.__proto__),
+    [_container]: dart.fieldType(dart.nullable(framework.ProviderContainer)),
+    [_dependencies]: dart.fieldType(core.Map$(framework.ProviderBase, framework.ProviderSubscription)),
+    [_oldDependencies]: dart.fieldType(dart.nullable(core.Map$(framework.ProviderBase, framework.ProviderSubscription))),
+    [___ConsumerState__buildCache]: dart.fieldType(dart.nullable(framework$.Widget)),
+    [___ConsumerState__buildCache_isSet]: dart.fieldType(core.bool),
+    [_isExternalBuild]: dart.fieldType(core.bool)
+  }));
+  builders.ChangeNotifierProviderBuilder = class ChangeNotifierProviderBuilder extends core.Object {
+    call(T, create, opts) {
+      if (create == null) dart.nullFailed(I[5], 60, 39, "create");
+      let name = opts && 'name' in opts ? opts.name : null;
+      return new (change_notifier_provider.ChangeNotifierProvider$(T)).new(create, {name: name});
+    }
+    get autoDispose() {
+      return C[5] || CT.C5;
+    }
+    get family() {
+      return C[6] || CT.C6;
+    }
+  };
+  (builders.ChangeNotifierProviderBuilder.new = function() {
+    ;
+  }).prototype = builders.ChangeNotifierProviderBuilder.prototype;
+  dart.addTypeTests(builders.ChangeNotifierProviderBuilder);
+  dart.addTypeCaches(builders.ChangeNotifierProviderBuilder);
+  dart.setMethodSignature(builders.ChangeNotifierProviderBuilder, () => ({
+    __proto__: dart.getMethods(builders.ChangeNotifierProviderBuilder.__proto__),
+    call: dart.gFnType(T => [change_notifier_provider.ChangeNotifierProvider$(T), [dart.fnType(T, [framework.ProviderReference])], {name: dart.nullable(core.String)}, {}], T => [change_notifier.ChangeNotifier])
+  }));
+  dart.setGetterSignature(builders.ChangeNotifierProviderBuilder, () => ({
+    __proto__: dart.getGetters(builders.ChangeNotifierProviderBuilder.__proto__),
+    autoDispose: builders.AutoDisposeChangeNotifierProviderBuilder,
+    family: builders.ChangeNotifierProviderFamilyBuilder
+  }));
+  dart.setLibraryUri(builders.ChangeNotifierProviderBuilder, I[6]);
+  builders.ChangeNotifierProviderFamilyBuilder = class ChangeNotifierProviderFamilyBuilder extends core.Object {
+    call(T, Value, create, opts) {
+      if (create == null) dart.nullFailed(I[5], 292, 52, "create");
+      let name = opts && 'name' in opts ? opts.name : null;
+      return new (change_notifier_provider.ChangeNotifierProviderFamily$(T, Value)).new(create, {name: name});
+    }
+    get autoDispose() {
+      return C[7] || CT.C7;
+    }
+  };
+  (builders.ChangeNotifierProviderFamilyBuilder.new = function() {
+    ;
+  }).prototype = builders.ChangeNotifierProviderFamilyBuilder.prototype;
+  dart.addTypeTests(builders.ChangeNotifierProviderFamilyBuilder);
+  dart.addTypeCaches(builders.ChangeNotifierProviderFamilyBuilder);
+  dart.setMethodSignature(builders.ChangeNotifierProviderFamilyBuilder, () => ({
+    __proto__: dart.getMethods(builders.ChangeNotifierProviderFamilyBuilder.__proto__),
+    call: dart.gFnType((T, Value) => [change_notifier_provider.ChangeNotifierProviderFamily$(T, Value), [dart.fnType(T, [framework.ProviderReference, Value])], {name: dart.nullable(core.String)}, {}], (T, Value) => [change_notifier.ChangeNotifier, dart.nullable(core.Object)])
+  }));
+  dart.setGetterSignature(builders.ChangeNotifierProviderFamilyBuilder, () => ({
+    __proto__: dart.getGetters(builders.ChangeNotifierProviderFamilyBuilder.__proto__),
+    autoDispose: builders.AutoDisposeChangeNotifierProviderFamilyBuilder
+  }));
+  dart.setLibraryUri(builders.ChangeNotifierProviderFamilyBuilder, I[6]);
+  builders.AutoDisposeChangeNotifierProviderBuilder = class AutoDisposeChangeNotifierProviderBuilder extends core.Object {
+    call(T, create, opts) {
+      if (create == null) dart.nullFailed(I[5], 311, 50, "create");
+      let name = opts && 'name' in opts ? opts.name : null;
+      return new (change_notifier_provider.AutoDisposeChangeNotifierProvider$(T)).new(create, {name: name});
+    }
+    get family() {
+      return C[7] || CT.C7;
+    }
+  };
+  (builders.AutoDisposeChangeNotifierProviderBuilder.new = function() {
+    ;
+  }).prototype = builders.AutoDisposeChangeNotifierProviderBuilder.prototype;
+  dart.addTypeTests(builders.AutoDisposeChangeNotifierProviderBuilder);
+  dart.addTypeCaches(builders.AutoDisposeChangeNotifierProviderBuilder);
+  dart.setMethodSignature(builders.AutoDisposeChangeNotifierProviderBuilder, () => ({
+    __proto__: dart.getMethods(builders.AutoDisposeChangeNotifierProviderBuilder.__proto__),
+    call: dart.gFnType(T => [change_notifier_provider.AutoDisposeChangeNotifierProvider$(T), [dart.fnType(T, [framework.AutoDisposeProviderReference])], {name: dart.nullable(core.String)}, {}], T => [change_notifier.ChangeNotifier])
+  }));
+  dart.setGetterSignature(builders.AutoDisposeChangeNotifierProviderBuilder, () => ({
+    __proto__: dart.getGetters(builders.AutoDisposeChangeNotifierProviderBuilder.__proto__),
+    family: builders.AutoDisposeChangeNotifierProviderFamilyBuilder
+  }));
+  dart.setLibraryUri(builders.AutoDisposeChangeNotifierProviderBuilder, I[6]);
+  builders.AutoDisposeChangeNotifierProviderFamilyBuilder = class AutoDisposeChangeNotifierProviderFamilyBuilder extends core.Object {
+    call(T, Value, create, opts) {
+      if (create == null) dart.nullFailed(I[5], 331, 63, "create");
+      let name = opts && 'name' in opts ? opts.name : null;
+      return new (change_notifier_provider.AutoDisposeChangeNotifierProviderFamily$(T, Value)).new(create, {name: name});
+    }
+  };
+  (builders.AutoDisposeChangeNotifierProviderFamilyBuilder.new = function() {
+    ;
+  }).prototype = builders.AutoDisposeChangeNotifierProviderFamilyBuilder.prototype;
+  dart.addTypeTests(builders.AutoDisposeChangeNotifierProviderFamilyBuilder);
+  dart.addTypeCaches(builders.AutoDisposeChangeNotifierProviderFamilyBuilder);
+  dart.setMethodSignature(builders.AutoDisposeChangeNotifierProviderFamilyBuilder, () => ({
+    __proto__: dart.getMethods(builders.AutoDisposeChangeNotifierProviderFamilyBuilder.__proto__),
+    call: dart.gFnType((T, Value) => [change_notifier_provider.AutoDisposeChangeNotifierProviderFamily$(T, Value), [dart.fnType(T, [framework.AutoDisposeProviderReference, Value])], {name: dart.nullable(core.String)}, {}], (T, Value) => [change_notifier.ChangeNotifier, dart.nullable(core.Object)])
+  }));
+  dart.setLibraryUri(builders.AutoDisposeChangeNotifierProviderFamilyBuilder, I[6]);
+  var _listener = dart.privateName(change_notifier_provider, "_listener");
+  const _is__ChangeNotifierProviderStateMixin_default = Symbol('_is__ChangeNotifierProviderStateMixin_default');
+  change_notifier_provider._ChangeNotifierProviderStateMixin$ = dart.generic(T => {
+    var TN = () => (TN = dart.constFn(dart.nullable(T)))();
+    class _ChangeNotifierProviderStateMixin extends framework.ProviderStateBase$(T, T) {}
+    _ChangeNotifierProviderStateMixin[dart.mixinOn] = ProviderStateBase => class _ChangeNotifierProviderStateMixin extends ProviderStateBase {
+      valueChanged(opts) {
+        let t6, t6$, t6$0;
+        let previous = opts && 'previous' in opts ? opts.previous : null;
+        TN().as(previous);
+        if (dart.equals(this.createdValue, previous)) {
+          return;
+        }
+        t6 = previous;
+        t6 == null ? null : t6.removeListener(dart.bind(this, _listener));
+        t6$ = previous;
+        t6$ == null ? null : t6$.dispose();
+        this.exposedValue = this.createdValue;
+        t6$0 = this.createdValue;
+        t6$0 == null ? null : t6$0.addListener(dart.bind(this, _listener));
+      }
+      [_listener]() {
+        this.exposedValue = this.createdValue;
+      }
+      dispose() {
+        let t6, t6$;
+        t6 = this.createdValue;
+        t6 == null ? null : t6.removeListener(dart.bind(this, _listener));
+        t6$ = this.createdValue;
+        t6$ == null ? null : t6$.dispose();
+        super.dispose();
+      }
+    };
+    dart.addTypeTests(_ChangeNotifierProviderStateMixin);
+    _ChangeNotifierProviderStateMixin.prototype[_is__ChangeNotifierProviderStateMixin_default] = true;
+    dart.addTypeCaches(_ChangeNotifierProviderStateMixin);
+    _ChangeNotifierProviderStateMixin[dart.implements] = () => [framework.ProviderStateBase$(T, T)];
+    dart.setMethodSignature(_ChangeNotifierProviderStateMixin, () => ({
+      __proto__: dart.getMethods(_ChangeNotifierProviderStateMixin.__proto__),
+      valueChanged: dart.fnType(dart.void, [], {previous: dart.nullable(core.Object)}, {}),
+      [_listener]: dart.fnType(dart.void, [])
+    }));
+    dart.setLibraryUri(_ChangeNotifierProviderStateMixin, I[7]);
+    return _ChangeNotifierProviderStateMixin;
+  });
+  change_notifier_provider._ChangeNotifierProviderStateMixin = change_notifier_provider._ChangeNotifierProviderStateMixin$();
+  dart.addTypeTests(change_notifier_provider._ChangeNotifierProviderStateMixin, _is__ChangeNotifierProviderStateMixin_default);
+  const _is_ChangeNotifierProvider_default = Symbol('_is_ChangeNotifierProvider_default');
+  change_notifier_provider.ChangeNotifierProvider$ = dart.generic(T => {
+    var _ChangeNotifierProviderStateOfT = () => (_ChangeNotifierProviderStateOfT = dart.constFn(change_notifier_provider._ChangeNotifierProviderState$(T)))();
+    class ChangeNotifierProvider extends framework.AlwaysAliveProviderBase$(T, T) {
+      createState() {
+        return new (_ChangeNotifierProviderStateOfT()).new();
+      }
+    }
+    (ChangeNotifierProvider.new = function(create, opts) {
+      if (create == null) dart.nullFailed(I[8], 9, 34, "create");
+      let name = opts && 'name' in opts ? opts.name : null;
+      ChangeNotifierProvider.__proto__.new.call(this, create, name);
+      ;
+    }).prototype = ChangeNotifierProvider.prototype;
+    dart.addTypeTests(ChangeNotifierProvider);
+    ChangeNotifierProvider.prototype[_is_ChangeNotifierProvider_default] = true;
+    dart.addTypeCaches(ChangeNotifierProvider);
+    dart.setMethodSignature(ChangeNotifierProvider, () => ({
+      __proto__: dart.getMethods(ChangeNotifierProvider.__proto__),
+      createState: dart.fnType(change_notifier_provider._ChangeNotifierProviderState$(T), [])
+    }));
+    dart.setLibraryUri(ChangeNotifierProvider, I[7]);
+    return ChangeNotifierProvider;
+  });
+  change_notifier_provider.ChangeNotifierProvider = change_notifier_provider.ChangeNotifierProvider$();
+  dart.defineLazy(change_notifier_provider.ChangeNotifierProvider, {
+    /*change_notifier_provider.ChangeNotifierProvider.family*/get family() {
+      return C[6] || CT.C6;
+    },
+    /*change_notifier_provider.ChangeNotifierProvider.autoDispose*/get autoDispose() {
+      return C[5] || CT.C5;
+    }
+  }, false);
+  dart.addTypeTests(change_notifier_provider.ChangeNotifierProvider, _is_ChangeNotifierProvider_default);
+  const _is__ChangeNotifierProviderState_default = Symbol('_is__ChangeNotifierProviderState_default');
+  change_notifier_provider._ChangeNotifierProviderState$ = dart.generic(T => {
+    var TN = () => (TN = dart.constFn(dart.nullable(T)))();
+    const ProviderStateBase__ChangeNotifierProviderStateMixin$36 = class ProviderStateBase__ChangeNotifierProviderStateMixin extends framework.ProviderStateBase$(T, T) {};
+    (ProviderStateBase__ChangeNotifierProviderStateMixin$36.new = function() {
+      ProviderStateBase__ChangeNotifierProviderStateMixin$36.__proto__.new.call(this);
+    }).prototype = ProviderStateBase__ChangeNotifierProviderStateMixin$36.prototype;
+    dart.applyMixin(ProviderStateBase__ChangeNotifierProviderStateMixin$36, change_notifier_provider._ChangeNotifierProviderStateMixin$(T));
+    class _ChangeNotifierProviderState extends ProviderStateBase__ChangeNotifierProviderStateMixin$36 {
+      valueChanged(opts) {
+        let previous = opts && 'previous' in opts ? opts.previous : null;
+        TN().as(previous);
+        return super.valueChanged({previous: previous});
+      }
+      [_listener]() {
+        return super[_listener]();
+      }
+      dispose() {
+        return super.dispose();
+      }
+    }
+    (_ChangeNotifierProviderState.new = function() {
+      _ChangeNotifierProviderState.__proto__.new.call(this);
+      ;
+    }).prototype = _ChangeNotifierProviderState.prototype;
+    dart.addTypeTests(_ChangeNotifierProviderState);
+    _ChangeNotifierProviderState.prototype[_is__ChangeNotifierProviderState_default] = true;
+    dart.addTypeCaches(_ChangeNotifierProviderState);
+    dart.setMethodSignature(_ChangeNotifierProviderState, () => ({
+      __proto__: dart.getMethods(_ChangeNotifierProviderState.__proto__),
+      valueChanged: dart.fnType(dart.void, [], {previous: dart.nullable(core.Object)}, {}),
+      [_listener]: dart.fnType(dart.void, [])
+    }));
+    dart.setLibraryUri(_ChangeNotifierProviderState, I[7]);
+    return _ChangeNotifierProviderState;
+  });
+  change_notifier_provider._ChangeNotifierProviderState = change_notifier_provider._ChangeNotifierProviderState$();
+  dart.addTypeTests(change_notifier_provider._ChangeNotifierProviderState, _is__ChangeNotifierProviderState_default);
+  const _is_ChangeNotifierProviderFamily_default = Symbol('_is_ChangeNotifierProviderFamily_default');
+  change_notifier_provider.ChangeNotifierProviderFamily$ = dart.generic((T, A) => {
+    var ProviderReferenceAndAToT = () => (ProviderReferenceAndAToT = dart.constFn(dart.fnType(T, [framework.ProviderReference, A])))();
+    var ChangeNotifierProviderOfT = () => (ChangeNotifierProviderOfT = dart.constFn(change_notifier_provider.ChangeNotifierProvider$(T)))();
+    var ProviderReferenceToT = () => (ProviderReferenceToT = dart.constFn(dart.fnType(T, [framework.ProviderReference])))();
+    class ChangeNotifierProviderFamily extends framework.Family$(T, T, A, framework.ProviderReference, change_notifier_provider.ChangeNotifierProvider$(T)) {
+      create(value, builder, name) {
+        A.as(value);
+        ProviderReferenceAndAToT().as(builder);
+        if (builder == null) dart.nullFailed(I[8], 44, 48, "builder");
+        return new (ChangeNotifierProviderOfT()).new(dart.fn(ref => {
+          if (ref == null) dart.nullFailed(I[8], 47, 36, "ref");
+          return builder(ref, value);
+        }, ProviderReferenceToT()), {name: name});
+      }
+    }
+    (ChangeNotifierProviderFamily.new = function(create, opts) {
+      if (create == null) dart.nullFailed(I[8], 37, 44, "create");
+      let name = opts && 'name' in opts ? opts.name : null;
+      ChangeNotifierProviderFamily.__proto__.new.call(this, create, name);
+      ;
+    }).prototype = ChangeNotifierProviderFamily.prototype;
+    dart.addTypeTests(ChangeNotifierProviderFamily);
+    ChangeNotifierProviderFamily.prototype[_is_ChangeNotifierProviderFamily_default] = true;
+    dart.addTypeCaches(ChangeNotifierProviderFamily);
+    dart.setMethodSignature(ChangeNotifierProviderFamily, () => ({
+      __proto__: dart.getMethods(ChangeNotifierProviderFamily.__proto__),
+      create: dart.fnType(change_notifier_provider.ChangeNotifierProvider$(T), [dart.nullable(core.Object), dart.nullable(core.Object), dart.nullable(core.String)])
+    }));
+    dart.setLibraryUri(ChangeNotifierProviderFamily, I[7]);
+    return ChangeNotifierProviderFamily;
+  });
+  change_notifier_provider.ChangeNotifierProviderFamily = change_notifier_provider.ChangeNotifierProviderFamily$();
+  dart.addTypeTests(change_notifier_provider.ChangeNotifierProviderFamily, _is_ChangeNotifierProviderFamily_default);
+  const _is_AutoDisposeChangeNotifierProvider_default = Symbol('_is_AutoDisposeChangeNotifierProvider_default');
+  change_notifier_provider.AutoDisposeChangeNotifierProvider$ = dart.generic(T => {
+    var _AutoDisposeChangeNotifierProviderStateOfT = () => (_AutoDisposeChangeNotifierProviderStateOfT = dart.constFn(change_notifier_provider._AutoDisposeChangeNotifierProviderState$(T)))();
+    class AutoDisposeChangeNotifierProvider extends framework.AutoDisposeProviderBase$(T, T) {
+      createState() {
+        return new (_AutoDisposeChangeNotifierProviderStateOfT()).new();
+      }
+    }
+    (AutoDisposeChangeNotifierProvider.new = function(create, opts) {
+      if (create == null) dart.nullFailed(I[9], 9, 45, "create");
+      let name = opts && 'name' in opts ? opts.name : null;
+      AutoDisposeChangeNotifierProvider.__proto__.new.call(this, create, name);
+      ;
+    }).prototype = AutoDisposeChangeNotifierProvider.prototype;
+    dart.addTypeTests(AutoDisposeChangeNotifierProvider);
+    AutoDisposeChangeNotifierProvider.prototype[_is_AutoDisposeChangeNotifierProvider_default] = true;
+    dart.addTypeCaches(AutoDisposeChangeNotifierProvider);
+    dart.setMethodSignature(AutoDisposeChangeNotifierProvider, () => ({
+      __proto__: dart.getMethods(AutoDisposeChangeNotifierProvider.__proto__),
+      createState: dart.fnType(change_notifier_provider._AutoDisposeChangeNotifierProviderState$(T), [])
+    }));
+    dart.setLibraryUri(AutoDisposeChangeNotifierProvider, I[7]);
+    return AutoDisposeChangeNotifierProvider;
+  });
+  change_notifier_provider.AutoDisposeChangeNotifierProvider = change_notifier_provider.AutoDisposeChangeNotifierProvider$();
+  dart.defineLazy(change_notifier_provider.AutoDisposeChangeNotifierProvider, {
+    /*change_notifier_provider.AutoDisposeChangeNotifierProvider.family*/get family() {
+      return C[6] || CT.C6;
+    }
+  }, false);
+  dart.addTypeTests(change_notifier_provider.AutoDisposeChangeNotifierProvider, _is_AutoDisposeChangeNotifierProvider_default);
+  const _is__AutoDisposeChangeNotifierProviderState_default = Symbol('_is__AutoDisposeChangeNotifierProviderState_default');
+  change_notifier_provider._AutoDisposeChangeNotifierProviderState$ = dart.generic(T => {
+    var TN = () => (TN = dart.constFn(dart.nullable(T)))();
+    const ProviderStateBase__ChangeNotifierProviderStateMixin$36 = class ProviderStateBase__ChangeNotifierProviderStateMixin extends framework.ProviderStateBase$(T, T) {};
+    (ProviderStateBase__ChangeNotifierProviderStateMixin$36.new = function() {
+      ProviderStateBase__ChangeNotifierProviderStateMixin$36.__proto__.new.call(this);
+    }).prototype = ProviderStateBase__ChangeNotifierProviderStateMixin$36.prototype;
+    dart.applyMixin(ProviderStateBase__ChangeNotifierProviderStateMixin$36, change_notifier_provider._ChangeNotifierProviderStateMixin$(T));
+    class _AutoDisposeChangeNotifierProviderState extends ProviderStateBase__ChangeNotifierProviderStateMixin$36 {
+      valueChanged(opts) {
+        let previous = opts && 'previous' in opts ? opts.previous : null;
+        TN().as(previous);
+        return super.valueChanged({previous: previous});
+      }
+      [_listener]() {
+        return super[_listener]();
+      }
+      dispose() {
+        return super.dispose();
+      }
+    }
+    (_AutoDisposeChangeNotifierProviderState.new = function() {
+      _AutoDisposeChangeNotifierProviderState.__proto__.new.call(this);
+      ;
+    }).prototype = _AutoDisposeChangeNotifierProviderState.prototype;
+    dart.addTypeTests(_AutoDisposeChangeNotifierProviderState);
+    _AutoDisposeChangeNotifierProviderState.prototype[_is__AutoDisposeChangeNotifierProviderState_default] = true;
+    dart.addTypeCaches(_AutoDisposeChangeNotifierProviderState);
+    dart.setMethodSignature(_AutoDisposeChangeNotifierProviderState, () => ({
+      __proto__: dart.getMethods(_AutoDisposeChangeNotifierProviderState.__proto__),
+      valueChanged: dart.fnType(dart.void, [], {previous: dart.nullable(core.Object)}, {}),
+      [_listener]: dart.fnType(dart.void, [])
+    }));
+    dart.setLibraryUri(_AutoDisposeChangeNotifierProviderState, I[7]);
+    return _AutoDisposeChangeNotifierProviderState;
+  });
+  change_notifier_provider._AutoDisposeChangeNotifierProviderState = change_notifier_provider._AutoDisposeChangeNotifierProviderState$();
+  dart.addTypeTests(change_notifier_provider._AutoDisposeChangeNotifierProviderState, _is__AutoDisposeChangeNotifierProviderState_default);
+  const _is_AutoDisposeChangeNotifierProviderFamily_default = Symbol('_is_AutoDisposeChangeNotifierProviderFamily_default');
+  change_notifier_provider.AutoDisposeChangeNotifierProviderFamily$ = dart.generic((T, A) => {
+    var AutoDisposeProviderReferenceAndAToT = () => (AutoDisposeProviderReferenceAndAToT = dart.constFn(dart.fnType(T, [framework.AutoDisposeProviderReference, A])))();
+    var AutoDisposeChangeNotifierProviderOfT = () => (AutoDisposeChangeNotifierProviderOfT = dart.constFn(change_notifier_provider.AutoDisposeChangeNotifierProvider$(T)))();
+    var AutoDisposeProviderReferenceToT = () => (AutoDisposeProviderReferenceToT = dart.constFn(dart.fnType(T, [framework.AutoDisposeProviderReference])))();
+    class AutoDisposeChangeNotifierProviderFamily extends framework.Family$(T, T, A, framework.AutoDisposeProviderReference, change_notifier_provider.AutoDisposeChangeNotifierProvider$(T)) {
+      create(value, builder, name) {
+        A.as(value);
+        AutoDisposeProviderReferenceAndAToT().as(builder);
+        if (builder == null) dart.nullFailed(I[9], 40, 59, "builder");
+        return new (AutoDisposeChangeNotifierProviderOfT()).new(dart.fn(ref => {
+          if (ref == null) dart.nullFailed(I[9], 44, 8, "ref");
+          return builder(ref, value);
+        }, AutoDisposeProviderReferenceToT()), {name: name});
+      }
+    }
+    (AutoDisposeChangeNotifierProviderFamily.new = function(create, opts) {
+      if (create == null) dart.nullFailed(I[9], 33, 55, "create");
+      let name = opts && 'name' in opts ? opts.name : null;
+      AutoDisposeChangeNotifierProviderFamily.__proto__.new.call(this, create, name);
+      ;
+    }).prototype = AutoDisposeChangeNotifierProviderFamily.prototype;
+    dart.addTypeTests(AutoDisposeChangeNotifierProviderFamily);
+    AutoDisposeChangeNotifierProviderFamily.prototype[_is_AutoDisposeChangeNotifierProviderFamily_default] = true;
+    dart.addTypeCaches(AutoDisposeChangeNotifierProviderFamily);
+    dart.setMethodSignature(AutoDisposeChangeNotifierProviderFamily, () => ({
+      __proto__: dart.getMethods(AutoDisposeChangeNotifierProviderFamily.__proto__),
+      create: dart.fnType(change_notifier_provider.AutoDisposeChangeNotifierProvider$(T), [dart.nullable(core.Object), dart.nullable(core.Object), dart.nullable(core.String)])
+    }));
+    dart.setLibraryUri(AutoDisposeChangeNotifierProviderFamily, I[7]);
+    return AutoDisposeChangeNotifierProviderFamily;
+  });
+  change_notifier_provider.AutoDisposeChangeNotifierProviderFamily = change_notifier_provider.AutoDisposeChangeNotifierProviderFamily$();
+  dart.addTypeTests(change_notifier_provider.AutoDisposeChangeNotifierProviderFamily, _is_AutoDisposeChangeNotifierProviderFamily_default);
+  dart.trackLibraries("packages/flutter_riverpod/src/provider.dart", {
+    "package:flutter_riverpod/src/provider.dart": provider$,
+    "package:flutter_riverpod/src/framework.dart": framework$0,
+    "package:flutter_riverpod/src/consumer.dart": consumer,
+    "package:flutter_riverpod/src/internals.dart": internals,
+    "package:flutter_riverpod/src/builders.dart": builders,
+    "package:flutter_riverpod/src/change_notifier_provider.dart": change_notifier_provider
+  }, {
+    "package:flutter_riverpod/src/change_notifier_provider.dart": ["change_notifier_provider/base.dart", "change_notifier_provider/auto_dispose.dart"]
+  }, '{"version":3,"sourceRoot":"","sources":["provider.dart","framework.dart","consumer.dart","builders.dart","change_notifier_provider.dart","change_notifier_provider/base.dart","change_notifier_provider/auto_dispose.dart"],"names":[],"mappings":"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","file":"../../../../../../../../packages/flutter_riverpod/src/provider.dart.lib.js"}');
+  // Exports:
+  return {
+    src__provider: provider$,
+    src__framework: framework$0,
+    src__consumer: consumer,
+    src__internals: internals,
+    src__builders: builders,
+    src__change_notifier_provider: change_notifier_provider
+  };
+}));
+
+//# sourceMappingURL=provider.dart.lib.js.map
