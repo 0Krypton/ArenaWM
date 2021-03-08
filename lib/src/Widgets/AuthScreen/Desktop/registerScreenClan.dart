@@ -10,9 +10,7 @@ import '../../../Themes/color.dart';
 class RegisterClanScreenDesktop extends StatelessWidget {
   // The login page is the main page of our authentication process
 
-  const RegisterClanScreenDesktop({
-    Key key,
-  }) : super(key: key);
+  const RegisterClanScreenDesktop();
 
   @override
   Widget build(BuildContext context) {

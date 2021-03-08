@@ -9,10 +9,9 @@ class PositionedImg extends StatelessWidget {
   final bool hasRight, hasLeft, hasBottom, hasTop;
 
   const PositionedImg({
-    Key key,
-    @required this.imgUrl,
-    @required this.height,
-    @required this.width,
+    required this.imgUrl,
+    required this.height,
+    required this.width,
     this.hasRight = false,
     this.hasLeft = false,
     this.hasBottom = false,
@@ -22,7 +21,7 @@ class PositionedImg extends StatelessWidget {
     this.top = 0,
     this.left = 0,
     this.right = 0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

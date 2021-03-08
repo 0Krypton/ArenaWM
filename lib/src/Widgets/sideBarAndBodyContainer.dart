@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class SABContainer extends StatelessWidget {
   const SABContainer({
-    this.child,
-    this.height,
+    required this.child,
+    required this.height,
+    required this.halfMarginFromWhere,
     this.margin = 0.0,
     this.padding = const EdgeInsets.all(0.0),
-    this.halfMarginFromWhere,
     this.borderRadius = 0.0,
     this.blurRadius = 0.0,
     this.bgColor = Colors.white,
@@ -45,7 +45,7 @@ class SABContainer extends StatelessWidget {
         padding: padding,
         height: height,
         decoration: BoxDecoration(
-          color: bgColor ?? Colors.white,
+          color: bgColor,
           borderRadius: BorderRadius.all(
             Radius.circular(
               borderRadius,
@@ -58,7 +58,7 @@ class SABContainer extends StatelessWidget {
             ),
           ],
         ),
-        child: child ?? SizedBox(),
+        child: child,
       ),
     );
   }

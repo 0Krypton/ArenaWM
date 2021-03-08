@@ -10,9 +10,7 @@ import '../../../Themes/color.dart';
 class RegisterImgAndUserInfoScreenDesktop extends StatelessWidget {
   // The login page is the main page of our authentication process
 
-  const RegisterImgAndUserInfoScreenDesktop({
-    Key key,
-  }) : super(key: key);
+  const RegisterImgAndUserInfoScreenDesktop();
 
   @override
   Widget build(BuildContext context) {

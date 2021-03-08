@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../Themes/color.dart';
 
 class ArenaLogo extends StatelessWidget {
-  const ArenaLogo({Key key}) : super(key: key);
+  const ArenaLogo();
   @override
   Widget build(BuildContext context) {
     return InkWell(

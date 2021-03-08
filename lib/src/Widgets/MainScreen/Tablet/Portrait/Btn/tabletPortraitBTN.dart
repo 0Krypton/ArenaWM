@@ -8,10 +8,7 @@ import '../../../../../Themes/color.dart';
 import 'tabletPortraitBTNItem.dart';
 
 class TabletPortraitBTN extends StatelessWidget {
-  TabletPortraitBTN({
-    Key key,
-    @required this.width,
-  }) : super(key: key);
+  TabletPortraitBTN({required this.width});
 
   final double width;
   final double posFromSides = 25;

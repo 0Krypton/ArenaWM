@@ -15,7 +15,7 @@ import '../../../providers/Auth/authImgsState.dart';
 import 'dart:math' as math;
 
 class AuthBg extends StatelessWidget {
-  const AuthBg({Key key}) : super(key: key);
+  const AuthBg();
 
   @override
   Widget build(BuildContext context) {

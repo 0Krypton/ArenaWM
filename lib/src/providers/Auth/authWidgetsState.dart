@@ -51,7 +51,7 @@ class AuthWidgetsStateNotifier extends ChangeNotifier {
   String get authTitle => _authTitle;
 
   /* Setters */
-  void setWidthScr({double width, double height}) {
+  void setWidthScr({required double width, required double height}) {
     _widthScr = width;
 
     _widthBody = width * .3;

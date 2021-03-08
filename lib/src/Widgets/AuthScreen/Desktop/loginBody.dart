@@ -12,7 +12,7 @@ import '../../../providers/Auth/authenticationState.dart';
 import '../../CustomTextField.dart';
 
 class LoginBody extends StatefulWidget {
-  const LoginBody({Key key}) : super(key: key);
+  const LoginBody();
 
   @override
   _LoginBodyState createState() => _LoginBodyState();
@@ -21,11 +21,11 @@ class LoginBody extends StatefulWidget {
 class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
   bool _isVisibleLogin = true;
 
-  AnimationController emailLoginColorController;
-  AnimationController passwordLoginColorController;
+  late AnimationController emailLoginColorController;
+  late AnimationController passwordLoginColorController;
 
-  FocusNode emailLoginFocusNode;
-  FocusNode passwordLoginFocusNode;
+  late FocusNode emailLoginFocusNode;
+  late FocusNode passwordLoginFocusNode;
 
   @override
   void initState() {

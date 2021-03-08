@@ -17,7 +17,7 @@ import '../../Widgets/orientationLayout.dart';
 import '../../Widgets/screenTypeLayout.dart';
 
 class App extends StatelessWidget {
-  const App({Key key}) : super(key: key);
+  const App();
 
   @override
   Widget build(BuildContext context) {

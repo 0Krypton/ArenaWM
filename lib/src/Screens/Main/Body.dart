@@ -13,9 +13,9 @@ class Body extends StatelessWidget {
   final SizingInformation sizingInformation;
 
   Body({
-    this.margin,
-    this.height,
-    this.sizingInformation,
+    required this.margin,
+    required this.height,
+    required this.sizingInformation,
   });
 
   @override

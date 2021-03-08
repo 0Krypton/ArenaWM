@@ -8,10 +8,7 @@ import '../../../../../Themes/color.dart';
 import 'mobileLandscapeSidebarItem.dart';
 
 class MobileLandscapeBTN extends StatelessWidget {
-  MobileLandscapeBTN({
-    Key key,
-    @required this.height,
-  }) : super(key: key);
+  MobileLandscapeBTN({required this.height});
 
   final double height;
 

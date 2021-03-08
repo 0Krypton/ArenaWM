@@ -5,25 +5,25 @@ class CustomTextField extends StatefulWidget {
   CustomTextField({
     this.controller,
     this.type,
-    this.maxLines = 1,
+    this.maxLines,
     this.maxLength,
-    this.limit = 0,
-    @required this.labelText,
-    this.prefixIconUrl,
+    this.limit,
+    required this.labelText,
+    required this.prefixIconUrl,
     this.isObscure = false,
     this.isPasswordField = false,
-    this.focusNode,
-    this.nextFocusNode,
+    required this.focusNode,
+    required this.nextFocusNode,
     this.suffixOnPressed,
-    @required this.onChanged,
-    this.colorAnimController,
+    required this.onChanged,
+    required this.colorAnimController,
   });
 
-  final int maxLines;
-  final int maxLength;
-  final int limit;
+  final int? maxLines;
+  final int? maxLength;
+  final int? limit;
 
-  final String type;
+  final String? type;
 
   final String labelText;
   final String prefixIconUrl;
@@ -34,21 +34,21 @@ class CustomTextField extends StatefulWidget {
   final bool isObscure;
   final bool isPasswordField;
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
-  final AnimationController colorAnimController;
+  late final AnimationController colorAnimController;
 
-  final Function suffixOnPressed;
-  final Function onChanged;
+  final Function()? suffixOnPressed;
+  final Function(String value) onChanged;
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  Animation<Color> textFieldFilledColor;
-  Animation<Color> textFieldTextColor;
-  Animation<Color> iconUnVisibleColor;
+  late Animation<Color?> textFieldFilledColor;
+  late Animation<Color?> textFieldTextColor;
+  late Animation<Color?> iconUnVisibleColor;
 
   @override
   void initState() {
@@ -98,11 +98,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: widget.controller ?? null,
+      controller: widget.controller,
       autofocus: false,
       maxLines: 1,
       minLines: 1,
-      maxLength: widget.maxLength == null ? null : widget.maxLength,
+      maxLength: widget.maxLength,
       textAlign: TextAlign.center,
       obscureText: widget.isObscure,
       cursorColor: textFieldTextColor.value,
@@ -181,7 +181,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           fontSize: 12,
           fontFamily: 'Lequire',
         ),
-        prefixIcon: widget.prefixIconUrl != null
+        prefixIcon: widget.prefixIconUrl.isNotEmpty
             ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

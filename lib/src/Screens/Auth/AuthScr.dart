@@ -17,7 +17,7 @@ import '../../Widgets/orientationLayout.dart';
 import '../../Widgets/screenTypeLayout.dart';
 
 class AuthScreen extends StatelessWidget {
-  const AuthScreen({Key key}) : super(key: key);
+  const AuthScreen();
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,7 @@ import '../../../Themes/color.dart';
 import '../../CustomTextField.dart';
 
 class RegisterBody extends StatefulWidget {
-  const RegisterBody({Key key}) : super(key: key);
+  const RegisterBody();
   @override
   _RegisterBodyState createState() => _RegisterBodyState();
 }
@@ -19,13 +19,13 @@ class _RegisterBodyState extends State<RegisterBody>
   bool _isVisibleRegister = true;
   bool isHoveredBtnRegister = false;
 
-  AnimationController emailRegisterColorController;
-  AnimationController passwordRegisterColorController;
-  AnimationController userNameRegisterColorController;
+  late AnimationController emailRegisterColorController;
+  late AnimationController passwordRegisterColorController;
+  late AnimationController userNameRegisterColorController;
 
-  FocusNode emailRegisterFocusNode;
-  FocusNode passwordRegisterFocusNode;
-  FocusNode userNameRegisterFocusNode;
+  late FocusNode emailRegisterFocusNode;
+  late FocusNode passwordRegisterFocusNode;
+  late FocusNode userNameRegisterFocusNode;
 
   @override
   void initState() {
@@ -79,11 +79,11 @@ class _RegisterBodyState extends State<RegisterBody>
           height: 50,
           child: CustomTextField(
             labelText: 'Email',
-            // focusNode: emailFocusNode,
             type: 'email',
+            focusNode: emailRegisterFocusNode,
             nextFocusNode: passwordRegisterFocusNode,
-            prefixIconUrl: 'assets/form/emailPng.png',
             colorAnimController: emailRegisterColorController,
+            prefixIconUrl: 'assets/form/emailPng.png',
             onChanged: (email) {
               print('Email : $email');
             },

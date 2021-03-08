@@ -12,11 +12,10 @@ class MobilePortraitBtnItem extends ConsumerWidget {
   final Color color;
 
   const MobilePortraitBtnItem({
-    Key key,
-    this.iconUrl,
-    this.index,
-    this.color,
-  }) : super(key: key);
+    required this.iconUrl,
+    required this.index,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {

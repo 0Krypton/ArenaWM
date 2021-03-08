@@ -13,12 +13,11 @@ class MobileLandscapeBtnItem extends ConsumerWidget {
   final Color color;
 
   const MobileLandscapeBtnItem({
-    Key key,
-    this.iconUrl,
-    this.title,
-    this.index,
-    this.color,
-  }) : super(key: key);
+    required this.iconUrl,
+    required this.title,
+    required this.index,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {

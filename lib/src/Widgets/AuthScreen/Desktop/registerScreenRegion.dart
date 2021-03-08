@@ -10,9 +10,7 @@ import '../../../Themes/color.dart';
 class RegisterRegionScreenDesktop extends StatelessWidget {
   // The login page is the main page of our authentication process
 
-  const RegisterRegionScreenDesktop({
-    Key key,
-  }) : super(key: key);
+  const RegisterRegionScreenDesktop();
 
   @override
   Widget build(BuildContext context) {

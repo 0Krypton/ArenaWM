@@ -8,10 +8,7 @@ import '../../../../Themes/color.dart';
 import './desktopSidebarItem.dart';
 
 class DesktopSideBar extends StatelessWidget {
-  DesktopSideBar({
-    Key key,
-    @required this.height,
-  }) : super(key: key);
+  DesktopSideBar({required this.height});
 
   final double height;
 

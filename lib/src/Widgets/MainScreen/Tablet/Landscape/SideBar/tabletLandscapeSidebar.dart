@@ -8,10 +8,7 @@ import '../../../../../Themes/color.dart';
 import 'tabletLandscapeSidebarItem.dart';
 
 class TabletLandscapeSidebar extends StatelessWidget {
-  TabletLandscapeSidebar({
-    Key key,
-    @required this.height,
-  }) : super(key: key);
+  TabletLandscapeSidebar({required this.height});
 
   final double height;
 

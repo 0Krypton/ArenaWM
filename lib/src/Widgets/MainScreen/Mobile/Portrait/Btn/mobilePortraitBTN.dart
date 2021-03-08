@@ -8,10 +8,7 @@ import '../../../../../Themes/color.dart';
 import './mobilePortraitBTNItem.dart';
 
 class MobilePortraitBTN extends StatelessWidget {
-  MobilePortraitBTN({
-    Key key,
-    @required this.width,
-  }) : super(key: key);
+  MobilePortraitBTN({required this.width});
 
   final double width;
   final double posFromSides = 15;

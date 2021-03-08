@@ -10,9 +10,7 @@ import './loginBody.dart';
 import './registerBody.dart';
 
 class AuthBody extends StatelessWidget {
-  const AuthBody({
-    Key key,
-  }) : super(key: key);
+  const AuthBody();
 
   @override
   Widget build(BuildContext context) {

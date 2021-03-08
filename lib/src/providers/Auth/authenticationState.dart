@@ -1,6 +1,9 @@
 //importing packages
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 
 //importing dart files
 import 'dart:io';
@@ -32,7 +35,15 @@ class AuthenticationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loginUser() {
+  void loginUser() async {
+    http.Response res =
+        await http.get(new Uri(path: 'http://localhost:3000/tour'), headers: {
+      "Content-Type": "application/json",
+      "Authorization":
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwM2Q0ZmI4Nzg0NjAzMjU2NGQ0OWNkOSIsImlhdCI6MTYxNDYzMTMzMCwiZXhwIjoxNjIyNDA3MzMwfQ.zBgH1ZdSXmlpqoBNG9OyZBbRq18mgepYiadzq081XTk"
+    });
+    Map<String, dynamic> data = jsonDecode(res.body);
+    print(data);
     print('Email: $_lEmail');
     print('Password: $_lPassword');
     print('LoggedIn');
@@ -94,6 +105,6 @@ class AuthenticationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  File _sBgImg;
-  File _sProfileImg;
+  late File _sBgImg;
+  late File _sProfileImg;
 }
