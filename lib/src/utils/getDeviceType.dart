@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../enums/device_screen_type.dart';
 
 DeviceScreenType getDeviceType(MediaQueryData media) {
-  double deviceWidth = media.size.shortestSide;
+  double deviceWidth = media.size.width;
 
   Orientation orientation = media.orientation;
 
@@ -19,11 +19,10 @@ DeviceScreenType getDeviceType(MediaQueryData media) {
     }
     return DeviceScreenType.Mobile;
   } else {
-    if (deviceWidth > 950) {
+    if (deviceWidth > 1024) {
       return DeviceScreenType.Desktop;
     }
-
-    if (deviceWidth > 600) {
+    if (deviceWidth > 650) {
       return DeviceScreenType.Tablet;
     }
 

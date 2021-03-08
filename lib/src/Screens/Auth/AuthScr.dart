@@ -11,7 +11,7 @@ import './DeviceLayout/Tablet/Landscape/authScreenTabletLandscape.dart';
 import './DeviceLayout/Tablet/Portrait/authScreenTabletPortrait.dart';
 
 /** Desktop */
-import './DeviceLayout/Desktop/authScreenDesktop.dart';
+import 'DeviceLayout/Desktop/authScreensDesktop.dart';
 
 import '../../Widgets/orientationLayout.dart';
 import '../../Widgets/screenTypeLayout.dart';
