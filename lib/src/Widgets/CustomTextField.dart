@@ -1,45 +1,56 @@
 // importing packages
 import 'package:flutter/material.dart';
 
+//importing utils
+import '../utils/validators.dart';
+
 class CustomTextField extends StatefulWidget {
-  CustomTextField({
+  const CustomTextField({
     this.controller,
+    this.isExpands = false,
     this.type,
-    this.maxLines,
+    this.maxLines = 1,
+    this.minLines = 1,
     this.maxLength,
     this.limit,
-    required this.labelText,
-    required this.prefixIconUrl,
+    this.labelText = '',
+    this.hintText = '',
+    this.prefixIconUrl,
     this.isObscure = false,
     this.isPasswordField = false,
     required this.focusNode,
     required this.nextFocusNode,
     this.suffixOnPressed,
-    required this.onChanged,
+    required this.onSubmit,
+    required this.onChange,
     required this.colorAnimController,
   });
 
-  final int? maxLines;
+  final int maxLines;
+  final int minLines;
   final int? maxLength;
   final int? limit;
 
   final String? type;
 
   final String labelText;
-  final String prefixIconUrl;
+  final String hintText;
+  final String? prefixIconUrl;
 
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
 
   final bool isObscure;
   final bool isPasswordField;
+  final bool isExpands;
 
   final TextEditingController? controller;
 
-  late final AnimationController colorAnimController;
+  final AnimationController colorAnimController;
 
   final Function()? suffixOnPressed;
-  final Function(String value) onChanged;
+  final Function(String value) onSubmit;
+  final Function(String value) onChange;
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -77,31 +88,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
       });
   }
 
-  bool validateEmail(String value) {
-    return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(value);
-  }
-
-  bool validatePassword(String value) {
-    return RegExp(
-            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
-        .hasMatch(value);
-  }
-
-  bool validateUserName(String value) {
-    return RegExp(
-            r'^[a-zA-Z]([._-](?![._-])|[a-zA-Z0-9]){2,20}([a-zA-Z0-9]|[_-])$')
-        .hasMatch(value);
-  }
-
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
+      expands: widget.isExpands,
       autofocus: false,
-      maxLines: 1,
-      minLines: 1,
+      maxLines: widget.isExpands == true ? null : widget.maxLines,
+      minLines: widget.isExpands == true ? null : widget.minLines,
       maxLength: widget.maxLength,
       textAlign: TextAlign.center,
       obscureText: widget.isObscure,
@@ -116,63 +110,78 @@ class _CustomTextFieldState extends State<CustomTextField> {
       ),
       onChanged: (v) {
         if (widget.type == 'email') {
-          if (validateEmail(v.trim())) {
+          if (v.trim().validateEmail) {
             widget.colorAnimController.reverse();
-            widget.onChanged(v.trim());
+            widget.onChange(v.trim());
           } else {
             widget.colorAnimController.forward();
-            widget.onChanged(v.trim());
           }
         } else if (widget.type == 'password') {
-          if (validatePassword(v.trim())) {
+          if (v.trim().validatePassword) {
             widget.colorAnimController.reverse();
-            widget.onChanged(v.trim());
+            widget.onChange(v.trim());
           } else {
             widget.colorAnimController.forward();
-            widget.onChanged(v.trim());
           }
         } else if (widget.type == 'username') {
-          if (validateUserName(v.trim())) {
+          if (v.trim().validateUserName) {
             widget.colorAnimController.reverse();
-            widget.onChanged(v.trim());
+            widget.onChange(v.trim());
           } else {
             widget.colorAnimController.forward();
-            widget.onChanged(v.trim());
           }
         } else {
           if (v.trim().length >= (widget.limit ?? 0)) {
             widget.colorAnimController.reverse();
-            widget.onChanged(v.trim());
+            widget.onChange(v.trim());
           } else {
             widget.colorAnimController.forward();
-            widget.onChanged(v.trim());
           }
         }
       },
       onSubmitted: (value) {
         widget.focusNode.unfocus();
         if (widget.type == 'email') {
-          if (validateEmail(value.trim())) {
+          if (value.trim().validateEmail) {
+            widget.onSubmit(value);
+            widget.focusNode.unfocus();
             FocusScope.of(context).requestFocus(widget.nextFocusNode);
+            return;
           }
         } else if (widget.type == 'password') {
-          if (validatePassword(value.trim())) {
+          if (value.trim().validatePassword) {
             FocusScope.of(context).requestFocus(widget.nextFocusNode);
+            widget.focusNode.unfocus();
+            widget.onSubmit(value);
+            return;
           }
         } else if (widget.type == 'username') {
-          if (validateUserName(value.trim())) {
+          if (value.trim().validateUserName) {
+            widget.focusNode.unfocus();
             FocusScope.of(context).requestFocus(widget.nextFocusNode);
+            widget.onSubmit(value);
+            return;
           }
-        } else {
-          if ((value.length >= (widget.limit ?? 0))) {
-            FocusScope.of(context).requestFocus(widget.nextFocusNode);
-          }
+        } else if (value.length >= (widget.limit ?? 0)) {
+          widget.focusNode.unfocus();
+          FocusScope.of(context).requestFocus(widget.nextFocusNode);
+          widget.onSubmit(value);
+          return;
         }
+        //TODO
+        //show global error
+        FocusScope.of(context).requestFocus(widget.focusNode);
       },
       decoration: InputDecoration(
         hoverColor: const Color(0xFFC1F4FF),
         counterText: '',
         border: InputBorder.none,
+        hintText: widget.hintText,
+        hintStyle: TextStyle(
+          color: textFieldTextColor.value,
+          fontSize: 12,
+          fontFamily: 'Lequire',
+        ),
         filled: true,
         fillColor: textFieldFilledColor.value,
         labelText: widget.labelText,
@@ -181,15 +190,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
           fontSize: 12,
           fontFamily: 'Lequire',
         ),
-        prefixIcon: widget.prefixIconUrl.isNotEmpty
+        prefixIcon: widget.prefixIconUrl != null
             ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Image.asset(
-                      widget.prefixIconUrl,
+                      widget.prefixIconUrl!,
                       color: textFieldTextColor.value,
                     ),
                   ),
@@ -197,7 +206,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ],
               )
             : null,
-        suffixIcon: widget.isPasswordField
+        suffixIcon: widget.isPasswordField == true
             ? IconButton(
                 icon: Icon(
                   widget.isObscure ? Icons.visibility_off : Icons.visibility,
@@ -207,21 +216,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
                 onPressed: widget.suffixOnPressed,
               )
-            : SizedBox(
-                height: 0,
-                width: 0,
-              ),
-        enabledBorder: OutlineInputBorder(
+            : const SizedBox(height: 0, width: 0),
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
+          borderRadius: const BorderRadius.all(const Radius.circular(10)),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
+          borderRadius: const BorderRadius.all(const Radius.circular(10)),
         ),
       ),
     );

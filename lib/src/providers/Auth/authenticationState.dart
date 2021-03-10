@@ -1,9 +1,10 @@
 //importing packages
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+
+//importing utils
+import '../../../src/utils/validators.dart';
 
 //importing dart files
 import 'dart:io';
@@ -24,7 +25,7 @@ class AuthenticationState extends ChangeNotifier {
   String get lEmail => _lEmail;
   String get lPassword => _lPassword;
 
-  //voidters
+  //setters
   void setlEmail(String lEmail) {
     _lEmail = lEmail;
     notifyListeners();
@@ -35,18 +36,38 @@ class AuthenticationState extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Register
+  //  options: Options(
+  //         headers: {
+  //           "Authorization":
+  //               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwM2Q0ZmI4Nzg0NjAzMjU2NGQ0OWNkOSIsImlhdCI6MTYxNDYzMTMzMCwiZXhwIjoxNjIyNDA3MzMwfQ.zBgH1ZdSXmlpqoBNG9OyZBbRq18mgepYiadzq081XTk",
+  //         },
+  //       ),
+
+  //Login
+
   void loginUser() async {
-    http.Response res =
-        await http.get(new Uri(path: 'http://localhost:3000/tour'), headers: {
-      "Content-Type": "application/json",
-      "Authorization":
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwM2Q0ZmI4Nzg0NjAzMjU2NGQ0OWNkOSIsImlhdCI6MTYxNDYzMTMzMCwiZXhwIjoxNjIyNDA3MzMwfQ.zBgH1ZdSXmlpqoBNG9OyZBbRq18mgepYiadzq081XTk"
-    });
-    Map<String, dynamic> data = jsonDecode(res.body);
-    print(data);
-    print('Email: $_lEmail');
-    print('Password: $_lPassword');
-    print('LoggedIn');
+    try {
+      print(_lEmail);
+      print(_lPassword);
+      if (_lEmail.isEmpty || (_lEmail.validateEmail == false))
+        throw Exception('Please provider a valid email address');
+
+      if (_lPassword.isEmpty || (_lPassword.validatePassword == false))
+        throw Exception('Please provider a valid password');
+
+      var response = await Dio().post(
+        'http://localhost:3000/auth/login',
+        data: {
+          'email': _lEmail,
+          'password': _lPassword,
+        },
+      );
+      print(response);
+      print(response);
+    } catch (e) {
+      print(e);
+    }
   }
 
   //////////////////////////////////
@@ -85,6 +106,20 @@ class AuthenticationState extends ChangeNotifier {
   String get sLName => _sLName;
   void setSLName(String sLName) {
     _sLName = sLName;
+    notifyListeners();
+  }
+
+  String _sBio = '';
+  String get sBio => _sBio;
+  void setBio(String bio) {
+    _sBio = bio;
+    notifyListeners();
+  }
+
+  String _region = '';
+  String get region => _region;
+  void setRegion(String region) {
+    _region = region;
     notifyListeners();
   }
 

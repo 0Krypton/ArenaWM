@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //importing widgets
 import '../../responsive_builder.dart';
 import '../../arenaLogo.dart';
-import 'authBgWidget.dart';
-import 'authBodyWidget.dart';
+import 'Widgets/authBgWidget.dart';
+import 'Widgets/authBodyWidget.dart';
 
 //importing themes
 import '../../../Themes/color.dart';
@@ -24,13 +24,13 @@ class _AuthenticationScreenDesktopState
     extends State<AuthenticationScreenDesktop> {
   @override
   void initState() {
+    super.initState();
     Future.delayed(Duration.zero, () {
       context.read(authWidgetsState).setWidthScr(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
           );
     });
-    super.initState();
   }
 
   @override
@@ -49,11 +49,7 @@ class _AuthenticationScreenDesktopState
               children: [
                 const AuthBg(),
                 const AuthBody(),
-                const Positioned(
-                  left: 25,
-                  top: 25,
-                  child: const ArenaLogo(),
-                ),
+                const Positioned(left: 25, top: 25, child: const ArenaLogo()),
               ],
             ),
           ),

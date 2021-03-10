@@ -1,6 +1,7 @@
 //importing pacakges
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vrouter/vrouter.dart';
 
 //importing themes
 import '../../../Themes/color.dart';
@@ -10,6 +11,9 @@ import '../../../providers/Auth/authenticationState.dart';
 
 //importing widgets
 import '../../CustomTextField.dart';
+
+//importing extendsions
+import '../../../utils/validators.dart';
 
 class LoginBody extends StatefulWidget {
   const LoginBody();
@@ -23,6 +27,9 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
 
   late AnimationController emailLoginColorController;
   late AnimationController passwordLoginColorController;
+
+  late TextEditingController emailLoginTxtController;
+  late TextEditingController passwordLoginTxtController;
 
   late FocusNode emailLoginFocusNode;
   late FocusNode passwordLoginFocusNode;
@@ -42,6 +49,12 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
+
+    emailLoginTxtController = TextEditingController(text: '')
+      ..addListener(() {});
+
+    passwordLoginTxtController = TextEditingController(text: '')
+      ..addListener(() {});
   }
 
   @override
@@ -52,6 +65,9 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
 
     emailLoginFocusNode.dispose();
     passwordLoginFocusNode.dispose();
+
+    emailLoginTxtController.dispose();
+    passwordLoginTxtController.dispose();
   }
 
   bool isHoveredBtn = false;
@@ -62,31 +78,33 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
       children: [
         Text(
           'Login',
-          style: TextStyle(
-            fontFamily: 'Noir',
-            fontSize: 25,
-            color: arenaLogoColor,
-          ),
+          style: const TextStyle(
+              fontFamily: 'Noir', fontSize: 25, color: arenaLogoColor),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Container(
           height: 50,
           child: CustomTextField(
+            controller: emailLoginTxtController,
             labelText: 'Email',
             focusNode: emailLoginFocusNode,
             type: 'email',
             nextFocusNode: passwordLoginFocusNode,
             prefixIconUrl: 'assets/form/emailPng.png',
             colorAnimController: emailLoginColorController,
-            onChanged: (email) {
+            onChange: (email) {
+              context.read(authentication).setlEmail(email);
+            },
+            onSubmit: (email) {
               context.read(authentication).setlEmail(email);
             },
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           height: 50,
           child: CustomTextField(
+            controller: passwordLoginTxtController,
             labelText: 'Password',
             type: 'password',
             focusNode: passwordLoginFocusNode,
@@ -95,7 +113,10 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
             colorAnimController: passwordLoginColorController,
             isObscure: _isVisibleLogin,
             isPasswordField: true,
-            onChanged: (password) {
+            onChange: (password) {
+              context.read(authentication).setlPassword(password);
+            },
+            onSubmit: (password) {
               context.read(authentication).setlPassword(password);
             },
             suffixOnPressed: () {
@@ -105,9 +126,26 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
             },
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         InkWell(
-          onTap: context.read(authentication).loginUser,
+          onTap: () {
+            if (!emailLoginTxtController.text.validateEmail) {
+              emailLoginColorController.forward();
+              emailLoginFocusNode.requestFocus();
+              return;
+            }
+            if (!passwordLoginTxtController.text.validatePassword) {
+              passwordLoginColorController.forward();
+              passwordLoginFocusNode.requestFocus();
+              return;
+            }
+            emailLoginFocusNode.unfocus();
+            passwordLoginFocusNode.unfocus();
+
+            //if loginUser returns Exception don't navigate and show errorDialog
+            context.read(authentication).loginUser();
+            // VRouterData.of(context).pushReplacement('/');
+          },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             height: 50,
@@ -125,10 +163,10 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
                 ),
               ],
             ),
-            child: Center(
-              child: Text(
+            child: const Center(
+              child: const Text(
                 'Login',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Noir',
                   fontSize: 18,
                   color: Colors.white,
@@ -137,25 +175,25 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
             ),
           ),
         ),
-        SizedBox(height: 25),
+        const SizedBox(height: 25),
         Row(
           children: [
             Text(
               'Don\'t remember your password?',
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Reglo',
                 fontSize: 12,
                 color: const Color(0xFF74D7FF),
               ),
             ),
-            SizedBox(width: 5),
+            const SizedBox(width: 5),
             InkWell(
               onTap: () {
                 print('Get help reset password');
               },
-              child: Text(
+              child: const Text(
                 'Get Help',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Reglo',
                   fontSize: 15,
                   color: arenaLogoColor,
