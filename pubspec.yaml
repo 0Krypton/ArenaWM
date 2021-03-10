@@ -99,6 +99,9 @@ flutter:
     - family: Reglo
       fonts:
         - asset: fonts/reglo/Reglo-Bold.ttf
+    - family: SfPro
+      fonts:
+        - asset: fonts/sfpro/sfpro.ttf
     - family: PtSans
       fonts:
         - asset: fonts/ptsans/PTSans-Bold.ttf

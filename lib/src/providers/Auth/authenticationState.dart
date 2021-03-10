@@ -116,22 +116,25 @@ class AuthenticationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _region = '';
-  String get region => _region;
+  String _sRegion = 'Europe';
+  String get sRegion => _sRegion;
   void setRegion(String region) {
-    _region = region;
+    _sRegion = region;
     notifyListeners();
   }
 
   String _sClanName = '';
+  String get sClanName => _sClanName;
   void setSClanName(String sClanName) {
     _sClanName = sClanName;
     notifyListeners();
   }
 
   List<String> _sPlayingGames = [];
+  List<String> get sPlayingGames => _sPlayingGames;
   void setSPlayingGames(String sClanName) {
-    String isExist = _sPlayingGames.firstWhere((game) => game == sClanName);
+    final isExist =
+        _sPlayingGames.where((game) => game.toString() == sClanName.toString());
     if (isExist.isEmpty) {
       _sPlayingGames.add(sClanName.trim().toLowerCase());
     } else {

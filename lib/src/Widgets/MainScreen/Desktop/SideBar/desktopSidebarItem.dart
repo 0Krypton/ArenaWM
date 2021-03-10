@@ -23,7 +23,7 @@ class DesktopSidebarItem extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     int selected = watch(btnIndexProvider.state);
 
-    return GestureDetector(
+    return InkWell(
       onTap: () => context.read(btnIndexProvider).setIndex(index),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -38,11 +38,11 @@ class DesktopSidebarItem extends ConsumerWidget {
               height: 25,
               color: index == selected ? color : Colors.black,
             ),
-            SizedBox(width: 20),
+            SizedBox(width: 25),
             Text(
               title,
               style: TextStyle(
-                fontFamily: 'Reglo',
+                fontFamily: 'SfPro',
                 fontSize: 18,
                 color: index == selected ? color : Colors.black,
               ),

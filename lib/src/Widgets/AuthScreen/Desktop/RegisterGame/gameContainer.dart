@@ -1,4 +1,9 @@
+//importing packages
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+//importing providers
+import '../../../../providers/Auth/authenticationState.dart';
 
 class GameContainer extends StatefulWidget {
   GameContainer({
@@ -24,43 +29,43 @@ class GameContainer extends StatefulWidget {
 }
 
 class _GameContainerState extends State<GameContainer> {
-  bool isAdded = false;
-
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
-        setState(() {
-          print('${widget.name}');
-          isAdded = !isAdded;
-        });
+        context.read(authentication).setSPlayingGames(widget.name);
       },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        width: widget.width,
-        height: widget.height,
-        decoration: BoxDecoration(
-          color: isAdded ? widget.color : Colors.grey.withOpacity(.7),
-          boxShadow: [
-            BoxShadow(
-              color:
-                  isAdded ? widget.shadowColor : Colors.black.withOpacity(.5),
-              blurRadius: 20,
-            )
-          ],
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
+      child: Consumer(
+          builder: (BuildContext context, ScopedReader watch, Widget? child) {
+        bool isAdded =
+            watch(authentication).sPlayingGames.contains(widget.name);
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          width: widget.width,
+          height: widget.height,
+          decoration: BoxDecoration(
+            color: isAdded ? widget.color : Colors.grey.withOpacity(.7),
+            boxShadow: [
+              BoxShadow(
+                color:
+                    isAdded ? widget.shadowColor : Colors.black.withOpacity(.5),
+                blurRadius: 20,
+              )
+            ],
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
           ),
-        ),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-          child: Image.asset(
-            widget.imageUrl,
-            fit: BoxFit.contain,
-            color: isAdded ? Colors.white : Colors.black,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+            child: Image.asset(
+              widget.imageUrl,
+              fit: BoxFit.contain,
+              color: isAdded ? Colors.white : Colors.black,
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

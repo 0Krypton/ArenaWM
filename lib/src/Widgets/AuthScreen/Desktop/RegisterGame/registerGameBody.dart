@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //importing providers
-import '../../../../providers/Auth/authenticationState.dart';
 import '../../../../providers/Auth/authWidgetsState.dart';
 
 //importing themes
@@ -13,6 +12,9 @@ import '../../../../Themes/color.dart';
 import '../../../customBtn.dart';
 import './gameContainer.dart';
 
+//importing screens
+import '../RegisterRegion/registerScrRegion.dart';
+
 class RegisterGameBody extends StatelessWidget {
   const RegisterGameBody();
 
@@ -21,53 +23,49 @@ class RegisterGameBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widgetsState = context.read(authWidgetsState);
-    return Consumer(
-      builder: (context, watch, child) {
-        final authState = watch(authentication);
-        return Stack(
-          children: [
-            Positioned(
-              left: (widgetsState.registerBodyPos).abs(),
-              top: 0,
-              bottom: 0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: widgetsState.widthScr * .5,
-                    padding: const EdgeInsets.only(
-                      left: 30,
-                      right: 30,
-                      top: 30,
-                      bottom: 30,
+
+    return Stack(
+      children: [
+        Positioned(
+          left: (widgetsState.registerBodyPos).abs(),
+          top: 0,
+          bottom: 0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: widgetsState.widthScr * .5,
+                padding: const EdgeInsets.only(
+                  left: 30,
+                  right: 30,
+                  top: 30,
+                  bottom: 30,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFFFFF),
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFBFF3FF),
+                      blurRadius: 50,
                     ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFFFFF),
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFFBFF3FF),
-                          blurRadius: 50,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _header(),
-                        SizedBox(height: 20),
-                        _body(width: widgetsState.widthScr * .5),
-                        SizedBox(height: 20),
-                        _buildButtons(context: context),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _header(),
+                    SizedBox(height: 20),
+                    _body(width: widgetsState.widthScr * .5),
+                    SizedBox(height: 20),
+                    _buildButtons(context: context),
+                  ],
+                ),
               ),
-            ),
-          ],
-        );
-      },
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -91,13 +89,17 @@ class RegisterGameBody extends StatelessWidget {
         SizedBox(width: 20),
         Expanded(
           child: CustomButton(
-            onTapCallBack: () {},
+            onTapCallBack: () {
+              Navigator.of(context).push(
+                RegisterRegionScreenDesktop.comeToPage(),
+              );
+            },
             title: 'NEXT',
             fontFamily: 'Noir',
             borderRadius: 10,
             blurRadius: 20,
-            bgColor: const Color(0xFF74D7FF),
-            shadowColor: const Color(0xFF66D3FF),
+            bgColor: const Color(0xFF9AE2FF),
+            shadowColor: const Color(0xFF74D7FF),
             textColor: Colors.white,
           ),
         ),
@@ -114,7 +116,7 @@ class RegisterGameBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GameContainer(
-              name: 'Fortnite',
+              name: 'fortnite',
               width: gameContainerWidth,
               height: gameContainerHeight,
               color: fortniteColor,
@@ -123,7 +125,7 @@ class RegisterGameBody extends StatelessWidget {
             ),
             SizedBox(width: 20),
             GameContainer(
-              name: 'Valorant',
+              name: 'valorant',
               width: gameContainerWidth,
               height: gameContainerHeight,
               color: valorantColor,
@@ -138,7 +140,7 @@ class RegisterGameBody extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GameContainer(
-              name: 'ApexLegend',
+              name: 'apex',
               width: gameContainerWidth,
               height: gameContainerHeight,
               color: apexlegendsColor,
@@ -147,7 +149,7 @@ class RegisterGameBody extends StatelessWidget {
             ),
             SizedBox(width: 20),
             GameContainer(
-              name: 'Rainbow Six',
+              name: 'rainbowsix',
               width: gameContainerWidth,
               height: gameContainerHeight,
               color: rainbowsixColor,

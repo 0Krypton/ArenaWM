@@ -11,10 +11,10 @@ class DesktopBody extends StatelessWidget {
       child: ResponsiveBuilder(
         builder: (context, sizeInfo) {
           return ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(

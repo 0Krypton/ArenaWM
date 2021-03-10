@@ -15,7 +15,7 @@ class DesktopSideBar extends StatelessWidget {
   final double padVertical = 20;
   final double padHorizontal = 25;
 
-  final BorderRadius borderRadius = BorderRadius.all(Radius.circular(15));
+  final BorderRadius borderRadius = BorderRadius.all(Radius.circular(10));
 
   @override
   Widget build(BuildContext context) {

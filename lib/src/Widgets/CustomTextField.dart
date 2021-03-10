@@ -135,6 +135,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             widget.colorAnimController.reverse();
             widget.onChange(v.trim());
           } else {
+            widget.onChange(v.trim());
             widget.colorAnimController.forward();
           }
         }
