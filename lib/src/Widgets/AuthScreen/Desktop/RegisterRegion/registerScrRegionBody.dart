@@ -86,11 +86,7 @@ class RegisterRegionBody extends StatelessWidget {
         SizedBox(width: 20),
         Expanded(
           child: CustomButton(
-            onTapCallBack: () {
-              Navigator.of(context).push(
-                RegisterClanScreenDesktop.comeToPage(),
-              );
-            },
+            onTapCallBack: () {},
             title: 'NEXT',
             fontFamily: 'Noir',
             borderRadius: 10,

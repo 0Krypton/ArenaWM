@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 //importing widgets
 import '../../../../Widgets/responsive_builder.dart';
 import '../../../../Widgets/MainScreen/Mobile/Landscape/SideBar/mobileLandscapeSidebar.dart';
-import '../../../../Widgets/MainScreen/Mobile/Landscape/Body/mobileLandscapeBody.dart';
 
 //importing themes
 import '../../../../Themes/color.dart';
@@ -25,7 +24,6 @@ class MainScreenMobileLandscape extends StatelessWidget {
             child: Row(
               children: [
                 MobileLandscapeBTN(height: height),
-                MobileLandscapeBody(),
               ],
             ),
           ),

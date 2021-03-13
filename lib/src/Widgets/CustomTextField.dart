@@ -130,6 +130,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
           } else {
             widget.colorAnimController.forward();
           }
+        } else if (widget.type == 'name') {
+          if (v.trim().validateName) {
+            widget.colorAnimController.reverse();
+            widget.onChange(v.trim());
+          } else {
+            widget.onChange(v.trim());
+            widget.colorAnimController.forward();
+          }
         } else {
           if (v.trim().length >= (widget.limit ?? 0)) {
             widget.colorAnimController.reverse();
@@ -163,6 +171,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
             widget.onSubmit(value);
             return;
           }
+        } else if (widget.type == 'name') {
+          if (value.trim().validateName) {
+            widget.focusNode.unfocus();
+            FocusScope.of(context).requestFocus(widget.nextFocusNode);
+            widget.onSubmit(value);
+            return;
+          }
         } else if (value.length >= (widget.limit ?? 0)) {
           widget.focusNode.unfocus();
           FocusScope.of(context).requestFocus(widget.nextFocusNode);
@@ -182,6 +197,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           color: textFieldTextColor.value,
           fontSize: 12,
           fontFamily: 'Lequire',
+          letterSpacing: 1.2,
         ),
         filled: true,
         fillColor: textFieldFilledColor.value,

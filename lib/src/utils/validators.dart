@@ -16,4 +16,10 @@ extension ValidateEmail on String {
             r'^[a-zA-Z]([._-](?![._-])|[a-zA-Z0-9]){2,20}([a-zA-Z0-9]|[_-])$')
         .hasMatch(this);
   }
+
+  bool get validateName {
+    return RegExp(
+            r'^[a-zA-Z][^±!@£$%^`&*-_~+§¡€#¢§¶•ªº«\\/<>?:;|=.,0-9(){}][a-zA-Z0-9]{3,20}$')
+        .hasMatch(this);
+  }
 }

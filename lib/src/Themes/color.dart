@@ -19,3 +19,13 @@ const Color rainbowsixShadowColor = const Color(0xFF000000);
 
 const Color apexlegendsColor = const Color(0xFF860000);
 const Color apexlegendsShadowColor = const Color(0xFF860000);
+
+//BTN COLORS
+
+const List<Color> colors = const <Color>[
+  const Color(0xFF9E00FF),
+  const Color(0xFFFF11A0),
+  const Color(0xFFFF4D00),
+  const Color(0xFF00D1FF),
+  const Color(0xFF33019F),
+];

@@ -1,4 +1,6 @@
 //importing packages
+import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
@@ -64,7 +66,6 @@ class AuthenticationState extends ChangeNotifier {
         },
       );
       print(response);
-      print(response);
     } catch (e) {
       print(e);
     }
@@ -74,6 +75,28 @@ class AuthenticationState extends ChangeNotifier {
   /*SignUp State */
   // 's' in the begining stands for 'SignUp'
   //initializing
+
+  bool _isChecked = false;
+  bool get isChecked => _isChecked;
+  void setIsChecked(bool value) {
+    _isChecked = value;
+    notifyListeners();
+  }
+
+  String _checkedEmailAddress = '';
+  String get checkedEmailAddress => _checkedEmailAddress;
+  void setCheckedEmailAdress(String value) {
+    _checkedEmailAddress = value;
+    notifyListeners();
+  }
+
+  String _checkedUsername = '';
+  String get checkedUsername => _checkedUsername;
+  void setCheckedUsername(String value) {
+    _checkedUsername = value;
+    notifyListeners();
+  }
+
   String _sEmail = '';
   String get sEmail => _sEmail;
   void setSEmail(String sEmail) {
@@ -143,6 +166,47 @@ class AuthenticationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  late File _sBgImg;
-  late File _sProfileImg;
+  File? _sBgImg;
+  File? get sBgImg => _sBgImg;
+  Uint8List? _sBgImgU8L;
+  Uint8List? get sBgImgU8L => _sBgImgU8L;
+
+  File? _sProfileImg;
+  Uint8List? _sProfileImgU8L;
+  File? get sProfileImg => _sProfileImg;
+  Uint8List? get sProfileImgU8L => _sProfileImgU8L;
+
+  void setImg({required String type, required File file, required unit8File}) {
+    if (type == 'profile') {
+      _sProfileImg = file;
+      _sProfileImgU8L = unit8File;
+      notifyListeners();
+    } else if (type == 'bg') {
+      _sBgImg = file;
+      _sBgImgU8L = unit8File;
+      print(_sBgImg!.isAbsolute);
+      notifyListeners();
+    }
+  }
+
+  void registerUser() async {
+    try {
+      if (_lEmail.isEmpty || (_lEmail.validateEmail == false))
+        throw Exception('Please provider a valid email address');
+
+      if (_lPassword.isEmpty || (_lPassword.validatePassword == false))
+        throw Exception('Please provider a valid password');
+
+      var response = await Dio().post(
+        'http://localhost:3000/auth/login',
+        data: {
+          'email': _lEmail,
+          'password': _lPassword,
+        },
+      );
+      print(response);
+    } catch (e) {
+      print(e);
+    }
+  }
 }

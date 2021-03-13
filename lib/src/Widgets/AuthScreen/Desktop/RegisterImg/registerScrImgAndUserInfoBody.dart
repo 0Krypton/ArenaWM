@@ -1,7 +1,16 @@
+//importing dart files
+import 'dart:io';
+import 'dart:typed_data';
+
 //importing packages
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:file_picker/file_picker.dart';
+
+//importing utils
+import '../../../../utils/getImageFromClient.dart';
 
 //importing providers
 import '../../../../providers/Auth/authenticationState.dart';
@@ -11,6 +20,9 @@ import '../../../../providers/Auth/authWidgetsState.dart';
 import '../../../CustomTextField.dart';
 import '../../../customBtn.dart';
 import '../../../counterVlidator.dart';
+
+//importing extensions
+import '../../../../utils/validators.dart';
 
 //importing screens
 import '../RegisterGame/registerScreenGame.dart';
@@ -176,7 +188,24 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
         Expanded(
           child: CustomButton(
             onTapCallBack: () {
-              Navigator.of(context).push(RegisterGame.comeToPage());
+              if (!fNameTxtController.text.validateName) {
+                fNameColorController.forward();
+                fNameFocusNode.requestFocus();
+                return;
+              }
+
+              if (!lNameTxtController.text.validateName) {
+                lNameColorController.forward();
+                lNameFocusNode.requestFocus();
+                return;
+              }
+
+              fNameFocusNode.unfocus();
+              lNameFocusNode.unfocus();
+              bioFocusNode.unfocus();
+
+              register();
+              // Navigator.of(context).push(RegisterGame.comeToPage());
             },
             title: 'NEXT',
             fontFamily: 'Noir',
@@ -190,6 +219,8 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
       ],
     );
   }
+
+  void register() async {}
 
   Widget _bio({required AuthenticationState authState}) {
     return Stack(
@@ -261,6 +292,7 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
         child: CustomTextField(
           controller: lNameTxtController,
           labelText: 'LastName',
+          type: 'name',
           focusNode: lNameFocusNode,
           nextFocusNode: bioFocusNode,
           colorAnimController: lNameColorController,
@@ -282,6 +314,7 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
         child: CustomTextField(
           controller: fNameTxtController,
           labelText: 'FirstName',
+          type: 'name',
           focusNode: fNameFocusNode,
           nextFocusNode: lNameFocusNode,
           colorAnimController: fNameColorController,
@@ -317,7 +350,7 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(width: 50),
-                _profileImg(heightAndWidth: containerHeight * .7),
+                _profileImg(heightAndWidth: containerHeight * .6),
                 SizedBox(width: 20),
                 _info(height: containerHeight * .6, authState: authState),
               ],
@@ -400,12 +433,14 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
 
   Widget _profileImg({required heightAndWidth}) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        // ImageFromClient.getImage();
+        // pickFile(type: "profile");
+      },
       splashColor: Colors.transparent,
       child: Container(
         height: heightAndWidth,
         width: heightAndWidth,
-        padding: const EdgeInsets.all(40.0),
         decoration: BoxDecoration(
           color: const Color(0xFFE8FBFF),
           shape: BoxShape.circle,
@@ -413,8 +448,27 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
             const BoxShadow(color: const Color(0xFFBAEAF4), blurRadius: 30),
           ],
         ),
-        child: SvgPicture.asset(
-          'assets/form/camera.svg',
+        child: Center(
+          child: Consumer(
+            builder: (context, watch, child) {
+              File? profileImg = watch(authentication).sProfileImg;
+              if (profileImg?.existsSync() != null &&
+                  profileImg?.existsSync() == true) {
+                return Image.file(
+                  profileImg!,
+                  fit: BoxFit.cover,
+                );
+              } else {
+                print('no bgImage');
+                return child!;
+              }
+            },
+            child: SvgPicture.asset(
+              'assets/form/camera.svg',
+              height: 60,
+              width: 60,
+            ),
+          ),
         ),
       ),
     );
@@ -422,18 +476,72 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
 
   Widget _bgImg({required height}) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        pickFile(type: 'bg');
+        // ImageFromClient.getImage(onComplete: (Uint8List bgImg) {
+        //   print('retrieved');
+
+        //   Uint8List u8l = Uint8List.fromList(bgImg);
+        //   File file = File.fromRawPath(u8l.buffer.asUint8List());
+
+        //   context.read(authentication).setImg(
+        //         type: 'bg',
+        //         file: file,
+        //         unit8File: u8l,
+        //       );
+        // });
+      },
       splashColor: Colors.transparent,
       child: Container(
         height: height,
-        decoration: BoxDecoration(
-          color: const Color(0xFFE8FBFF),
-          borderRadius: const BorderRadius.only(
-            topLeft: const Radius.circular(15),
-            topRight: const Radius.circular(15),
+        child: Consumer(
+          builder: (context, watch, child) {
+            Uint8List? bgImgU8L = watch(authentication).sBgImgU8L;
+
+            if (bgImgU8L != null) {
+              return Image.memory(
+                bgImgU8L,
+                fit: BoxFit.cover,
+              );
+            } else {
+              print('no bgImage');
+              return child!;
+            }
+          },
+          child: Container(
+            height: height,
+            decoration: BoxDecoration(
+              color: const Color(0xFFE8FBFF),
+              borderRadius: const BorderRadius.only(
+                topLeft: const Radius.circular(15),
+                topRight: const Radius.circular(15),
+              ),
+            ),
           ),
         ),
       ),
     );
+  }
+
+  void pickFile({required String type}) async {
+    try {
+      List<PlatformFile>? _paths = (await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: false,
+        allowedExtensions: ['png', 'jpeg', 'jpg'],
+      ))
+          ?.files;
+      print('file ${_paths?.first.bytes}');
+      File unit8File = File.fromRawPath(_paths!.first.bytes!);
+      context.read(authentication).setImg(
+            type: type,
+            file: unit8File,
+            unit8File: _paths.first.bytes!,
+          );
+    } on PlatformException catch (e) {
+      print("Unsupported operation" + e.toString());
+    } catch (ex) {
+      print(ex);
+    }
   }
 }

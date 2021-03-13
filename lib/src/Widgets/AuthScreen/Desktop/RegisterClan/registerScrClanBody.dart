@@ -273,7 +273,9 @@ class _RegisterClanBodyState extends State<RegisterClanBody>
         SizedBox(width: 20),
         Expanded(
           child: CustomButton(
-            onTapCallBack: () {},
+            onTapCallBack: () {
+              context.read(authentication).registerUser();
+            },
             title: 'NEXT',
             fontFamily: 'Noir',
             borderRadius: 10,

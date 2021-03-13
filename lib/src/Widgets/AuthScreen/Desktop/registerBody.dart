@@ -6,6 +6,9 @@ import 'package:vrouter/vrouter.dart';
 //importing providers
 import '../../../providers/Auth/authenticationState.dart';
 
+//importing api files
+import '../../../api/auth/authenticate.dart';
+
 //importing themes
 import '../../../Themes/color.dart';
 
@@ -113,7 +116,7 @@ class _RegisterBodyState extends State<RegisterBody>
                 context.read(authentication).setSEmail(email);
               },
               onSubmit: (email) {
-                print('Email : $email');
+                context.read(authentication).setSEmail(email);
               },
             ),
           ),
@@ -132,8 +135,8 @@ class _RegisterBodyState extends State<RegisterBody>
               onChange: (username) {
                 context.read(authentication).setSUsername(username);
               },
-              onSubmit: (userName) {
-                print('Username : $userName');
+              onSubmit: (username) {
+                context.read(authentication).setSUsername(username);
               },
             ),
           ),
@@ -154,7 +157,7 @@ class _RegisterBodyState extends State<RegisterBody>
                 context.read(authentication).setSPassword(password);
               },
               onSubmit: (password) {
-                print('Password : $password');
+                context.read(authentication).setSPassword(password);
               },
               suffixOnPressed: () {
                 setState(() {
@@ -166,36 +169,30 @@ class _RegisterBodyState extends State<RegisterBody>
           SizedBox(height: 15),
           InkWell(
             onTap: () {
-              // if (!emailRegisterTxtController.text.validateEmail) {
-              //   emailRegisterColorController.forward();
-              //   emailRegisterFocusNode.requestFocus();
-              //   return;
-              // }
+              if (!emailRegisterTxtController.text.validateEmail) {
+                emailRegisterColorController.forward();
+                emailRegisterFocusNode.requestFocus();
+                return;
+              }
 
-              // if (!userNameRegisterTxtController.text.validateUserName) {
-              //   userNameRegisterColorController.forward();
-              //   userNameRegisterFocusNode.requestFocus();
-              //   return;
-              // }
+              if (!userNameRegisterTxtController.text.validateUserName) {
+                userNameRegisterColorController.forward();
+                userNameRegisterFocusNode.requestFocus();
+                return;
+              }
 
-              // if (!passwordRegisterTxtController.text.validatePassword) {
-              //   passwordRegisterColorController.forward();
-              //   passwordRegisterFocusNode.requestFocus();
-              //   return;
-              // }
+              if (!passwordRegisterTxtController.text.validatePassword) {
+                passwordRegisterColorController.forward();
+                passwordRegisterFocusNode.requestFocus();
+                return;
+              }
 
-              // emailRegisterFocusNode.unfocus();
-              // userNameRegisterFocusNode.unfocus();
-              // passwordRegisterFocusNode.unfocus();
+              emailRegisterFocusNode.unfocus();
+              userNameRegisterFocusNode.unfocus();
+              passwordRegisterFocusNode.unfocus();
 
-              // TODO
-              // check to see is username available or not if not show error dialog
-
-              // navigate to next level
-              // VRouterData.of(context).push('/');
-              // print('registered');
-              Navigator.of(context)
-                  .push(RegisterImgAndUserInfoScreenDesktop.comeToPage());
+              // check to see is username available or not, if not show error dialog
+              checkUser();
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
@@ -230,5 +227,31 @@ class _RegisterBodyState extends State<RegisterBody>
         ],
       ),
     );
+  }
+
+  void checkUser() async {
+    AuthenticationState authState = context.read(authentication);
+    if (authState.checkedEmailAddress != authState.sEmail ||
+        authState.checkedUsername != authState.sUsername) {
+      try {
+        await Authenticate.check({
+          'email': emailRegisterTxtController.text,
+          'username': userNameRegisterTxtController.text,
+        });
+
+        authState.setCheckedEmailAdress(emailRegisterTxtController.text);
+        authState.setCheckedUsername(userNameRegisterTxtController.text);
+
+        Navigator.of(context)
+            .push(RegisterImgAndUserInfoScreenDesktop.comeToPage());
+      } catch (err) {
+        // TODO
+        // Show error message to user
+        print(err);
+      }
+    } else {
+      Navigator.of(context)
+          .push(RegisterImgAndUserInfoScreenDesktop.comeToPage());
+    }
   }
 }

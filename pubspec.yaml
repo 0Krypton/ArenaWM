@@ -38,6 +38,9 @@ dependencies:
   dio: ^4.0.0-beta6
   google_fonts: ^2.0.0
   flutter_riverpod: ^0.13.1
+  simple_animations: ^3.0.1
+  file_picker: ^3.0.0
+
 
 
 
