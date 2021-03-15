@@ -1,4 +1,6 @@
 //importing pacakges
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 class Repository {
@@ -8,6 +10,17 @@ class Repository {
       url,
       data: data,
     );
+    return response;
+  }
+
+  static Future<Response> getRequest({
+    required String url,
+    required String token,
+  }) async {
+    Dio dio = Dio();
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["authorization"] = "Bearer $token";
+    final response = await dio.get(url);
     return response;
   }
 }

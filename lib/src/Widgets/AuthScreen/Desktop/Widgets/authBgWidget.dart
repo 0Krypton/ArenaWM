@@ -9,7 +9,7 @@ import 'PositionedImg.dart';
 
 //importing providers
 import '../../../../providers/Auth/authWidgetsState.dart';
-import '../../../../providers/Auth/authImgsState.dart';
+import '../../../../utils/getAssets.dart';
 
 //importing dart files
 import 'dart:math' as math;

@@ -14,6 +14,9 @@ import '../../../NavigationScreens/Home/DeviceLayout/Mobile/homeScreenMobilePort
 import '../../../NavigationScreens/Top/DeviceLayout/Mobile/topScreenMobilePortrait.dart';
 import '../../../NavigationScreens/Store/DeviceLayout/Mobile/storeScreenMobilePortrait.dart';
 
+//importing provider
+import '../../../../providers/SideBar/sideBarState.dart';
+
 //importing themes
 import '../../../../Themes/color.dart';
 
@@ -25,32 +28,126 @@ List<Widget> pages = [
   ProfileScreenMobilePortrait(),
 ];
 
-class MainScreenMobilePortrait extends StatelessWidget {
+class MainScreenMobilePortrait extends StatefulWidget {
+  @override
+  _MainScreenMobilePortraitState createState() =>
+      _MainScreenMobilePortraitState();
+}
+
+class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait>
+    with TickerProviderStateMixin {
+  late final AnimationController _scaleController;
+  late final Animation<double> _scaleAnimation;
+  late final Animation<Color> _shadowAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _scaleController = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 400,
+      ),
+    );
+    _scaleAnimation =
+        CurvedAnimation(parent: _scaleController, curve: Curves.easeInBack);
+
+    _shadowAnimation = Tween<Color>(
+      begin: Color(0xFFFFFFFF),
+      end: Color(0xFF86E4FF),
+    ).animate(_scaleController);
+  }
+
+  @override
+  void didChangeDependencies() {
+    context.read(sideBarState).setController(_scaleController);
+    _scaleController.addListener(() {
+      context.read(sideBarState).setAnimationValue(_scaleController.value);
+    });
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _scaleController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('Build');
     return ResponsiveBuilder(
       builder: (context, sizeInfo) {
         final height = sizeInfo.screenSize.height;
         final width = sizeInfo.screenSize.width;
 
+        final widthWithScale = (width - (width * .7));
+
         return Scaffold(
           backgroundColor: bgColor,
-          body: Container(
-            height: height,
-            width: width,
-            child: Stack(
-              children: [
-                //Pages
-                Consumer(
-                  builder: (context, watch, child) {
-                    int selectedIndex = watch(btnIndexProvider.state);
-                    return pages[selectedIndex];
-                  },
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              Container(
+                width: width,
+                height: height,
+                color: bgColor,
+              ),
+              Consumer(
+                builder: (context, watch, child) {
+                  final double animationValue =
+                      watch(sideBarState).animationValue;
+
+                  return Align(
+                    alignment: Alignment.center,
+                    child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()
+                        ..translate(-(animationValue * widthWithScale))
+                        ..scale(
+                          1 - (0.3 * _scaleAnimation.value),
+                        ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15.0 * animationValue),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.0 * animationValue),
+                            ),
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: _shadowAnimation.value,
+                            //     blurRadius: 30,
+                            //   ),
+                            // ],
+                          ),
+                          child: child,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: height,
+                  width: width,
+                  child: Stack(
+                    children: [
+                      //Pages
+                      Consumer(
+                        builder: (context, watch, child) {
+                          int selectedIndex = watch(btnIndexProvider.state);
+                          return pages[selectedIndex];
+                        },
+                      ),
+                      //Btn
+                      MobilePortraitBTN(width: width),
+                    ],
+                  ),
                 ),
-                //Btn
-                MobilePortraitBTN(width: width),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

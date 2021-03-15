@@ -28,10 +28,16 @@ class _MobilePortraitBTNState extends State<MobilePortraitBTN>
   final double posFromSides = 15;
   final double padVertical = 10;
   final double padHorizontal = 20;
+  final double movingContainerPos = 10.0;
 
   late final double widthBtn, widthItemsContainer, widthItemArea;
 
   final BorderRadius borderRadius = BorderRadius.all(Radius.circular(10));
+
+  late AnimationController btnContainerController;
+  late AnimationController btnMovingContainerController;
+  late Animation<double> btnContainerPosition;
+  late Animation<double> btnMovingContainerPosition;
 
   late AnimationController controllerOne;
   late AnimationController controllerTwo;
@@ -55,31 +61,106 @@ class _MobilePortraitBTNState extends State<MobilePortraitBTN>
     widthItemArea = widthItemsContainer / 5;
 
     //initializing controllers
+
+    btnContainerController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    )..addListener(() {
+        setState(() {});
+      });
+
+    btnMovingContainerController = AnimationController(
+        vsync: this,
+        duration: const Duration(
+          milliseconds: 1100,
+        ))
+      ..addListener(() {
+        setState(() {});
+      });
+
+    btnContainerPosition = TweenSequence(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: -(60 + posFromSides),
+            end: (posFromSides + 15.0),
+          ),
+          weight: 40.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: (posFromSides + 15.0),
+            end: posFromSides - 5.0,
+          ),
+          weight: 20.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: posFromSides - 5.0,
+            end: posFromSides,
+          ),
+          weight: 40.0,
+        ),
+      ],
+    ).animate(btnContainerController);
+
+    btnMovingContainerPosition = TweenSequence(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: -(movingContainerPos + 10),
+            end: movingContainerPos + 5.0,
+          ),
+          weight: 40.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: movingContainerPos + 5.0,
+            end: movingContainerPos - 5.0,
+          ),
+          weight: 20.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(
+            begin: movingContainerPos - 5.0,
+            end: movingContainerPos,
+          ),
+          weight: 40.0,
+        ),
+      ],
+    ).animate(btnContainerController);
+
+    btnContainerController.forward();
+    btnMovingContainerController.forward();
+
     controllerOne = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 700),
     );
     controllerTwo = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 700),
     );
     controllerThree = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 700),
     );
     controllerFour = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 700),
     );
     controllerFive = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 700),
     );
   }
 
   @override
   void dispose() {
     super.dispose();
+    btnContainerController.dispose();
+    btnMovingContainerController.dispose();
+
     controllerOne.dispose();
     controllerTwo.dispose();
     controllerThree.dispose();
@@ -94,7 +175,8 @@ class _MobilePortraitBTNState extends State<MobilePortraitBTN>
     return Positioned(
       left: posFromSides,
       right: posFromSides,
-      bottom: posFromSides,
+      // bottom: btnContainerController.value * posFromSides,
+      bottom: btnContainerPosition.value,
       child: Container(
         height: 60,
         decoration: BoxDecoration(
@@ -118,14 +200,13 @@ class _MobilePortraitBTNState extends State<MobilePortraitBTN>
     return Consumer(
       builder: (context, watch, child) {
         return AnimatedPositioned(
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeInOutBack,
           left: padHorizontal +
-              (widthItemArea * watch(btnIndexProvider).state) +
+              (widthItemArea * watch(btnIndexProvider.state)) +
               (widthItemArea / 2) -
               20,
-          top: 10,
-          bottom: 10,
+          bottom: btnMovingContainerPosition.value,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             width: 40,

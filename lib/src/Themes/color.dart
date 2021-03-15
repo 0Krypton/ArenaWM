@@ -20,6 +20,31 @@ const Color rainbowsixShadowColor = const Color(0xFF000000);
 const Color apexlegendsColor = const Color(0xFF860000);
 const Color apexlegendsShadowColor = const Color(0xFF860000);
 
+const List<List<Color>> gameGradientColor = const [
+  const [
+    const Color(0xFF86E4FF),
+    const Color(0xFF65BAEA),
+  ], //Fortnite
+  const [
+    const Color(0xFFFFA5AC),
+    const Color(0xFFC14D69),
+  ], //Valorant
+  const [
+    const Color(0xFFAAAAAA),
+    const Color(0xFF272727),
+  ], //Rainbow
+  const [
+    const Color(0xFFEA8D8D),
+    const Color(0xFF871515),
+  ], //Apex
+];
+
+const List<Color> gameShadowColors = const [
+  const Color(0xFF87D0F6),
+  const Color(0xFFE27C8D),
+  const Color(0xFFB2B2B2),
+  const Color(0xFFE68888),
+];
 //BTN COLORS
 
 const List<Color> colors = const <Color>[

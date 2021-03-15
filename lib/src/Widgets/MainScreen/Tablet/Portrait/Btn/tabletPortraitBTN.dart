@@ -44,27 +44,27 @@ class TabletPortraitBTN extends StatelessWidget {
             TabletPortraitBtnItem(
               iconUrl: 'assets/btnIcons/shop.svg',
               color: Color(0xFF9E00FF),
-              index: 1,
+              index: 0,
             ),
             TabletPortraitBtnItem(
               iconUrl: 'assets/btnIcons/top.svg',
               color: Color(0xFFFF11A0),
-              index: 2,
+              index: 1,
             ),
             TabletPortraitBtnItem(
               iconUrl: 'assets/btnIcons/home.svg',
               color: Color(0xFFFF4D00),
-              index: 3,
+              index: 2,
             ),
             TabletPortraitBtnItem(
               iconUrl: 'assets/btnIcons/explore.svg',
               color: Color(0xFF00D1FF),
-              index: 4,
+              index: 3,
             ),
             TabletPortraitBtnItem(
               iconUrl: 'assets/btnIcons/profile.svg',
               color: Color(0xFF33019F),
-              index: 5,
+              index: 4,
             ),
           ],
         ),

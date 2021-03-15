@@ -40,6 +40,7 @@ dependencies:
   flutter_riverpod: ^0.13.1
   simple_animations: ^3.0.1
   file_picker: ^3.0.0
+  flare_flutter: ^3.0.0-nullsafety.0
 
 
 
@@ -69,6 +70,7 @@ flutter:
     - assets/btnIcons/
     - assets/authBackground/
     - assets/form/
+    - assets/rive/
     - assets/game_icons/
     - assets/game_icons/fortnite/
     - assets/game_icons/apex/
@@ -117,6 +119,18 @@ flutter:
     - family: Luckiest
       fonts:
         - asset: fonts/luckiest/LuckiestGuy.ttf
+    - family: Aremat
+      fonts:
+        - asset: fonts/aremat/aremat.ttf
+    - family: Bronx
+      fonts:
+        - asset: fonts/bronx/bronx.ttf
+    - family: Gilroy
+      fonts:
+        - asset: fonts/gilroy/gilroy.ttf
+    - family: Qanelas
+      fonts:
+        - asset: fonts/qanelas/qanelas.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -1,6 +1,9 @@
 //importing class
 import '../repository.dart';
 
+//importing models
+import '../../models/user.dart';
+
 const String url = 'http://localhost:3000/api/v1';
 
 class Authenticate {
@@ -23,11 +26,23 @@ class Authenticate {
     }
   }
 
-  // static Future<Map<String, dynamic>> register(
-  //     Map<String, dynamic> data) async {
-  //   try {} catch (e) {
-  //     print('##### authenticate.dart register() ##### \n');
-  //     throw (e);
-  //   }
-  // }
+  static Future<UserModel> getUser({required String token}) async {
+    try {
+      // get response from api
+      final res =
+          await Repository.getRequest(url: '$url/users/getMe', token: token);
+
+      //check to see are we have any errors is the sent response
+      if (res.data['status'] == 'failure') {
+        throw ('${res.data['message']}');
+      }
+      // if we don't have any error we sent back response's data to client
+      else {
+        return UserModel.fromJson(res.data['data']);
+      }
+    } catch (e) {
+      print('##### authenticate.dart getUser() ##### \n');
+      throw (e);
+    }
+  }
 }
