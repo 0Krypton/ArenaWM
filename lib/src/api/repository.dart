@@ -16,11 +16,15 @@ class Repository {
   static Future<Response> getRequest({
     required String url,
     required String token,
+    Map<String, dynamic>? queries,
   }) async {
     Dio dio = Dio();
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["authorization"] = "Bearer $token";
-    final response = await dio.get(url);
+    final response = await dio.get(
+      url,
+      queryParameters: queries ?? {},
+    );
     return response;
   }
 }

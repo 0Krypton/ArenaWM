@@ -8,6 +8,8 @@ import '../../../../../Widgets/responsive_builder.dart';
 import '../../../../../Themes/color.dart';
 
 class TopScreenMobilePortrait extends StatelessWidget {
+  const TopScreenMobilePortrait();
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(

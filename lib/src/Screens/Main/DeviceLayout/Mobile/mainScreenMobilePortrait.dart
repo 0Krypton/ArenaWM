@@ -20,12 +20,12 @@ import '../../../../providers/SideBar/sideBarState.dart';
 //importing themes
 import '../../../../Themes/color.dart';
 
-List<Widget> pages = [
-  StoreScreenMobilePortrait(),
-  TopScreenMobilePortrait(),
-  HomeScreenMobilePortrait(),
-  ExploreScreenMobilePortrait(),
-  ProfileScreenMobilePortrait(),
+const List<Widget> pages = [
+  const StoreScreenMobilePortrait(),
+  const TopScreenMobilePortrait(),
+  const HomeScreenMobilePortrait(),
+  const ExploreScreenMobilePortrait(),
+  const ProfileScreenMobilePortrait(),
 ];
 
 class MainScreenMobilePortrait extends StatefulWidget {
@@ -38,7 +38,6 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait>
     with TickerProviderStateMixin {
   late final AnimationController _scaleController;
   late final Animation<double> _scaleAnimation;
-  late final Animation<Color> _shadowAnimation;
 
   @override
   void initState() {
@@ -51,11 +50,6 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait>
     );
     _scaleAnimation =
         CurvedAnimation(parent: _scaleController, curve: Curves.easeInBack);
-
-    _shadowAnimation = Tween<Color>(
-      begin: Color(0xFFFFFFFF),
-      end: Color(0xFF86E4FF),
-    ).animate(_scaleController);
   }
 
   @override
@@ -97,6 +91,8 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait>
                 builder: (context, watch, child) {
                   final double animationValue =
                       watch(sideBarState).animationValue;
+                  final Color? shadowTweeAnim =
+                      watch(sideBarState).shadowTweenColor.value;
 
                   return Align(
                     alignment: Alignment.center,
@@ -107,21 +103,22 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait>
                         ..scale(
                           1 - (0.3 * _scaleAnimation.value),
                         ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15.0 * animationValue),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15.0 * animationValue),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: shadowTweeAnim,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15.0 * animationValue),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: shadowTweeAnim!,
+                              blurRadius: 30,
                             ),
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: _shadowAnimation.value,
-                            //     blurRadius: 30,
-                            //   ),
-                            // ],
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15.0 * animationValue),
                           ),
                           child: child,
                         ),

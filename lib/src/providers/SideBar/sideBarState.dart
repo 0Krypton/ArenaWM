@@ -9,8 +9,16 @@ class SideBarState extends ChangeNotifier {
   late AnimationController _sideBarAnimationController;
   AnimationController get sideBarAnimController => _sideBarAnimationController;
 
+  late Animation<Color?> _shadowTweenColor;
+  Animation<Color?> get shadowTweenColor => _shadowTweenColor;
+
   void setController(AnimationController controller) {
     _sideBarAnimationController = controller;
+    _shadowTweenColor = ColorTween(
+      begin: Color(0xFFFFFFFF),
+      end: Color(0xFFE9E9E9),
+    ).animate(_sideBarAnimationController)
+      ..addListener(() {});
     notifyListeners();
   }
 

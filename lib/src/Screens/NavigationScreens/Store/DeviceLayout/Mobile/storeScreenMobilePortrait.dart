@@ -8,6 +8,7 @@ import '../../../../../Widgets/responsive_builder.dart';
 import '../../../../../Themes/color.dart';
 
 class StoreScreenMobilePortrait extends StatelessWidget {
+  const StoreScreenMobilePortrait();
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(

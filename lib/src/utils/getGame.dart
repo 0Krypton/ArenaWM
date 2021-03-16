@@ -52,4 +52,19 @@ class GameAssist {
       return Color(0xFF777777);
     }
   }
+
+  static String getGameLogo({required String gameName}) {
+    switch (gameName) {
+      case 'fortnite':
+        return 'assets/game_icons/fortnite/fortniteLogoPng.png';
+      case 'valorant':
+        return 'assets/game_icons/valorant/valorantLogoPng.png';
+      case 'apex':
+        return 'assets/game_icons/apex/apexPng.png';
+      case 'rainbow':
+        return 'assets/game_icons/rainbowsix/rainbowsixLogoPng.png';
+      default:
+    }
+    return '';
+  }
 }

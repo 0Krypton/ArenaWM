@@ -11,6 +11,7 @@ import '../../../../../Widgets/textSplitter.dart';
 
 //impoting themes
 import '../../../../../Themes/color.dart';
+import '../../../../../Themes/text.dart';
 
 //importing utils
 import '../../../../../utils/getGame.dart';
@@ -120,22 +121,16 @@ class ProfileScreenMobilePortrait extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          text.amountWithPrefix,
-          style: TextStyle(
-            fontFamily: 'Qanelas',
-            fontSize: 12,
-            color: Colors.black,
-          ),
+        qanelas(
+          text: text.amountWithPrefix,
+          fontSize: 12,
+          color: Colors.black,
         ),
         SizedBox(height: 3),
-        Text(
-          lable,
-          style: TextStyle(
-            fontFamily: 'Aremat',
-            fontSize: 10,
-            color: const Color(0xFFA3A3A3),
-          ),
+        aremat(
+          text: lable,
+          fontSize: 10,
+          color: const Color(0xFFA3A3A3),
         ),
       ],
     );
@@ -194,14 +189,12 @@ class ProfileScreenMobilePortrait extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          user.userName,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontFamily: 'Qanelas',
-          ),
+        qanelas(
+          text: user.userName,
+          fontSize: 18,
+          color: Colors.black,
         ),
+
         //TODO:Add verified
       ],
     );
