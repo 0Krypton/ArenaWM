@@ -2,6 +2,8 @@
 import 'package:app_v2/src/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:simple_animations/simple_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 //importing widgets
@@ -137,38 +139,53 @@ class ProfileScreenMobilePortrait extends StatelessWidget {
   }
 
   Widget _buildGames({required double width, required List<String> games}) {
-    double padGamContainer = 10;
+    double padGamContainer = 11;
     double widthGameContainers = (width / 2) - (padGamContainer * 4);
     return Wrap(
       runSpacing: padGamContainer * 2,
       children: List.generate(games.length, (index) {
         final List<Color> gameGradientColors =
             GameAssist.getGameColor(games[index]);
-        return Container(
-          height: 100,
-          width: widthGameContainers,
-          margin: EdgeInsets.symmetric(horizontal: padGamContainer),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: gameGradientColors,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: GameAssist.getGameShadowColor(games[index]),
-                blurRadius: 15,
-                offset: Offset(0, 4),
+        return AnimationConfiguration.staggeredGrid(
+          columnCount: 2,
+          position: index,
+          duration: const Duration(milliseconds: 600),
+          delay: const Duration(milliseconds: 150),
+          child: ScaleAnimation(
+            duration: const Duration(milliseconds: 350),
+            delay: const Duration(milliseconds: 150),
+            child: FadeInAnimation(
+              duration: const Duration(milliseconds: 350),
+              delay: const Duration(milliseconds: 150),
+              child: Container(
+                height: 100,
+                width: widthGameContainers,
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: gameGradientColors,
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: GameAssist.getGameShadowColor(games[index]),
+                      blurRadius: 15,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                  borderRadius:
+                      const BorderRadius.all(const Radius.circular(15)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Image.asset(
+                    // listGamesPlayed[index].imageUrl,
+                    GameAssist.getGameImageUrl(games[index]),
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
-            ],
-            borderRadius: const BorderRadius.all(const Radius.circular(15)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Image.asset(
-              // listGamesPlayed[index].imageUrl,
-              GameAssist.getGameImageUrl(games[index]),
-              fit: BoxFit.contain,
             ),
           ),
         );

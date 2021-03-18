@@ -1,6 +1,7 @@
 //importing packages
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -57,29 +58,45 @@ Widget buildServers() {
             children: List.generate(
               listRegionServers.length,
               (index) {
-                return GestureDetector(
-                  onTap: () {
-                    context.read(exploreScrState).changeRegionOrder(index);
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                    margin: EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: listRegionServers[index]['isSelected']
-                            ? listRegionServers[index]['color']
-                            : const Color(0xFFD2D2D2),
-                        width: 3,
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 600),
+                  delay: const Duration(milliseconds: 150),
+                  child: SlideAnimation(
+                    horizontalOffset: 70,
+                    curve: Curves.ease,
+                    child: FadeInAnimation(
+                      duration: const Duration(milliseconds: 350),
+                      delay: const Duration(milliseconds: 150),
+                      child: GestureDetector(
+                        onTap: () {
+                          context
+                              .read(exploreScrState)
+                              .changeRegionOrder(index);
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                          margin: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: listRegionServers[index]['isSelected']
+                                  ? listRegionServers[index]['color']
+                                  : const Color(0xFFD2D2D2),
+                              width: 3,
+                            ),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: reglo(
+                            text: (listRegionServers[index]['name']),
+                            fontSize: 12,
+                            color: listRegionServers[index]['isSelected']
+                                ? listRegionServers[index]['color']
+                                : const Color(0xFFD2D2D2),
+                          ),
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: reglo(
-                      text: (listRegionServers[index]['name']),
-                      fontSize: 12,
-                      color: listRegionServers[index]['isSelected']
-                          ? listRegionServers[index]['color']
-                          : const Color(0xFFD2D2D2),
                     ),
                   ),
                 );
@@ -105,49 +122,62 @@ Widget buildGamesAvailable() {
             mainAxisAlignment: MainAxisAlignment.start,
             children: List.generate(
               listGamesAvailable.length,
-              (index) => GestureDetector(
-                onTap: () {
-                  if (context.read(exploreScrState).orderByGame[0] ==
-                      listGamesAvailable[index]['name']) {
-                    return;
-                  } else {
-                    context.read(exploreScrState).changeGameOrder(index);
-                  }
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  height: 50,
-                  width: 50,
-                  padding: EdgeInsets.all(10),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: listGamesAvailable[index]['isSelected']
-                            ? listGamesAvailable[index]['shadow']
-                            : const Color(0xFFC3C3C3),
-                        offset: Offset(0, 2),
-                        blurRadius: 15,
+              (index) => AnimationConfiguration.staggeredList(
+                position: index,
+                duration: const Duration(milliseconds: 600),
+                delay: const Duration(milliseconds: 150),
+                child: SlideAnimation(
+                  horizontalOffset: 70,
+                  curve: Curves.ease,
+                  child: FadeInAnimation(
+                    duration: const Duration(milliseconds: 350),
+                    delay: const Duration(milliseconds: 150),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (context.read(exploreScrState).orderByGame[0] ==
+                            listGamesAvailable[index]['name']) {
+                          return;
+                        } else {
+                          context.read(exploreScrState).changeGameOrder(index);
+                        }
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        height: 50,
+                        width: 50,
+                        padding: EdgeInsets.all(10),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: listGamesAvailable[index]['isSelected']
+                                  ? listGamesAvailable[index]['shadow']
+                                  : const Color(0xFFC3C3C3),
+                              offset: Offset(0, 2),
+                              blurRadius: 15,
+                            ),
+                          ],
+                          gradient: LinearGradient(
+                            colors: [
+                              listGamesAvailable[index]['isSelected']
+                                  ? listGamesAvailable[index]['color-begin']
+                                  : const Color(0xFFD2D2D2),
+                              listGamesAvailable[index]['isSelected']
+                                  ? listGamesAvailable[index]['color-end']
+                                  : const Color(0xFF797979),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        child: Image.asset(
+                          listGamesAvailable[index]['image-url'],
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                    ],
-                    gradient: LinearGradient(
-                      colors: [
-                        listGamesAvailable[index]['isSelected']
-                            ? listGamesAvailable[index]['color-begin']
-                            : const Color(0xFFD2D2D2),
-                        listGamesAvailable[index]['isSelected']
-                            ? listGamesAvailable[index]['color-end']
-                            : const Color(0xFF797979),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
                     ),
-                  ),
-                  child: Image.asset(
-                    listGamesAvailable[index]['image-url'],
-                    fit: BoxFit.contain,
                   ),
                 ),
               ),

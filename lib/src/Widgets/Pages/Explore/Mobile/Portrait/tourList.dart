@@ -1,6 +1,7 @@
 //importing packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 //importing models
@@ -58,68 +59,81 @@ class _TourListState extends State<TourList> {
       itemCount: widget.tours.length,
       padding: EdgeInsets.only(top: 50, bottom: 50),
       itemBuilder: (BuildContext context, int index) {
-        return Consumer(
-          builder: (context, watch, child) {
-            final tourListScale = watch(tourListState).scale;
-            double scale = 1.0;
+        return AnimationConfiguration.staggeredList(
+          position: index,
+          duration: const Duration(milliseconds: 600),
+          delay: const Duration(milliseconds: 150),
+          child: SlideAnimation(
+            verticalOffset: 100,
+            curve: Curves.ease,
+            child: FadeInAnimation(
+              duration: const Duration(milliseconds: 350),
+              delay: const Duration(milliseconds: 150),
+              child: Consumer(
+                builder: (context, watch, child) {
+                  final tourListScale = watch(tourListState).scale;
+                  double scale = 1.0;
 
-            if (tourListScale > 0.2) {
-              // we used 'index + 1' because first item in the list must scale
-              // if we use 'index' instead of that, then first item scale to 0 suddenly
-              scale = (index + 1) + 0.2 - tourListScale;
-              if (scale < 0) {
-                scale = 0;
-              } else if (scale > 1) {
-                scale = 1;
-              }
-            }
-            return Opacity(
-              opacity: scale,
-              child: Transform(
-                transform: Matrix4.identity()..scale(scale, scale),
-                alignment: index % 2 == 0
-                    ? Alignment.bottomRight
-                    : Alignment.bottomLeft,
-                child: Align(
-                  heightFactor: 0.8,
-                  alignment: Alignment.topCenter,
-                  child: child,
+                  if (tourListScale > 0.2) {
+                    // we used 'index + 1' because first item in the list must scale
+                    // if we use 'index' instead of that, then first item scale to 0 suddenly
+                    scale = (index + 1) + 0.2 - tourListScale;
+                    if (scale < 0) {
+                      scale = 0;
+                    } else if (scale > 1) {
+                      scale = 1;
+                    }
+                  }
+                  return Opacity(
+                    opacity: scale,
+                    child: Transform(
+                      transform: Matrix4.identity()..scale(scale, scale),
+                      alignment: index % 2 == 0
+                          ? Alignment.bottomRight
+                          : Alignment.bottomLeft,
+                      child: Align(
+                        heightFactor: 0.8,
+                        alignment: Alignment.topCenter,
+                        child: child,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: heightTourContainer,
+                  margin: EdgeInsets.symmetric(
+                    horizontal: marginHorizontal,
+                    vertical: marginVertical,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [
+                        widget.tours[index].gradientBegin,
+                        widget.tours[index].gradientEnd,
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: widget.tours[index].shadowColor,
+                        blurRadius: 25,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Stack(
+                    overflow: Overflow.visible,
+                    children: [
+                      _buildPrice(tour: widget.tours[index]),
+                      _buildBgImg(tour: widget.tours[index]),
+                      _buildInfo(tour: widget.tours[index]),
+                      _buildHeader(tour: widget.tours[index]),
+                    ],
+                  ),
                 ),
               ),
-            );
-          },
-          child: Container(
-            height: heightTourContainer,
-            margin: EdgeInsets.symmetric(
-              horizontal: marginHorizontal,
-              vertical: marginVertical,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              gradient: LinearGradient(
-                colors: [
-                  widget.tours[index].gradientBegin,
-                  widget.tours[index].gradientEnd,
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: widget.tours[index].shadowColor,
-                  blurRadius: 25,
-                  offset: Offset(0, 5),
-                ),
-              ],
-            ),
-            child: Stack(
-              overflow: Overflow.visible,
-              children: [
-                _buildPrice(tour: widget.tours[index]),
-                _buildBgImg(tour: widget.tours[index]),
-                _buildInfo(tour: widget.tours[index]),
-                _buildHeader(tour: widget.tours[index]),
-              ],
             ),
           ),
         );
