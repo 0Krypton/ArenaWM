@@ -4,15 +4,15 @@ class UserModel {
   final String lastName;
   final String bio;
 
-  final String following;
-  final String followers;
+  final List<dynamic> following;
+  final List<dynamic> followers;
 
   final String region;
 
   final String profileImageUrl;
   final String bgImageUrl;
 
-  final List<String> playingGames;
+  final List<dynamic> playingGames;
 
   get isNull =>
       userName.isEmpty || profileImageUrl.isEmpty || bgImageUrl.isEmpty;
@@ -35,10 +35,10 @@ class UserModel {
         firstName = (data['name'].toString()).split(' ').first,
         lastName = (data['name'].toString()).split(' ').last,
         bio = (data['bio'].toString()),
-        following = (data['following'].toString()),
-        followers = (data['followers'].toString()),
+        following = data['following'] as List<dynamic>,
+        followers = data['followers'] as List<dynamic>,
         region = data['region'].toString(),
         profileImageUrl = data['profileImage'].toString(),
         bgImageUrl = data['bgImage'].toString(),
-        playingGames = (data['playingGames'][0]).toString().split(',');
+        playingGames = data['playingGames'] as List<dynamic>;
 }

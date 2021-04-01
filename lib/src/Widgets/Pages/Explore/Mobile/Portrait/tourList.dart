@@ -17,15 +17,19 @@ import '../../../../../utils/getGame.dart';
 import '../../../../../Themes/text.dart';
 
 class TourList extends StatefulWidget {
-  final List<Tour> tours;
-  TourList({required this.tours});
+  final List tours;
+  final double heightTourContainer;
+  TourList({
+    required this.tours,
+    this.heightTourContainer = 140.0,
+  });
   @override
   _TourListState createState() => _TourListState();
 }
 
 class _TourListState extends State<TourList> {
   //height of each tour item
-  final double heightTourContainer = 140.0;
+  // final double heightTourContainer = widget.heightTourContainer;
   final double marginHorizontal = 30.0;
   final double marginVertical = 5.0;
 
@@ -39,7 +43,7 @@ class _TourListState extends State<TourList> {
     _listController
       ..addListener(() {
         double value =
-            _listController.offset / ((heightTourContainer * 80) / 100);
+            _listController.offset / ((widget.heightTourContainer * 80) / 100);
 
         context.read(tourListState).setScale(value);
       });
@@ -100,7 +104,7 @@ class _TourListState extends State<TourList> {
                   );
                 },
                 child: Container(
-                  height: heightTourContainer,
+                  height: widget.heightTourContainer,
                   margin: EdgeInsets.symmetric(
                     horizontal: marginHorizontal,
                     vertical: marginVertical,
@@ -109,15 +113,17 @@ class _TourListState extends State<TourList> {
                     borderRadius: BorderRadius.circular(10),
                     gradient: LinearGradient(
                       colors: [
-                        widget.tours[index].gradientBegin,
-                        widget.tours[index].gradientEnd,
+                        widget.tours[index].gradientBegin!,
+                        if (widget.tours[index].gradientMid != null)
+                          widget.tours[index].gradientMid!,
+                        widget.tours[index].gradientEnd!,
                       ],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: widget.tours[index].shadowColor,
+                        color: widget.tours[index].shadowColor!,
                         blurRadius: 25,
                         offset: Offset(0, 5),
                       ),
@@ -143,14 +149,14 @@ class _TourListState extends State<TourList> {
 
   Widget _buildPrice({required Tour tour}) {
     return Positioned(
-      right: 20,
+      right: 10,
       bottom: 0,
       child: Container(
-        height: heightTourContainer,
+        height: widget.heightTourContainer,
         child: FittedBox(
           child: qanelas(
             text: '${tour.prize}',
-            color: tour.bgPriceColor,
+            color: tour.bgPriceColor!,
           ),
           fit: BoxFit.fitHeight,
         ),
@@ -161,9 +167,9 @@ class _TourListState extends State<TourList> {
   Widget _buildBgImg({required Tour tour}) {
     return Positioned(
       bottom: 0,
-      right: 5,
+      right: 2,
       child: Container(
-        height: heightTourContainer + 20,
+        height: widget.heightTourContainer + 20,
         child: Image.network(
           'http://localhost:3000/images/tour/${tour.bgImg}',
           fit: BoxFit.fitHeight,
@@ -174,7 +180,7 @@ class _TourListState extends State<TourList> {
 
   Widget _buildInfo({required Tour tour}) {
     return Positioned(
-      top: 50,
+      top: 55,
       left: 20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,18 +207,18 @@ class _TourListState extends State<TourList> {
         const SizedBox(width: 5),
         bronx(
           text: '${tour.enteredPlayers}',
-          fontSize: 12,
-          color: tour.textColor,
+          fontSize: 10,
+          color: tour.textColor!,
         ),
         reglo(
           text: '/',
           fontSize: 12,
-          color: tour.textColor,
+          color: tour.textColor!,
         ),
         bronx(
           text: '${tour.totalPlayers}',
-          fontSize: 12,
-          color: tour.textColor,
+          fontSize: 10,
+          color: tour.textColor!,
         ),
       ],
     );
@@ -233,7 +239,7 @@ class _TourListState extends State<TourList> {
         bronx(
           text: '${tour.tourMode} - ${tour.gameMode}',
           fontSize: 10,
-          color: tour.textColor,
+          color: tour.textColor!,
         ),
       ],
     );
@@ -249,9 +255,9 @@ class _TourListState extends State<TourList> {
           _buildGameLogo(tour),
           const SizedBox(width: 10),
           bronx(
-            text: tour.title,
+            text: tour.title!,
             fontSize: 12,
-            color: tour.textColor,
+            color: tour.textColor!,
           ),
         ],
       ),
@@ -268,14 +274,14 @@ class _TourListState extends State<TourList> {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: tour.gameIconColorShadowColor,
+            color: tour.gameIconShadowColor!,
             blurRadius: 10,
           ),
         ],
       ),
       child: Image.asset(
         GameAssist.getGameLogo(
-          gameName: tour.game.toLowerCase(),
+          gameName: tour.game!.toLowerCase(),
         ),
       ),
     );

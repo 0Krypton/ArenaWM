@@ -1,4 +1,5 @@
 //importing packages
+import 'package:animations/animations.dart';
 import 'package:app_v2/src/providers/btn_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,7 +70,7 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait>
 
   @override
   Widget build(BuildContext context) {
-    print('Build');
+    print('Build MainScreenMobilePortrait');
     return ResponsiveBuilder(
       builder: (context, sizeInfo) {
         final height = sizeInfo.screenSize.height;
@@ -135,7 +136,22 @@ class _MainScreenMobilePortraitState extends State<MainScreenMobilePortrait>
                       Consumer(
                         builder: (context, watch, child) {
                           int selectedIndex = watch(btnIndexProvider.state);
-                          return pages[selectedIndex];
+
+                          return PageTransitionSwitcher(
+                            duration: const Duration(milliseconds: 800),
+                            transitionBuilder: (
+                              Widget child,
+                              Animation<double> primaryAnimation,
+                              Animation<double> secondaryAnimation,
+                            ) {
+                              return FadeThroughTransition(
+                                animation: primaryAnimation,
+                                secondaryAnimation: secondaryAnimation,
+                                child: child,
+                              );
+                            },
+                            child: pages[selectedIndex],
+                          );
                         },
                       ),
                       //Btn

@@ -30,7 +30,7 @@ class Authenticate {
     try {
       // get response from api
       final res =
-          await Repository.getRequest(url: '$url/users/getMe', token: token);
+          await Repository.getRequest(url: '$url/users/me', token: token);
 
       //check to see are we have any errors is the sent response
       if (res.data['status'] == 'failure') {

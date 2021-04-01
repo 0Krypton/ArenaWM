@@ -1,15 +1,18 @@
 //importing packages
-import 'package:app_v2/src/models/user.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:simple_animations/simple_animations.dart';
+import 'package:supercharged/supercharged.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+//importing models
+import '../../../../../models/user.dart';
 
 //importing widgets
 import '../../../../../Widgets/responsive_builder.dart';
-import '../../../../../Widgets/Pages/Profile/Mobile/Portrait/profilePortraitBody.dart';
 import '../../../../../Widgets/textSplitter.dart';
+import '../../../../../Widgets/animatedScale.dart';
 
 //impoting themes
 import '../../../../../Themes/color.dart';
@@ -23,8 +26,59 @@ import '../../../../../utils/getAmountWithPrefix.dart';
 import '../../../../../providers/User/userState.dart';
 import '../../../../../providers/SideBar/sideBarState.dart';
 
-class ProfileScreenMobilePortrait extends StatelessWidget {
+class ProfileScreenMobilePortrait extends StatefulWidget {
   const ProfileScreenMobilePortrait();
+
+  @override
+  _ProfileScreenMobilePortraitState createState() =>
+      _ProfileScreenMobilePortraitState();
+}
+
+class _ProfileScreenMobilePortraitState
+    extends State<ProfileScreenMobilePortrait> with TickerProviderStateMixin {
+  late List<AnimationController> _gamesScaleAnimationController = [];
+  late int plyingGamesLength;
+  @override
+  void initState() {
+    super.initState();
+    plyingGamesLength = context.read(userLoggedIn.state).playingGames.length;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    for (int i = 0; i < plyingGamesLength; i++) {
+      _gamesScaleAnimationController.add(
+        AnimationController(
+          vsync: this,
+          duration: 300.milliseconds + (i * 100).milliseconds,
+        )..addListener(
+            () {
+              setState(() {});
+            },
+          ),
+      );
+    }
+
+    Future.delayed(
+      const Duration(milliseconds: 750),
+      () {
+        _gamesScaleAnimationController.forEach(
+          (gController) {
+            gController.forward();
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _gamesScaleAnimationController.forEach((controller) {
+      controller.dispose();
+    });
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +99,7 @@ class ProfileScreenMobilePortrait extends StatelessWidget {
                 // controller: scrollController,
                 physics: BouncingScrollPhysics(),
                 child: Container(
-                  height: height,
+                  height: height+0.1,
                   width: width,
                   color: bgColor,
                   child: Stack(
@@ -108,11 +162,13 @@ class ProfileScreenMobilePortrait extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          buildUserAccStat(lable: 'following', text: user.following),
+          buildUserAccStat(
+              lable: 'following', text: '${user.following.length}'),
           SizedBox(
             width: 50,
           ),
-          buildUserAccStat(lable: 'followers', text: user.followers),
+          buildUserAccStat(
+              lable: 'followers', text: '${user.followers.length}'),
         ],
       ),
     );
@@ -123,81 +179,103 @@ class ProfileScreenMobilePortrait extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        qanelas(
-          text: text.amountWithPrefix,
-          fontSize: 12,
-          color: Colors.black,
+        PlayAnimation<double>(
+          tween: (0.0).tweenTo(1.0),
+          duration: 300.milliseconds,
+          delay: 1000.milliseconds,
+          builder: (context, child, value) => Opacity(
+            opacity: value,
+            child: qanelas(
+              text: text.amountWithPrefix,
+              fontSize: 12,
+              color: Colors.black,
+            ),
+          ),
         ),
         SizedBox(height: 3),
-        aremat(
-          text: lable,
-          fontSize: 10,
-          color: const Color(0xFFA3A3A3),
+        PlayAnimation<double>(
+          tween: (0.0).tweenTo(1.0),
+          duration: 300.milliseconds,
+          delay: 800.milliseconds,
+          builder: (context, child, value) => Opacity(
+            opacity: value,
+            child: aremat(
+              text: lable,
+              fontSize: 10,
+              color: const Color(0xFFA3A3A3),
+            ),
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildGames({required double width, required List<String> games}) {
-    double padGamContainer = 11;
-    double widthGameContainers = (width / 2) - (padGamContainer * 4);
+  Widget _buildGames({required double width, required List<dynamic> games}) {
+    double padGamContainerLR = 15;
+    double marginGameContainer = 10;
+    double widthGameContainers =
+        (width / 2) - (padGamContainerLR * 2) - (marginGameContainer * 2);
     return Wrap(
-      runSpacing: padGamContainer * 2,
-      children: List.generate(games.length, (index) {
-        final List<Color> gameGradientColors =
-            GameAssist.getGameColor(games[index]);
-        return AnimationConfiguration.staggeredGrid(
-          columnCount: 2,
-          position: index,
-          duration: const Duration(milliseconds: 600),
-          delay: const Duration(milliseconds: 150),
-          child: ScaleAnimation(
-            duration: const Duration(milliseconds: 350),
-            delay: const Duration(milliseconds: 150),
-            child: FadeInAnimation(
-              duration: const Duration(milliseconds: 350),
-              delay: const Duration(milliseconds: 150),
-              child: Container(
-                height: 100,
-                width: widthGameContainers,
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: gameGradientColors,
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: GameAssist.getGameShadowColor(games[index]),
-                      blurRadius: 15,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                  borderRadius:
-                      const BorderRadius.all(const Radius.circular(15)),
+      runSpacing: padGamContainerLR * 2,
+      children: List.generate(
+        games.length,
+        (index) {
+          final List<Color> gameGradientColors = GameAssist.getGameColor(
+            games[index],
+          );
+          return AnimatedScale(
+            animController: _gamesScaleAnimationController[index],
+            beginScale: 0.0,
+            middleOneScale: 1.2,
+            middleTwoScale: 0.8,
+            endScale: 1,
+            child: Container(
+              height: 100,
+              width: widthGameContainers,
+              margin: EdgeInsets.symmetric(horizontal: marginGameContainer),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: gameGradientColors,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Image.asset(
-                    // listGamesPlayed[index].imageUrl,
-                    GameAssist.getGameImageUrl(games[index]),
-                    fit: BoxFit.contain,
+                boxShadow: [
+                  BoxShadow(
+                    color: GameAssist.getGameShadowColor(games[index]),
+                    blurRadius: 15,
+                    offset: Offset(0, 4),
                   ),
+                ],
+                borderRadius: const BorderRadius.all(const Radius.circular(10)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Image.asset(
+                  // listGamesPlayed[index].imageUrl,
+                  GameAssist.getGameImageUrl(games[index]),
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
-          ),
-        );
-      }).toList(),
+          );
+        },
+      ).toList(),
     );
   }
 
   Widget _buildBio({required double width, required UserModel user}) {
-    return Container(
-      alignment: Alignment.center,
-      width: width,
-      child: textSplitter(input: user.bio),
+    return PlayAnimation<double>(
+      tween: (0.0).tweenTo(1.0),
+      duration: 300.milliseconds,
+      delay: 850.milliseconds,
+      builder: (context, child, value) => Opacity(
+        opacity: value,
+        child: Container(
+          alignment: Alignment.center,
+          width: width,
+          child: textSplitter(input: user.bio),
+        ),
+      ),
     );
   }
 
@@ -206,10 +284,18 @@ class ProfileScreenMobilePortrait extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        qanelas(
-          text: user.userName,
-          fontSize: 18,
-          color: Colors.black,
+        PlayAnimation<double>(
+          tween: (0.0).tweenTo(1.0),
+          duration: 300.milliseconds,
+          delay: 900.milliseconds,
+          builder: (context, child, value) => Opacity(
+            opacity: value,
+            child: qanelas(
+              text: user.userName,
+              fontSize: 18,
+              color: Colors.black,
+            ),
+          ),
         ),
 
         //TODO:Add verified
@@ -238,23 +324,32 @@ class ProfileScreenMobilePortrait extends StatelessWidget {
           left: 0,
           right: 0,
           top: height - (hwProfileImg / 2),
-          child: Container(
-            height: hwProfileImg,
-            width: hwProfileImg,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.4),
-                  blurRadius: 50,
+          child: PlayAnimation<double>(
+            duration: 350.milliseconds,
+            delay: 500.milliseconds,
+            tween: (0.0).tweenTo(1.0),
+            curve: Curves.ease,
+            builder: (context, child, value) => Transform.scale(
+              scale: value,
+              child: Container(
+                height: hwProfileImg,
+                width: hwProfileImg,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.35),
+                      blurRadius: 40,
+                    ),
+                  ],
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      'http://localhost:3000/images/users/${user.profileImageUrl}',
+                    ),
+                    alignment: Alignment.center,
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ],
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(
-                  'http://localhost:3000/images/users/${user.profileImageUrl}',
-                ),
-                alignment: Alignment.center,
-                fit: BoxFit.fill,
               ),
             ),
           ),

@@ -54,3 +54,9 @@ const List<Color> colors = const <Color>[
   const Color(0xFF00D1FF),
   const Color(0xFF33019F),
 ];
+
+// TextField Hint Color
+const Color txtFieldHintColor = const Color(0xFF8F8F8F);
+
+//TextField bg Color
+const Color txtFieldBgColor = const Color(0xFFF7F6F9);

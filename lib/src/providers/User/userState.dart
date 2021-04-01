@@ -13,11 +13,11 @@ import '../../models/user.dart';
 final userLoggedIn = StateNotifierProvider((ref) => LoggedInUser());
 final userState = FutureProvider<UserModel>(
   (ref) async {
-    final user = fetchUser(
+    final user = await fetchUser(
       token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNGY3ZGQyMDhmNzUyMDRiNGFjMGY1MCIsImlhdCI6MTYxNTgyMjI5MSwiZXhwIjoxNjIzNTk4MjkxfQ.CL1nYUpoD_nMIEqx56SRSaXxrgXve8zh2_G699OMkzY',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjJkNjhmNGNlMWFjMTE0YzdiNjdhYyIsImlhdCI6MTYxNzA5MDE5MiwiZXhwIjoxNjI0ODY2MTkyfQ.2R5ZungGQ2NN3bAuTwAjMhn-Yuv9Gt59ijvMQ5xzB3w',
     );
-    ref.read(userLoggedIn).setUser(await user);
+    ref.read(userLoggedIn).setUser(user);
 
     return user;
   },
@@ -44,8 +44,8 @@ class LoggedInUser extends StateNotifier<UserModel> {
             region: '',
             userName: '',
             bio: '',
-            followers: '',
-            following: '',
+            followers: [''],
+            following: [''],
           ),
         );
 

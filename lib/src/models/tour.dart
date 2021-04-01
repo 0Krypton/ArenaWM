@@ -5,59 +5,84 @@ import 'package:flutter/material.dart';
 import '../utils/convertStringtoColor.dart';
 
 class Tour {
-  final String title;
-  final String description;
-  final String game;
-  final String gameMode;
-  final String tourMode;
-  final String region;
-  final String bgImg;
+  String? title;
+  String? description;
+  String? game;
+  String? gameMode;
+  String? tourMode;
+  String? region;
+  String? bgImg;
 
-  final Color gradientBegin;
-  final Color gradientEnd;
-  final Color textColor;
-  final Color shadowColor;
-  final Color gameIconColorShadowColor;
-  final Color bgPriceColor;
+  Color? gradientBegin;
+  Color? gradientMid;
+  Color? gradientEnd;
+  Color? textColor;
+  Color? shadowColor;
+  Color? gameIconShadowColor;
+  Color? bgPriceColor;
 
-  final int prize;
-  final List<dynamic> prizePool;
+  int? prize;
+  List<dynamic>? prizePool;
 
-  final int totalRounds;
-  final int? enteredPlayers;
-  final int? totalPlayers;
+  int? totalRounds;
+  int? enteredPlayers;
 
-  final bool premium;
+  int? totalPlayers;
 
-  Tour.fromJson(Map<String, dynamic> data)
-      : title = data['title'],
-        description = data['description'],
-        game = data['game'],
-        gameMode = data['gameMode'],
-        tourMode = data['tourMode'],
-        region = data['region'],
-        bgImg = data['bgImg'],
-        gradientBegin = (data['gradientBegin'] as String).convertToColor!,
-        gradientEnd = (data['gradientEnd'] as String).convertToColor!,
-        textColor = (data['textColor'] as String).convertToColor!,
-        shadowColor = (data['shadowColor'] as String).convertToColor!,
-        gameIconColorShadowColor =
-            (data['gameIconColorShadowColor'] as String).convertToColor!,
-        bgPriceColor = (data['bgPriceColor'] as String).convertToColor!,
-        prize = data['prize'],
-        prizePool = data['prizePool'].map((prize) {
-          return int.parse(prize.toString());
-        }).toList(),
-        totalRounds = data['totalRounds'],
-        enteredPlayers = data['enteredPlayers'] ?? 1,
-        totalPlayers = data['totalPlayers'] ??
-            (data['gameMode'] == 'battle royal' ? 100 : 16),
-        premium = data['premium'];
+  bool? premium;
 
-  @override
-  String toString() {
-    print(
-        'title: ${this.title}, prize: ${this.prize}\nprizePool : ${this.prizePool}');
-    return super.toString();
+  Tour({
+    this.title,
+    this.description,
+    this.game,
+    this.gameMode,
+    this.tourMode,
+    this.region,
+    this.bgImg,
+    this.gradientBegin,
+    this.gradientMid,
+    this.gradientEnd,
+    this.textColor,
+    this.shadowColor,
+    this.gameIconShadowColor,
+    this.bgPriceColor,
+    this.prize,
+    this.prizePool,
+    this.totalRounds,
+    this.enteredPlayers,
+    this.totalPlayers,
+    this.premium,
+  });
+
+  factory Tour.fromJson(Map<String, dynamic> json) {
+    Tour tour = Tour(
+      title: json['title'] as String,
+      description: json['description'] as String,
+      game: json['game'] as String,
+      gameMode: json['gameMode'] as String,
+      tourMode: json['tourMode'] as String,
+      region: json['region'] as String,
+      bgImg: json['bgImg'] as String,
+      gradientBegin: (json['gradientBegin'] as String).convertToColor!,
+      gradientEnd: (json['gradientEnd'] as String).convertToColor!,
+      textColor: (json['textColor'] as String).convertToColor!,
+      shadowColor: (json['shadowColor'] as String).convertToColor!,
+      gameIconShadowColor:
+          (json['gameIconShadowColor'] as String).convertToColor!,
+      bgPriceColor: (json['bgPriceColor'] as String).convertToColor!,
+      prize: json['prize'],
+      prizePool: json['prizePool'] as List<dynamic>,
+      totalRounds: json['totalRounds'],
+      enteredPlayers: json['enteredPlayers'],
+      totalPlayers: json['totalPlayers'],
+      premium: json['premium'],
+    );
+
+    Color gradientMid;
+    if (json['gradientMid'] != null) {
+      gradientMid = (json['gradientMid'] as String).convertToColor!;
+      tour.gradientMid = gradientMid;
+    }
+    return tour;
   }
 }

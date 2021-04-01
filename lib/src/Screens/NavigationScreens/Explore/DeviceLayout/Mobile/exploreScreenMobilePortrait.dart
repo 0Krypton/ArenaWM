@@ -1,13 +1,9 @@
 //importing packages
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //importing widgets
 import '../../../../../Widgets/responsive_builder.dart';
 import '../../../../../Widgets/Pages/Explore/Mobile/Portrait/explorePortraitBody.dart';
-
-//importing providers
-import '../../../../../providers/ExploreScr/toursState.dart';
 
 //impoting themes
 import '../../../../../Themes/color.dart';
@@ -34,10 +30,11 @@ class _ExploreScreenMobilePortraitState
           color: bgColor,
           child: Column(
             children: [
-              buildExploreScrAppBar(width: width),
-              buildServers(),
-              buildGamesAvailable(),
+              buildExploreScrAppBar(context: context, width: width),
+              AvailableServers(),
+              AvailableGames(),
               Expanded(child: ExploreScrTourList()),
+              SizedBox(height: 70),
             ],
           ),
         );

@@ -37,7 +37,6 @@ class _MobilePortraitBTNState extends State<MobilePortraitBTN>
   late AnimationController btnContainerController;
   late AnimationController btnMovingContainerController;
   late Animation<double> btnContainerPosition;
-  late Animation<double> btnMovingContainerPosition;
 
   late AnimationController controllerOne;
   late AnimationController controllerTwo;
@@ -72,7 +71,7 @@ class _MobilePortraitBTNState extends State<MobilePortraitBTN>
     btnMovingContainerController = AnimationController(
         vsync: this,
         duration: const Duration(
-          milliseconds: 1100,
+          milliseconds: 1000,
         ))
       ..addListener(() {
         setState(() {});
@@ -98,32 +97,6 @@ class _MobilePortraitBTNState extends State<MobilePortraitBTN>
           tween: Tween<double>(
             begin: posFromSides - 5.0,
             end: posFromSides,
-          ),
-          weight: 40.0,
-        ),
-      ],
-    ).animate(btnContainerController);
-
-    btnMovingContainerPosition = TweenSequence(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(
-            begin: -(movingContainerPos + 10),
-            end: movingContainerPos + 5.0,
-          ),
-          weight: 40.0,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(
-            begin: movingContainerPos + 5.0,
-            end: movingContainerPos - 5.0,
-          ),
-          weight: 20.0,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(
-            begin: movingContainerPos - 5.0,
-            end: movingContainerPos,
           ),
           weight: 40.0,
         ),
@@ -180,10 +153,10 @@ class _MobilePortraitBTNState extends State<MobilePortraitBTN>
       child: Container(
         height: 60,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: bgColor,
           borderRadius: borderRadius,
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(.1), blurRadius: 15),
+            BoxShadow(color: Colors.grey.withOpacity(.3), blurRadius: 15),
           ],
         ),
         child: Stack(
@@ -206,22 +179,25 @@ class _MobilePortraitBTNState extends State<MobilePortraitBTN>
               (widthItemArea * watch(btnIndexProvider.state)) +
               (widthItemArea / 2) -
               20,
-          bottom: btnMovingContainerPosition.value,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: colors[watch(btnIndexProvider.state)],
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(10.0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: colors[watch(btnIndexProvider.state)],
-                  blurRadius: 10,
+          bottom: 10.0,
+          child: Opacity(
+            opacity: btnContainerController.value,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: colors[watch(btnIndexProvider.state)],
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(10.0),
                 ),
-              ],
+                boxShadow: [
+                  BoxShadow(
+                    color: colors[watch(btnIndexProvider.state)],
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
             ),
           ),
         );

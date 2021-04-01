@@ -19,7 +19,7 @@ class ResponsiveBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
 
-    return LayoutBuilder(builder: (contextn, constraints) {
+    return LayoutBuilder(builder: (context, constraints) {
       SizingInformation sizingInformation = SizingInformation(
         orientation: media.orientation,
         deviceType: getDeviceType(media),

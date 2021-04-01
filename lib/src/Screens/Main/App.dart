@@ -47,15 +47,13 @@ class _AppState extends State<App> {
 
   final Widget _loadingWidget = Scaffold(
     backgroundColor: bgColor,
-    body: Container(
-      child: Center(
-        child: Container(
-          height: 120,
-          width: 120,
-          child: FlareActor(
-            'assets/rive/loading-Complicit-Simple.flr',
-            animation: 'Complicit',
-          ),
+    body: Center(
+      child: Container(
+        height: 120,
+        width: 120,
+        child: FlareActor(
+          'assets/rive/loading-Complicit-Simple.flr',
+          animation: 'Complicit',
         ),
       ),
     ),

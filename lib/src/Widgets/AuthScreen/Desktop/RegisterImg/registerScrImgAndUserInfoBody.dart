@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:file_picker/file_picker.dart';
 
 //importing utils
 import '../../../../utils/getImageFromClient.dart';
@@ -477,7 +476,7 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
   Widget _bgImg({required height}) {
     return InkWell(
       onTap: () {
-        pickFile(type: 'bg');
+        // pickFile(type: 'bg');
         // ImageFromClient.getImage(onComplete: (Uint8List bgImg) {
         //   print('retrieved');
 
@@ -523,25 +522,25 @@ class _RegisterImgAndUserInfoState extends State<RegisterImgAndUserInfo>
     );
   }
 
-  void pickFile({required String type}) async {
-    try {
-      List<PlatformFile>? _paths = (await FilePicker.platform.pickFiles(
-        type: FileType.image,
-        allowMultiple: false,
-        allowedExtensions: ['png', 'jpeg', 'jpg'],
-      ))
-          ?.files;
-      print('file ${_paths?.first.bytes}');
-      File unit8File = File.fromRawPath(_paths!.first.bytes!);
-      context.read(authentication).setImg(
-            type: type,
-            file: unit8File,
-            unit8File: _paths.first.bytes!,
-          );
-    } on PlatformException catch (e) {
-      print("Unsupported operation" + e.toString());
-    } catch (ex) {
-      print(ex);
-    }
-  }
+  // void pickFile({required String type}) async {
+  //   try {
+  //     List<PlatformFile>? _paths = (await FilePicker.platform.pickFiles(
+  //       type: FileType.image,
+  //       allowMultiple: false,
+  //       allowedExtensions: ['png', 'jpeg', 'jpg'],
+  //     ))
+  //         ?.files;
+  //     print('file ${_paths?.first.bytes}');
+  //     File unit8File = File.fromRawPath(_paths!.first.bytes!);
+  //     context.read(authentication).setImg(
+  //           type: type,
+  //           file: unit8File,
+  //           unit8File: _paths.first.bytes!,
+  //         );
+  //   } on PlatformException catch (e) {
+  //     print("Unsupported operation" + e.toString());
+  //   } catch (ex) {
+  //     print(ex);
+  //   }
+  // }
 }
