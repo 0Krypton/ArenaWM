@@ -51,7 +51,7 @@ class _InboxState extends State<Inbox> with TickerProviderStateMixin {
     // Add new group init
     _addNewController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 350),
     );
   }
 
@@ -103,9 +103,17 @@ class _InboxState extends State<Inbox> with TickerProviderStateMixin {
                     ),
                   ],
                 ),
-                addNewButton(
-                  context: context,
-                  animationController: _addNewController,
+                Positioned(
+                  bottom: 30,
+                  right: 30,
+                  child: addButton(
+                    context: context,
+                    animationController: _addNewController,
+                    iconUrl: 'assets/add.svg',
+                    callBack: () {
+                      Navigator.of(context).push(AddNewScreen.comeToPage());
+                    },
+                  ),
                 ),
               ],
             ),

@@ -10,7 +10,12 @@ class Authenticate {
   static Future<Map<String, dynamic>> check(Map<String, dynamic> data) async {
     try {
       // get response from api
-      final res = await Repository.postRequest('$url/users/check', data);
+      final res = await Repository.postRequest(
+        '$url/users/check',
+        data,
+        token:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNjJkNjhmNGNlMWFjMTE0YzdiNjdhYyIsImlhdCI6MTYxNzA5MDE5MiwiZXhwIjoxNjI0ODY2MTkyfQ.2R5ZungGQ2NN3bAuTwAjMhn-Yuv9Gt59ijvMQ5xzB3w',
+      );
 
       //check to see are we have any errors is the sent response
       if (res.data['status'] == 'failure') {

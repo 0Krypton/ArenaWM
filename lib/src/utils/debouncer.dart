@@ -18,4 +18,8 @@ class Debouncer {
 
     _timer = Timer(Duration(milliseconds: this.milliseconds), action);
   }
+
+  void cancel() {
+    if (_timer != null) _timer!.cancel();
+  }
 }

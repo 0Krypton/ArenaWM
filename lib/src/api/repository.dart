@@ -1,12 +1,16 @@
 //importing pacakges
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 
 class Repository {
   static Future<Response> postRequest(
-      String url, Map<String, dynamic> data) async {
-    final response = await Dio().post(
+    String url,
+    Map<String, dynamic> data, {
+    required String token,
+  }) async {
+    Dio dio = Dio();
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["authorization"] = "Bearer $token";
+    final response = await dio.post(
       url,
       data: data,
     );

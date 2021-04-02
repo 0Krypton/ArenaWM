@@ -95,11 +95,12 @@ Text bronx(
 ///////////////////////////////////////////////////////////
 
 //Gilroy FontFamily
-Text gilroy(
-    {required String text,
-    required double fontSize,
-    required Color color,
-    FontWeight? fontWeight}) {
+Text gilroy({
+  required String text,
+  required double fontSize,
+  required Color color,
+  FontWeight? fontWeight,
+}) {
   return Text(
     text,
     style: TextStyle(

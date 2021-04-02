@@ -1,19 +1,23 @@
 //importing packages
+import 'package:app_v2/src/providers/HomeScr/Inbox/addNew.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-//importing themes
-import '../../../../../../Themes/color.dart';
+//importing apis
+import '../../../../../../api/Home/newChat.dart';
 
 //importing widgets
 import '../../../../../responsive_builder.dart';
-import './searchField.dart';
 
-//importing utils
-import '../../../../../../utils/debouncer.dart';
+import './newGroup/search.dart';
+import './newGroup/name.dart';
+import './newGroup/foundedUsers.dart';
+import './newGroup/selectedUsers.dart';
 
 //importing dart files
 import 'dart:ui';
+
+import 'addNewButton.dart';
 
 class AddNewScreen extends StatefulWidget {
   static Route comeToPage() {
@@ -41,9 +45,6 @@ class AddNewScreen extends StatefulWidget {
 
 class _AddNewScreenState extends State<AddNewScreen>
     with TickerProviderStateMixin {
-//Declaring search Friends Debouncer
-  final Debouncer _searchFriendDebouncer = Debouncer(milliseconds: 500);
-
   //Controller
   late final AnimationController _controller;
 
@@ -59,13 +60,22 @@ class _AddNewScreenState extends State<AddNewScreen>
   late final TextEditingController _groupNameTxtController;
   late final FocusNode _groupNameFocusNode;
 
+  // Add new group controller
+  late final AnimationController _addNewController;
+
   @override
   void initState() {
     super.initState();
     //initilizing animation controllers
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 400),
+    );
+
+    //initilizing addNewGroup Controllers
+    _addNewController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 350),
     );
 
     //initilizing txtControllers
@@ -81,6 +91,7 @@ class _AddNewScreenState extends State<AddNewScreen>
   void dispose() {
     //disposing Anim controllers
     _controller.dispose();
+    _addNewController.dispose();
 
     //disposing txtControllers
     _friendsTxtController.dispose();
@@ -117,7 +128,7 @@ class _AddNewScreenState extends State<AddNewScreen>
         parent: _controller,
         curve: Interval(
           0,
-          0.400,
+          0.500,
           curve: Curves.easeInOut,
         ),
       ),
@@ -138,6 +149,10 @@ class _AddNewScreenState extends State<AddNewScreen>
     Future.delayed(const Duration(milliseconds: 300), () {
       _controller.forward();
     });
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      _addNewController.forward();
+    });
   }
 
   @override
@@ -147,16 +162,20 @@ class _AddNewScreenState extends State<AddNewScreen>
         final double height = sizingInformation.screenSize.height;
         final double width = sizingInformation.screenSize.width;
 
-        return Material(
-          color: Colors.transparent,
-          child: Stack(
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Stack(
             children: [
               GestureDetector(
                 onTap: () {
                   _controller.reverse();
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    Navigator.of(context).pop();
-                  });
+
+                  Future.delayed(
+                    const Duration(milliseconds: 500),
+                    () {
+                      Navigator.of(context).pop();
+                    },
+                  );
                 },
                 child: Container(
                   height: height,
@@ -187,114 +206,80 @@ class _AddNewScreenState extends State<AddNewScreen>
                             const Radius.circular(10),
                           ),
                         ),
-                        padding: const EdgeInsets.only(
-                          top: 15,
-                          left: 15,
-                          right: 15,
-                        ),
+                        padding: const EdgeInsets.only(top: 15),
                         child: Opacity(
                           opacity: _opacityAnim.value,
                           child: child,
                         ),
                       );
                     },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Stack(
                       children: [
-                        //Find Friends TextField
-                        SearchField(
-                          hint: 'Find friends',
-                          heightField: 50,
-                          controller: _friendsTxtController,
-                          focusNode: _friendsFocusNode,
-                          prefixIconUrl: 'assets/scan_friend.svg',
-                          callBack: (v) {
-                            if (v.isNotEmpty) {
-                              _searchFriendDebouncer.run(() {
-                                print('debounced for 500 ms');
-                              });
-                            }
-                          },
-                        ),
-                        SizedBox(height: 5),
-                        //Select a name for group
-                        SearchField(
-                          hint: 'Name',
-                          heightField: 50,
-                          controller: _groupNameTxtController,
-                          focusNode: _groupNameFocusNode,
-                          prefixIconUrl: 'assets/chat.svg',
-                          callBack: (v) {},
-                        ),
-                        SizedBox(height: 5),
-                        //show selected peoples count
-                        Text(
-                          '4 people selected',
-                          style: TextStyle(
-                            fontSize: 8,
-                            fontFamily: 'Gilroy',
-                            color: txtFieldHintColor,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //Find Friends TextField
+                              findFriends(
+                                context: context,
+                                friendsTextEditingController:
+                                    _friendsTxtController,
+                                friendsFocusNode: _friendsFocusNode,
+                              ),
+                              const SizedBox(height: 5),
+                              //Select a name for group
+                              selectName(
+                                context: context,
+                                groupNameTxtController: _groupNameTxtController,
+                                groupNameFocusNode: _groupNameFocusNode,
+                              ),
+                              const SizedBox(height: 5),
+                              //show selected peoples count
+                              selectedUsersCount(),
+                              const SizedBox(height: 10),
+                              //showing selected peoples
+                              selectedUsers(),
+                              const SizedBox(height: 15),
+                              //show the list of finded firends
+                              Expanded(
+                                child: FoundedUsers(),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(height: 5),
-                        //show selected peoples with random color
-                        Wrap(
-                          direction: Axis.horizontal,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.pink[100],
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(5),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.pink[50]!,
-                                    blurRadius: 15,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Krypton',
-                                      style: TextStyle(
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.pink[900],
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: InkWell(
-                                      highlightColor: Colors.transparent,
-                                      splashColor: Colors.transparent,
-                                      onTap: () {
-                                        print('delete selected user');
-                                      },
-                                      child: SvgPicture.asset(
-                                        'assets/close.svg',
-                                        color: Colors.black,
-                                        height: 10,
-                                        width: 10,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        Positioned(
+                          bottom: 15,
+                          right: 15,
+                          child: addButton(
+                            context: context,
+                            animationController: _addNewController,
+                            iconUrl: 'assets/submit.svg',
+                            callBack: () async {
+                              if (_groupNameTxtController.text.isEmpty) {
+                                print('group name is empty');
+                              } else {
+                                //getting group's name
+                                final String groupName =
+                                    context.read(newGroup).groupName;
+
+                                // getting group's members
+                                final List<String> groupMembers = context
+                                    .read(newGroup)
+                                    .groupMembers
+                                    .map((member) => member.id)
+                                    .toList();
+
+                                print(groupName);
+                                print(groupMembers);
+                                final data = await Chat.newOne(
+                                    {"name": groupName, "users": groupMembers});
+
+                                print(data);
+                              }
+                            },
+                          ),
                         ),
-                        //show the list of finded firends
                       ],
                     ),
                   ),

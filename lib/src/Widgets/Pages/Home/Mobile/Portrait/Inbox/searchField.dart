@@ -45,7 +45,6 @@ class SearchField extends StatelessWidget {
         ),
         onChanged: (v) {
           callBack(v);
-          print('searchField Value: $v');
         },
         decoration: InputDecoration(
           hoverColor: const Color(0xFFC1F4FF),

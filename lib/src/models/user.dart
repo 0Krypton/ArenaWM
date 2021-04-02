@@ -3,6 +3,7 @@ class UserModel {
   final String firstName;
   final String lastName;
   final String bio;
+  final String id;
 
   final List<dynamic> following;
   final List<dynamic> followers;
@@ -22,6 +23,7 @@ class UserModel {
     required this.firstName,
     required this.lastName,
     required this.bio,
+    required this.id,
     required this.region,
     required this.profileImageUrl,
     required this.bgImageUrl,
@@ -35,6 +37,7 @@ class UserModel {
         firstName = (data['name'].toString()).split(' ').first,
         lastName = (data['name'].toString()).split(' ').last,
         bio = (data['bio'].toString()),
+        id = (data['_id'].toString()),
         following = data['following'] as List<dynamic>,
         followers = data['followers'] as List<dynamic>,
         region = data['region'].toString(),
