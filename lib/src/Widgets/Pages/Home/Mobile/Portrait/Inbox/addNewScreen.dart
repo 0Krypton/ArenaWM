@@ -47,6 +47,10 @@ class _AddNewScreenState extends State<AddNewScreen>
     with TickerProviderStateMixin {
   //Controller
   late final AnimationController _controller;
+  // Add new group controller
+  late final AnimationController _addNewBtnController;
+  // GroupNameTextFieldController
+  late final AnimationController _groupNameAnimController;
 
   //Width Animation
   late final Animation<double> _widthAnim;
@@ -60,9 +64,6 @@ class _AddNewScreenState extends State<AddNewScreen>
   late final TextEditingController _groupNameTxtController;
   late final FocusNode _groupNameFocusNode;
 
-  // Add new group controller
-  late final AnimationController _addNewController;
-
   @override
   void initState() {
     super.initState();
@@ -73,9 +74,15 @@ class _AddNewScreenState extends State<AddNewScreen>
     );
 
     //initilizing addNewGroup Controllers
-    _addNewController = AnimationController(
+    _addNewBtnController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 350),
+    );
+
+    //initilizing groupNameAnimController
+    _groupNameAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
     );
 
     //initilizing txtControllers
@@ -91,7 +98,8 @@ class _AddNewScreenState extends State<AddNewScreen>
   void dispose() {
     //disposing Anim controllers
     _controller.dispose();
-    _addNewController.dispose();
+    _addNewBtnController.dispose();
+    _groupNameAnimController.dispose();
 
     //disposing txtControllers
     _friendsTxtController.dispose();
@@ -151,7 +159,7 @@ class _AddNewScreenState extends State<AddNewScreen>
     });
 
     Future.delayed(const Duration(milliseconds: 500), () {
-      _addNewController.forward();
+      _addNewBtnController.forward();
     });
   }
 
@@ -199,7 +207,7 @@ class _AddNewScreenState extends State<AddNewScreen>
                     builder: (context, child) {
                       return Container(
                         height: _heightAnim.value,
-                        width: _widthAnim.value,
+                        width: width,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: const BorderRadius.all(
@@ -231,12 +239,14 @@ class _AddNewScreenState extends State<AddNewScreen>
                               //Select a name for group
                               selectName(
                                 context: context,
+                                groupNameColorController:
+                                    _groupNameAnimController,
                                 groupNameTxtController: _groupNameTxtController,
                                 groupNameFocusNode: _groupNameFocusNode,
                               ),
                               const SizedBox(height: 5),
                               //show selected peoples count
-                              selectedUsersCount(),
+                              SelectedUsersCount(),
                               const SizedBox(height: 10),
                               //showing selected peoples
                               selectedUsers(),
@@ -253,13 +263,24 @@ class _AddNewScreenState extends State<AddNewScreen>
                           right: 15,
                           child: addButton(
                             context: context,
-                            animationController: _addNewController,
+                            animationController: _addNewBtnController,
                             iconUrl: 'assets/submit.svg',
                             callBack: () async {
+                              // checking group name if it is empty then show error
                               if (_groupNameTxtController.text.isEmpty) {
+                                _groupNameAnimController.reset();
+                                _groupNameAnimController.forward();
+
+                                Future.delayed(
+                                    const Duration(milliseconds: 250), () {
+                                  _groupNameAnimController.reverse();
+                                });
+
+                                //TODO show toast that says please enter a name to group
                                 print('group name is empty');
+                                return;
                               } else {
-                                //getting group's name
+                                // getting group's name
                                 final String groupName =
                                     context.read(newGroup).groupName;
 
@@ -272,6 +293,7 @@ class _AddNewScreenState extends State<AddNewScreen>
 
                                 print(groupName);
                                 print(groupMembers);
+
                                 final data = await Chat.newOne(
                                     {"name": groupName, "users": groupMembers});
 

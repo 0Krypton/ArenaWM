@@ -10,8 +10,10 @@ Widget selectName({
   required BuildContext context,
   required TextEditingController groupNameTxtController,
   required FocusNode groupNameFocusNode,
+  required AnimationController groupNameColorController,
 }) {
   return SearchField(
+    colorAnimController: groupNameColorController,
     hint: 'Name',
     heightField: 50,
     controller: groupNameTxtController,

@@ -35,7 +35,10 @@ class FoundedUsers extends StatelessWidget {
                       physics: BouncingScrollPhysics(),
                       itemCount: users.length,
                       itemBuilder: (ctx, index) {
-                        return FoundedUser(foundedUser: users[index]);
+                        return FoundedUser(
+                          foundedUser: users[index],
+                          delay: (100 * index).toInt(),
+                        );
                       },
                     );
                   }
