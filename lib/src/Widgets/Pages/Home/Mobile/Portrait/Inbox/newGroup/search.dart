@@ -18,12 +18,14 @@ Widget findFriends({
   required BuildContext context,
   required TextEditingController friendsTextEditingController,
   required FocusNode friendsFocusNode,
+  required AnimationController friendsColorController,
 }) {
-  return SearchField(
+  return TxtField(
     hint: 'Find friends',
     heightField: 50,
     controller: friendsTextEditingController,
     focusNode: friendsFocusNode,
+    colorAnimController: friendsColorController,
     prefixIconUrl: 'assets/scan_friend.svg',
     callBack: (v) {
       if (v.isNotEmpty) {

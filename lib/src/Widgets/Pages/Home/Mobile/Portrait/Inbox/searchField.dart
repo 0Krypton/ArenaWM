@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 //importing themes
 import '../../../../../../Themes/color.dart';
 
-class SearchField extends StatefulWidget {
-  SearchField({
+class TxtField extends StatefulWidget {
+  TxtField({
     required this.heightField,
     required this.controller,
     required this.focusNode,
@@ -15,25 +15,35 @@ class SearchField extends StatefulWidget {
     this.colorAnimController,
     this.prefixIconUrl,
     this.suffixIconUrl,
+    this.fillColor,
+    this.txtColor,
+    this.fillErrorColor,
+    this.txtErrorColor,
   });
 
-  final double heightField;
   final FocusNode focusNode;
   final TextEditingController controller;
 
   final AnimationController? colorAnimController;
 
+  final double heightField;
+
   final String hint;
   final String? prefixIconUrl;
   final String? suffixIconUrl;
 
+  final Color? fillColor;
+  final Color? txtColor;
+  final Color? fillErrorColor;
+  final Color? txtErrorColor;
+
   final Function(String value) callBack;
 
   @override
-  _SearchFieldState createState() => _SearchFieldState();
+  _TxtFieldState createState() => _TxtFieldState();
 }
 
-class _SearchFieldState extends State<SearchField> {
+class _TxtFieldState extends State<TxtField> {
   late Animation<Color?> textFieldFilledColor;
   late Animation<Color?> textFieldTextColor;
 
@@ -43,15 +53,15 @@ class _SearchFieldState extends State<SearchField> {
 
     if (widget.colorAnimController != null) {
       textFieldFilledColor = ColorTween(
-        begin: txtFieldBgColor,
-        end: Colors.red[100],
+        begin: widget.fillColor ?? txtFieldBgColor,
+        end: widget.fillErrorColor ?? Colors.red[100],
       ).animate(widget.colorAnimController!)
         ..addListener(() {
           setState(() {});
         });
       textFieldTextColor = ColorTween(
-        begin: txtFieldHintColor,
-        end: Colors.red[900],
+        begin: widget.txtColor ?? txtFieldHintColor,
+        end: widget.txtErrorColor ?? Colors.red[900],
       ).animate(widget.colorAnimController!)
         ..addListener(() {
           setState(() {});

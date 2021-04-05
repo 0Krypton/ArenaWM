@@ -2,7 +2,7 @@
 import '../repository.dart';
 
 //importing models
-import '../../models/user.dart';
+import '../../models/userModel.dart';
 
 const String url = 'http://localhost:3000/api/v1';
 

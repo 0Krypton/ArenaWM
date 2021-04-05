@@ -6,7 +6,7 @@ import 'package:supercharged/supercharged.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 //importing models
-import '../../../../../models/user.dart';
+import '../../../../../models/userModel.dart';
 
 //importing widgets
 import '../../../../../Widgets/responsive_builder.dart';

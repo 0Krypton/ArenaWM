@@ -9,7 +9,7 @@ import '../../providers/ExploreScr/exploreScrState.dart';
 import '../../api/Explore/tours.dart';
 
 //importing models
-import '../../models/tour.dart';
+import '../../models/tourModel.dart';
 
 final fetchTours = FutureProvider(
   (ref) async {

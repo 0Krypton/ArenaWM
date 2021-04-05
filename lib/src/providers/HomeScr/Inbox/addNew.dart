@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //importing models
-import '../../../models/user.dart';
+import '../../../models/userModel.dart';
 
 //impotring apis
 import '../../../api/Explore/search.dart';
@@ -64,14 +64,17 @@ class AddNewGroup extends ChangeNotifier {
         .where((user) => user.userName == adedUser.userName)
         .toList();
 
-    print(existingUser);
     if (existingUser.isEmpty) {
       _groupMembers = [..._groupMembers, adedUser];
-      print(_groupMembers);
       notifyListeners();
     } else {
       return;
     }
+  }
+
+  void clearAll() {
+    _groupMembers = [];
+    notifyListeners();
   }
 
   void removeGroupMember(UserModel deletedUser) {

@@ -1,6 +1,6 @@
 //importing pacakges
 import 'package:app_v2/src/Widgets/userWidget.dart';
-import 'package:app_v2/src/models/user.dart';
+import 'package:app_v2/src/models/userModel.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

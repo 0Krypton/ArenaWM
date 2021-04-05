@@ -1,5 +1,5 @@
 //importing packages
-import 'package:app_v2/src/models/tour.dart';
+import 'package:app_v2/src/models/tourModel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../api/Explore/search.dart';
 
 //importing models
-import '../../models/user.dart';
+import '../../models/userModel.dart';
 
 final searchState = ChangeNotifierProvider((ref) => SearchState());
 

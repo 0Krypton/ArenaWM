@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 //importing models
-import '../models/user.dart';
+import '../models/userModel.dart';
 
 //importing Utils
 import '../utils/getTimeDiffinString.dart';

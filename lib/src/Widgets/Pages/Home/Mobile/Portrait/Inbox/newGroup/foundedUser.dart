@@ -11,7 +11,7 @@ import '../../../../../../../Themes/text.dart';
 import '../../../../../../animatedScale.dart';
 
 //importing models
-import '../../../../../../../models/user.dart';
+import '../../../../../../../models/userModel.dart';
 
 //importing providers
 import '../../../../../../../providers/HomeScr/Inbox/addNew.dart';

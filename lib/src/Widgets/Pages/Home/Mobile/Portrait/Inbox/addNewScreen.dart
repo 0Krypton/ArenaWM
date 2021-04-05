@@ -1,10 +1,11 @@
 //importing packages
+import 'package:app_v2/src/models/userModel.dart';
 import 'package:app_v2/src/providers/HomeScr/Inbox/addNew.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //importing apis
-import '../../../../../../api/Home/newChat.dart';
+import '../../../../../../api/Home/chat.dart';
 
 //importing widgets
 import '../../../../../responsive_builder.dart';
@@ -49,11 +50,11 @@ class _AddNewScreenState extends State<AddNewScreen>
   late final AnimationController _controller;
   // Add new group controller
   late final AnimationController _addNewBtnController;
-  // GroupNameTextFieldController
-  late final AnimationController _groupNameAnimController;
+  // FindFriends NameTextField Anim Controller
+  late final AnimationController _friendsColorAnimController;
+  // GroupNameTextField Anim Controller
+  late final AnimationController _groupNameColorAnimController;
 
-  //Width Animation
-  late final Animation<double> _widthAnim;
   //Height Animation
   late final Animation<double> _heightAnim;
   //Opacity Animation
@@ -79,8 +80,14 @@ class _AddNewScreenState extends State<AddNewScreen>
       duration: const Duration(milliseconds: 350),
     );
 
+    //initilizing findFriendsAnimController
+    _friendsColorAnimController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+
     //initilizing groupNameAnimController
-    _groupNameAnimController = AnimationController(
+    _groupNameColorAnimController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
@@ -99,7 +106,8 @@ class _AddNewScreenState extends State<AddNewScreen>
     //disposing Anim controllers
     _controller.dispose();
     _addNewBtnController.dispose();
-    _groupNameAnimController.dispose();
+    _groupNameColorAnimController.dispose();
+    _friendsColorAnimController.dispose();
 
     //disposing txtControllers
     _friendsTxtController.dispose();
@@ -115,8 +123,7 @@ class _AddNewScreenState extends State<AddNewScreen>
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     // Height animation initializing
     _heightAnim = Tween<double>(begin: 0, end: height * .7).animate(
@@ -125,18 +132,6 @@ class _AddNewScreenState extends State<AddNewScreen>
         curve: Interval(
           0.250,
           0.650,
-          curve: Curves.easeInOut,
-        ),
-      ),
-    );
-
-    // Width animation initializing
-    _widthAnim = Tween<double>(begin: 0, end: width - (25 * 2)).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Interval(
-          0,
-          0.500,
           curve: Curves.easeInOut,
         ),
       ),
@@ -158,7 +153,7 @@ class _AddNewScreenState extends State<AddNewScreen>
       _controller.forward();
     });
 
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       _addNewBtnController.forward();
     });
   }
@@ -231,6 +226,8 @@ class _AddNewScreenState extends State<AddNewScreen>
                               //Find Friends TextField
                               findFriends(
                                 context: context,
+                                friendsColorController:
+                                    _friendsColorAnimController,
                                 friendsTextEditingController:
                                     _friendsTxtController,
                                 friendsFocusNode: _friendsFocusNode,
@@ -240,7 +237,7 @@ class _AddNewScreenState extends State<AddNewScreen>
                               selectName(
                                 context: context,
                                 groupNameColorController:
-                                    _groupNameAnimController,
+                                    _groupNameColorAnimController,
                                 groupNameTxtController: _groupNameTxtController,
                                 groupNameFocusNode: _groupNameFocusNode,
                               ),
@@ -266,39 +263,79 @@ class _AddNewScreenState extends State<AddNewScreen>
                             animationController: _addNewBtnController,
                             iconUrl: 'assets/submit.svg',
                             callBack: () async {
+                              //check if group list is empty then show the error
+                              final List<UserModel> members =
+                                  context.read(newGroup).groupMembers;
+
+                              if (members.isEmpty) {
+                                _friendsColorAnimController.reset();
+                                _friendsColorAnimController.forward();
+                                Future.delayed(
+                                    const Duration(milliseconds: 250), () {
+                                  _friendsColorAnimController.reverse();
+                                });
+
+                                //focus on findFriends txtField
+                                _friendsFocusNode.requestFocus();
+                                //TODO show toast that says please choose group members
+                                return;
+                              }
+
                               // checking group name if it is empty then show error
                               if (_groupNameTxtController.text.isEmpty) {
-                                _groupNameAnimController.reset();
-                                _groupNameAnimController.forward();
+                                _groupNameColorAnimController.reset();
+                                _groupNameColorAnimController.forward();
 
                                 Future.delayed(
                                     const Duration(milliseconds: 250), () {
-                                  _groupNameAnimController.reverse();
+                                  _groupNameColorAnimController.reverse();
                                 });
 
+                                //focus on groupName txtField
+                                _groupNameFocusNode.requestFocus();
                                 //TODO show toast that says please enter a name to group
-                                print('group name is empty');
                                 return;
-                              } else {
-                                // getting group's name
-                                final String groupName =
-                                    context.read(newGroup).groupName;
-
-                                // getting group's members
-                                final List<String> groupMembers = context
-                                    .read(newGroup)
-                                    .groupMembers
-                                    .map((member) => member.id)
-                                    .toList();
-
-                                print(groupName);
-                                print(groupMembers);
-
-                                final data = await Chat.newOne(
-                                    {"name": groupName, "users": groupMembers});
-
-                                print(data);
                               }
+
+                              // getting group's name
+                              final String groupName =
+                                  context.read(newGroup).groupName;
+
+                              // getting group's members
+                              final List<String> groupMembers = context
+                                  .read(newGroup)
+                                  .groupMembers
+                                  .map((member) => member.id)
+                                  .toList();
+
+                              final data = await Chat.newOne(
+                                {"name": groupName, "users": groupMembers},
+                              );
+                              print(data);
+
+                              //clearing the founded users
+                              context.read(friendTermState).setNewTerm('');
+
+                              //clearing the groupName
+                              context.read(newGroup).setGroupName('');
+
+                              //clearing the selected users
+                              context.read(newGroup).clearAll();
+
+                              //reversing addNewBtnAnimation
+                              _addNewBtnController.reverse();
+
+                              //reversing the screen anim
+                              Future.delayed(const Duration(milliseconds: 350),
+                                  () {
+                                _controller.reverse();
+
+                                //poping the page after the animation completed
+                                Future.delayed(
+                                    const Duration(milliseconds: 400), () {
+                                  Navigator.of(context).pop();
+                                });
+                              });
                             },
                           ),
                         ),

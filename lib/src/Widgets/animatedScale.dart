@@ -7,12 +7,14 @@ class AnimatedScale extends StatelessWidget {
     required this.endScale,
     required this.middleOneScale,
     required this.middleTwoScale,
-    required this.animController,
+    this.animController,
+    this.animation,
     required this.child,
   });
 
   final double beginScale, middleOneScale, middleTwoScale, endScale;
-  final AnimationController animController;
+  final AnimationController? animController;
+  final Animation<double>? animation;
   final Widget child;
 
   @override
@@ -33,7 +35,7 @@ class AnimatedScale extends StatelessWidget {
             weight: 40.0,
           ),
         ],
-      ).animate(animController),
+      ).animate(animController == null ? animation! : animController!),
       child: child,
     );
   }

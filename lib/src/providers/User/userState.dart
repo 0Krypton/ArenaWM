@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../api/auth/authenticate.dart';
 
 //importing models
-import '../../models/user.dart';
+import '../../models/userModel.dart';
 
 //TODO
 // At the end we get this token when we logged in

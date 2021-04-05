@@ -12,7 +12,7 @@ Widget selectName({
   required FocusNode groupNameFocusNode,
   required AnimationController groupNameColorController,
 }) {
-  return SearchField(
+  return TxtField(
     colorAnimController: groupNameColorController,
     hint: 'Name',
     heightField: 50,

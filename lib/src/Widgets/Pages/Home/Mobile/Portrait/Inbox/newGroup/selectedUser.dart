@@ -1,5 +1,5 @@
 //importing packages
-import 'package:app_v2/src/models/user.dart';
+import 'package:app_v2/src/models/userModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,7 +15,7 @@ enum Anim { fade, offset }
 class SearchedUser extends StatefulWidget {
   final UserModel user;
 
-  SearchedUser({required this.user});
+  SearchedUser({Key? key, required this.user}) : super(key: key);
 
   @override
   _SearchedUserState createState() => _SearchedUserState();
@@ -25,6 +25,8 @@ class _SearchedUserState extends State<SearchedUser>
     with SingleTickerProviderStateMixin {
   // generated random color for user widget
   late final Color _userColor;
+  late final Color _userBgColor;
+  late final Color _userShadowColor;
 
   //Animcontrollers
   late final AnimationController _animationController;
@@ -39,11 +41,27 @@ class _SearchedUserState extends State<SearchedUser>
 
     final Random _random = Random();
     // generating random color
+    int r = _random.nextInt(256);
+    int g = _random.nextInt(256);
+    int b = _random.nextInt(256);
+
     _userColor = Color.fromARGB(
       255,
-      _random.nextInt(256),
-      _random.nextInt(256),
-      _random.nextInt(256),
+      max(0, r - 15),
+      max(0, g - 15),
+      max(0, b - 15),
+    );
+    _userBgColor = Color.fromARGB(
+      255,
+      min(r + 70, 255),
+      min(g + 70, 255),
+      min(b + 70, 255),
+    );
+    _userShadowColor = Color.fromARGB(
+      255,
+      min(r + 80, 255),
+      min(g + 80, 255),
+      min(b + 80, 255),
     );
 
     //initilizing controllers
@@ -91,10 +109,8 @@ class _SearchedUserState extends State<SearchedUser>
         ),
       ),
       child: Stack(
-        key: ValueKey('${widget.user.userName} user'),
         children: [
           Container(
-            key: ValueKey('${widget.user.userName} user'),
             constraints: const BoxConstraints(
               minWidth: 50,
               maxWidth: 70,
@@ -103,30 +119,31 @@ class _SearchedUserState extends State<SearchedUser>
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: _userColor.withOpacity(.10),
+              color: _userBgColor,
               borderRadius: const BorderRadius.all(const Radius.circular(5)),
               boxShadow: [
                 BoxShadow(
-                  color: _userColor.withOpacity(.3),
-                  blurRadius: 15,
+                  color: _userShadowColor,
+                  blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
               ],
             ),
             child: Center(
-              child: Text(
-                '${widget.user.firstName}',
-                style: TextStyle(
-                  fontFamily: 'Gilroy',
-                  fontSize: 10,
-                  fontWeight: FontWeight.w800,
-                  color: _userColor,
+              child: FittedBox(
+                child: Text(
+                  '${widget.user.firstName}',
+                  style: TextStyle(
+                    fontFamily: 'Gilroy',
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    color: _userColor,
+                  ),
                 ),
               ),
             ),
           ),
           Positioned(
-            key: ValueKey('${widget.user.userName} close'),
             top: 5,
             right: 5,
             child: InkWell(

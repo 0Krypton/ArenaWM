@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //importing widgets
 import '../../../../../responsive_builder.dart';
 import './widgets.dart';
+import './chats.dart';
 
 //importing themes
 import '../../../../../../Themes/color.dart';
@@ -92,7 +93,7 @@ class _InboxState extends State<Inbox> with TickerProviderStateMixin {
                     appBar(context: context, width: width),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: SearchField(
+                      child: TxtField(
                         hint: 'Search',
                         controller: _searchController,
                         focusNode: _searchFocusNode,
@@ -100,6 +101,10 @@ class _InboxState extends State<Inbox> with TickerProviderStateMixin {
                         suffixIconUrl: 'assets/explore.svg',
                         callBack: (v) {},
                       ),
+                    ),
+                    SizedBox(height: 20),
+                    Expanded(
+                      child: Chats(),
                     ),
                   ],
                 ),

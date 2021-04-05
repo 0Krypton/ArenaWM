@@ -5,7 +5,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 //importing models
-import '../../../../../models/tour.dart';
+import '../../../../../models/tourModel.dart';
 
 //importing providers
 import '../../../../../providers/ExploreScr/toursState.dart';

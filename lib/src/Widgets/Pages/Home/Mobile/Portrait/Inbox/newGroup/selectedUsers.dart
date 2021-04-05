@@ -81,12 +81,16 @@ Widget selectedUsers() {
     builder: (context, watch, child) {
       final members = watch(newGroup).groupMembers;
       if (members.isNotEmpty) {
-        List<Widget> adedUser =
-            (members.map((member) => SearchedUser(user: member)).toList());
+        List<Widget> adedUser = (members
+            .map((member) => SearchedUser(
+                  key: ValueKey(member.userName),
+                  user: member,
+                ))
+            .toList());
 
         return Wrap(
           runAlignment: WrapAlignment.start,
-          runSpacing: 5,
+          runSpacing: 10,
           spacing: 10,
           children: adedUser,
         );
